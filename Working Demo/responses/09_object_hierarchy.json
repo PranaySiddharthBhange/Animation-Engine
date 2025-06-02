@@ -12,37 +12,87 @@
                                 "objectid": 3,
                                 "objects": [
                                     {
-                                        "objectid": 6,
+                                        "objectid": 11,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "blade_main:1"
+                                "name": "01-base:1"
                             },
                             {
                                 "objectid": 4,
                                 "objects": [
                                     {
-                                        "objectid": 7,
+                                        "objectid": 12,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "blade_top:1"
+                                "name": "01-base_thread:1"
                             },
                             {
                                 "objectid": 5,
                                 "objects": [
                                     {
-                                        "objectid": 8,
+                                        "objectid": 13,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "scissor_spring:1"
+                                "name": "02-bracket:1"
+                            },
+                            {
+                                "objectid": 6,
+                                "objects": [
+                                    {
+                                        "objectid": 14,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "02-bracket:2"
+                            },
+                            {
+                                "objectid": 7,
+                                "objects": [
+                                    {
+                                        "objectid": 15,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "03-bushing:1"
+                            },
+                            {
+                                "objectid": 8,
+                                "objects": [
+                                    {
+                                        "objectid": 16,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "03-bushing:2"
+                            },
+                            {
+                                "objectid": 9,
+                                "objects": [
+                                    {
+                                        "objectid": 17,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "04-roller:1"
+                            },
+                            {
+                                "objectid": 10,
+                                "objects": [
+                                    {
+                                        "objectid": 18,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "05-spindel:1"
                             }
                         ],
-                        "name": "scissors"
+                        "name": "015-brs"
                     }
                 ],
-                "name": "scissors"
+                "name": "015-brs"
             }
         ]
     }

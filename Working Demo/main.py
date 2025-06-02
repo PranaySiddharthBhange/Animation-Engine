@@ -9,8 +9,8 @@ CLIENT_SECRET = "Jx4HqWtqC9HA23nWnCti59M7nkb0av9x8hroTMnpGurBQl8VyPIARAEA820PQAX
 BUCKET_KEY = "check-3bucket"
 POLICY_KEY = "transient"
 FOLDER_PATH = "upload"
-ASSEMBLY_FILE = "scissors.iam"
-COMPONENTS_FOLDER = "Components"
+ASSEMBLY_FILE = "015-brs.iam"
+COMPONENTS_FOLDER = "parts"
 RESPONSES_FOLDER = "responses"
 
 os.makedirs(RESPONSES_FOLDER, exist_ok=True)
@@ -123,7 +123,7 @@ def link_references(access_token):
     }
 
     references = []
-    for file_name in os.listdir('./upload/Components'):
+    for file_name in os.listdir('./upload/parts'):
         if file_name.lower().endswith('.ipt'):
             references.append({
                 "urn": f"urn:adsk.objects:os.object:{BUCKET_KEY}/{file_name}",
