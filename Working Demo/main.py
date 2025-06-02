@@ -9,7 +9,7 @@ CLIENT_SECRET = "Jx4HqWtqC9HA23nWnCti59M7nkb0av9x8hroTMnpGurBQl8VyPIARAEA820PQAX
 BUCKET_KEY = "check-3bucket"
 POLICY_KEY = "transient"
 FOLDER_PATH = "upload"
-ASSEMBLY_FILE = "004-BN.iam"
+ASSEMBLY_FILE = "002-ANM.iam"
 RESPONSES_FOLDER = "responses"
 
 os.makedirs(RESPONSES_FOLDER, exist_ok=True)
@@ -199,7 +199,7 @@ def check_translation_status(access_token, encoded_urn):
             print("❌ Translation failed or timed out.")
             break
         else:
-            time.sleep(10)
+            time.sleep(30)
 
 def retrieve_list_of_viewable_files(access_token, encoded_urn):
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/metadata"

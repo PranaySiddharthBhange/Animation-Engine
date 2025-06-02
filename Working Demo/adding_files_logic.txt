@@ -1,0 +1,154 @@
+// ... existing code ...
+
+// --- Preload hierarchy and properties ---
+let objectHierarchy = null;
+let objectProperties = null;
+let componentFragmentsMap = {}; // Maps component names to fragment IDs
+
+// Load hierarchy and properties data
+fetch('09_object_hierarchy.json')
+    .then(response => response.json())
+    .then(data => {
+        objectHierarchy = data;
+        logToConsole("Loaded object hierarchy");
+    });
+
+fetch('10_properties_all_objects.json')
+    .then(response => response.json())
+    .then(data => {
+        objectProperties = data;
+        logToConsole("Loaded object properties");
+    });
+
+// Create mapping between fragments and components
+function buildComponentMap() {
+    if (!objectProperties || !viewer.model) return;
+    
+    const tree = viewer.model.getInstanceTree();
+    componentFragmentsMap = {};
+    
+    objectProperties.data.collection.forEach(item => {
+        const dbId = item.objectid;
+        const componentName = item.properties?.['Component Name'] || item.name;
+        
+        if (!componentName) return;
+        
+        tree.enumNodeFragments(dbId, fragId => {
+            if (!componentFragmentsMap[componentName]) {
+                componentFragmentsMap[componentName] = [];
+            }
+            componentFragmentsMap[componentName].push(fragId);
+        });
+    });
+    
+    logToConsole(`Mapped ${Object.keys(componentFragmentsMap).length} components`);
+}
+
+// Update on model load
+function onDocumentLoadSuccess(doc) {
+    // ... existing code ...
+    viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, () => {
+        logToConsole("Geometry loaded");
+        populateFragmentCount();
+        buildComponentMap(); // Build component mapping
+    });
+}
+
+// --- Enhanced Gemini Integration with Hierarchy Context ---
+async function getGeminiAnimationCommands() {
+    // ... existing code ...
+
+    // Build component hierarchy description
+    let hierarchyDescription = "Assembly Hierarchy:\n";
+    if (objectHierarchy) {
+        const traverse = (node, level = 0) => {
+            const indent = '  '.repeat(level);
+            const name = node.name || `Object ${node.objectid}`;
+            hierarchyDescription += `${indent}- ${name}\n`;
+            
+            if (node.objects) {
+                node.objects.forEach(child => traverse(child, level + 1));
+            }
+        };
+        
+        objectHierarchy.data.objects.forEach(root => traverse(root));
+    }
+
+    // Build component information
+    let componentInfo = "Component Details:\n";
+    if (objectProperties) {
+        objectProperties.data.collection.forEach(item => {
+            const compName = item.properties?.['Component Name'] || item.name;
+            const volume = item.properties?.['Mass Properties']?.Volume || 'N/A';
+            const partNum = item.properties?.['File Properties']?.['Part Number'] || 'N/A';
+            
+            if (compName) {
+                componentInfo += `- ${compName} (Part: ${partNum}, Volume: ${volume})\n`;
+            }
+        });
+    }
+
+    const prompt =
+        `You are an expert 3D animation assistant for Autodesk Forge models. 
+Generate a sequence of animation commands for the following components that will create a logical, visually appealing animation based on the mechanical assembly.
+
+${hierarchyDescription}
+
+${componentInfo}
+
+Available components and their fragments:
+${Object.entries(componentFragmentsMap).map(([comp, frags]) => 
+    `- ${comp}: Fragments [${frags.join(', ')}]`
+).join('\n')}
+
+Command format (JSON array of objects):
+[
+  {
+    "component": "<Component Name>",  // Animate entire component
+    "fragmentId": <number>,           // OR animate individual fragment
+    "action": "rotate" | "scale" | "translate",
+    "params": {
+      // For "rotate": "axis" ("x","y","z"), "angle": <degrees>
+      // For "scale": "factor": <number>
+      // For "translate": "x": <number>, "y": <number>, "z": <number>
+    }
+  },
+  // ... more commands
+]
+
+Guidelines:
+1. Create logical mechanical animations (e.g., rotating fan, moving pistons)
+2. Animate entire components together when possible
+3. Use real-world physical constraints
+4. Rotations: Use angles between 10-360 degrees
+5. Scaling: Use factors between 0.5-2.0
+6. Translations: Keep movements reasonable (0-100 units)
+7. Include 8-12 commands focusing on key mechanical movements
+
+Generate only the JSON array with no additional text.`;
+
+    // ... existing Gemini request code ...
+}
+
+// Handle new command format (component-level animations)
+function executeComponentAnimation(cmd) {
+    if (cmd.component && componentFragmentsMap[cmd.component]) {
+        const fragmentIds = componentFragmentsMap[cmd.component];
+        return Promise.all(fragmentIds.map(fragId => 
+            executeSmoothAnimation({...cmd, fragmentId: fragId})
+        ));
+    }
+    return executeSmoothAnimation(cmd);
+}
+
+// Update animation execution
+async function executeAnimationQueue(commands) {
+    // ... existing code ...
+    for (let i = 0; i < commands.length; i++) {
+        // ... existing code ...
+        await executeComponentAnimation(cmd);
+    }
+    // ... existing code ...
+}
+
+// ... rest of existing code ...
