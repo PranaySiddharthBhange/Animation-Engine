@@ -1,0 +1,109 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.9">
+  <diagram name="Page-1" id="tLCo57GppPZQ_4B1e9xH">
+    <mxGraphModel dx="1426" dy="751" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="Databases" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="90" y="439" width="314" height="269" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Services" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="40" y="130" width="607" height="231" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="Frontend" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="184" y="8" width="125" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="Node.js Backend" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="156" y="160" width="179" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="C# Backend" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="96" y="287" width="143" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="ML Backend" style="whiteSpace=wrap;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="429" y="287" width="144" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="Database" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="127" y="466" width="81" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="9" value="Model Store" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="451" y="464" width="100" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="User Data" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="125" y="612" width="85" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="11" value="Training Data" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="259" y="609" width="110" height="74" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="HTTP Requests" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="4" target="5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="13" value="API Calls" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.96;entryX=0.26;entryY=0;" parent="1" source="4" target="6" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="88" y="99" />
+              <mxPoint x="88" y="251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14" value="GraphQL Queries" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.89;entryX=0.3;entryY=0;" parent="1" source="4" target="7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="433" y="99" />
+              <mxPoint x="433" y="251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="15" value="Fetch Data" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.73;entryY=0;" parent="1" source="5" target="6" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="246" y="251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="16" value="Fetch Data" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.87;entryX=0.59;entryY=0;" parent="1" source="5" target="7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="531" y="251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="17" value="Database Queries" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.49;entryY=0;" parent="1" source="6" target="8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="18" value="Model Predictions" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" source="7" target="9" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="19" value="MongoDB Queries" style="curved=1;startArrow=none;endArrow=block;exitX=0.49;exitY=1;entryX=0.49;entryY=0;" parent="1" source="8" target="10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="20" value="Model Training" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.77;entryX=0.5;entryY=0;" parent="1" source="9" target="11" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="314" y="573" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jnTf-NJcUfB0uCgKP4di-20" value="API Calls" style="curved=1;startArrow=none;endArrow=block;exitX=0.75;exitY=1;entryX=0.26;entryY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="5">
+          <mxGeometry x="-0.4209" y="-8" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="320" />
+              <mxPoint x="270" y="350" />
+              <mxPoint x="260" y="400" />
+            </Array>
+            <mxPoint x="335" y="212" as="sourcePoint" />
+            <mxPoint x="284" y="439" as="targetPoint" />
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
