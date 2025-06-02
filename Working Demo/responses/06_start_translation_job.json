@@ -1,0 +1,17 @@
+{
+    "result": "success",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC9zY2lzc29ycy5pYW0",
+    "acceptedJobs": {
+        "output": {
+            "formats": [
+                {
+                    "type": "svf2",
+                    "views": [
+                        "2d",
+                        "3d"
+                    ]
+                }
+            ]
+        }
+    }
+}

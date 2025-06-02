@@ -1,0 +1,270 @@
+{
+    "data": {
+        "type": "properties",
+        "collection": [
+            {
+                "objectid": 9,
+                "name": "Base",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnxCMUQ1NzgxMTExRDg0RjdCM0ZFNDVBMDg1MkU1OTc1OENEN0E4N0U1\",\"RklYVFVSRVBMQVRFLklQVHw6fDc3RjYyM0IyODI0RjlENjYzQjk2MDQ2RjY5MzkzQ0MzQkI3NEY2MzR8OnxEQTRCOTIzN0JBQ0NDREYxOUMwNzYwQ0FCN0FFQzRBODM1OTAxMEIw\"]",
+                "properties": {
+                    "Name": "Base",
+                    "Appearance": "231, 214, 172"
+                }
+            },
+            {
+                "objectid": 10,
+                "name": "Screws",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnxCMUQ1NzgxMTExRDg0RjdCM0ZFNDVBMDg1MkU1OTc1OENEN0E4N0U1\",\"RklYVFVSRVBMQVRFLklQVHw6fDc3RjYyM0IyODI0RjlENjYzQjk2MDQ2RjY5MzkzQ0MzQkI3NEY2MzR8Onw0QzgyMDVEQTM2MTBBNjE1ODNCNjRDN0ZBRUI4NkREMDQwQ0FDRTYz\"]",
+                "properties": {
+                    "Name": "Screws",
+                    "Appearance": "191, 191, 191"
+                }
+            },
+            {
+                "objectid": 3,
+                "name": "FixturePlate:1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnxCMUQ1NzgxMTExRDg0RjdCM0ZFNDVBMDg1MkU1OTc1OENEN0E4N0U1\"]",
+                "properties": {
+                    "Name": "FixturePlate:1",
+                    "Component Name": "FixturePlate",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "normanpa"
+                    },
+                    "Mass Properties": {
+                        "Area": "15067.067 mm^2",
+                        "Volume": "33115.296 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "normanpa",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "BasePlate",
+                        "Creation Date": "2012-May-31 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 11,
+                "name": "Solid1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnxCRDMwN0EzRUMzMjlFMTBBMkNGRjhGQjg3NDgwODIzREExMTRGOEY0\",\"QkFTRV8xLklQVHw6fDNDM0FEQTQ5RkNGOUE5MkRBRjI5RUQ1MjM4RjA3N0Y3NzBBRjBEODB8Onw4QkQ3OTU0QzQwQzFFNTlBOTAwRjcxRUEzQTI2NjczMjYwOTkxNUIx\"]",
+                "properties": {
+                    "Name": "Solid1",
+                    "Appearance": "0, 125, 168"
+                }
+            },
+            {
+                "objectid": 4,
+                "name": "Base_1:1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnxCRDMwN0EzRUMzMjlFMTBBMkNGRjhGQjg3NDgwODIzREExMTRGOEY0\"]",
+                "properties": {
+                    "Name": "Base_1:1",
+                    "Component Name": "Base_1",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "normanpa"
+                    },
+                    "Mass Properties": {
+                        "Area": "10787.111 mm^2",
+                        "Volume": "23460.091 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "normanpa",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "Base_1",
+                        "Creation Date": "2012-May-30 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 12,
+                "name": "Solid2",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnxCNjY5MkVBNURGOTIwQ0FENjkxQzIwMzE5QTZGRkZEN0E0QTc2NkI4\",\"QkFMTF8xLklQVHw6fDk1QUYzQjFFMzA3NUNEMDg2MEExQ0RBRkQzQjlERUYyRUY0MEQzQjZ8OnwxQzY2MzdBOEYyRTFGNzVFMDZGRjk5ODQ4OTRENkJEMTZBM0EzNkE5\"]",
+                "properties": {
+                    "Name": "Solid2",
+                    "Appearance": "255, 120, 80"
+                }
+            },
+            {
+                "objectid": 5,
+                "name": "Ball_1:1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnxCNjY5MkVBNURGOTIwQ0FENjkxQzIwMzE5QTZGRkZEN0E0QTc2NkI4\"]",
+                "properties": {
+                    "Name": "Ball_1:1",
+                    "Component Name": "Ball_1",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "normanpa"
+                    },
+                    "Mass Properties": {
+                        "Area": "4.928 in^2",
+                        "Volume": "0.460 in^3"
+                    },
+                    "File Properties": {
+                        "Author": "normanpa",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "Ball_2",
+                        "Creation Date": "2012-May-30 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 13,
+                "name": "Solid2",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8Onw4MEUyOEE1MUNCQzI2RkE0QkQzNDkzOEM1RTU5M0IzNjE0NkY1RTBD\",\"Q09OTkVDVE9SXzEuSVBUfDp8QzE4QUZGQzcyMjFDMTZCOERGM0QzQTM0NDhENkE3QjI3NzI5RjREN3w6fEE3ODVCREJGM0M5OUUwNTA5RjRDQzM0MTcyOTVDQ0U5RDg5NDU5QTE=\"]",
+                "properties": {
+                    "Name": "Solid2",
+                    "Appearance": "191, 191, 191"
+                }
+            },
+            {
+                "objectid": 14,
+                "name": "Solid3",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8Onw4MEUyOEE1MUNCQzI2RkE0QkQzNDkzOEM1RTU5M0IzNjE0NkY1RTBD\",\"Q09OTkVDVE9SXzEuSVBUfDp8QzE4QUZGQzcyMjFDMTZCOERGM0QzQTM0NDhENkE3QjI3NzI5RjREN3w6fDM3NDFENTkxMTJFRUU4QUU4RDhDNjRFQUI1MjIwM0Q0RTI2RkU1NDE=\"]",
+                "properties": {
+                    "Name": "Solid3",
+                    "Appearance": "0, 0, 0"
+                }
+            },
+            {
+                "objectid": 6,
+                "name": "Connector_1:1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8Onw4MEUyOEE1MUNCQzI2RkE0QkQzNDkzOEM1RTU5M0IzNjE0NkY1RTBD\"]",
+                "properties": {
+                    "Name": "Connector_1:1",
+                    "Component Name": "Connector_1",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "normanpa"
+                    },
+                    "Mass Properties": {
+                        "Area": "3448.113 mm^2",
+                        "Volume": "3612.546 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "normanpa",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "Connector_1",
+                        "Creation Date": "2012-May-30 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 15,
+                "name": "Solid3",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnwzNUU5OTVDMTA3QTcxQ0FFQjgzM0JCM0I3OUY5RjU0NzgxQjMzRkEx\",\"TEVWRVJfMS5JUFR8Onw3QzM5NDM4QTNCNzZDQzcxNUIzNTYxRDAwRUExMzkzMDlCRTdCRjFDfDp8NkMwQUM3NkNBOUZFMUFGODg5NTU4RDExRkQ5QTc1RTFGQjlBMEI4Ng==\"]",
+                "properties": {
+                    "Name": "Solid3",
+                    "Appearance": "255, 228, 183"
+                }
+            },
+            {
+                "objectid": 16,
+                "name": "Solid4",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnwzNUU5OTVDMTA3QTcxQ0FFQjgzM0JCM0I3OUY5RjU0NzgxQjMzRkEx\",\"TEVWRVJfMS5JUFR8Onw3QzM5NDM4QTNCNzZDQzcxNUIzNTYxRDAwRUExMzkzMDlCRTdCRjFDfDp8NTgyRjZDMEY1MUREQjczMDgwRTg0QUQzMEIxMjFGOThFNjgxMUZCRg==\"]",
+                "properties": {
+                    "Name": "Solid4",
+                    "Appearance": "0, 0, 0"
+                }
+            },
+            {
+                "objectid": 7,
+                "name": "Lever_1:1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnwzNUU5OTVDMTA3QTcxQ0FFQjgzM0JCM0I3OUY5RjU0NzgxQjMzRkEx\"]",
+                "properties": {
+                    "Name": "Lever_1:1",
+                    "Component Name": "Lever_1",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "normanpa"
+                    },
+                    "Mass Properties": {
+                        "Area": "5669.940 mm^2",
+                        "Volume": "8813.885 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "normanpa",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "Lever_1",
+                        "Creation Date": "2012-May-30 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 17,
+                "name": "Solid2",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnwxNzUwM0E2QjIzMjZGMDlGQkM0RTNBN0MwMzg3NEM3MzMzMDAyMDM4\",\"U09DS0VUXzEuSVBUfDp8Q0NDRjE0RTdERDhBMTkwMDFDNTIzRjhEMEMyNjU2MjY4Q0VCQ0I2MHw6fDYyODY2QUI0MTUzMzFEMDNDMDM4NDlDMjRGNTI4NDUwRjI0NkUzNzU=\"]",
+                "properties": {
+                    "Name": "Solid2",
+                    "Appearance": "255, 220, 64"
+                }
+            },
+            {
+                "objectid": 8,
+                "name": "Socket_1:1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\",\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMER8OnwxNzUwM0E2QjIzMjZGMDlGQkM0RTNBN0MwMzg3NEM3MzMzMDAyMDM4\"]",
+                "properties": {
+                    "Name": "Socket_1:1",
+                    "Component Name": "Socket_1",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "normanpa"
+                    },
+                    "Mass Properties": {
+                        "Area": "4.227 in^2",
+                        "Volume": "0.239 in^3"
+                    },
+                    "File Properties": {
+                        "Author": "normanpa",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "Socket_1",
+                        "Creation Date": "2012-May-30 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 2,
+                "name": "Assembly1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTXw6fDY4OTBDODdGQkU3Rjk3QUQxNzUzN0EzNUI3N0IyRkQxMTM5NTAxMEQ=\"]",
+                "properties": {
+                    "Name": "Assembly1",
+                    "Component Name": "Assembly1",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Assembly",
+                        "Design State": "WorkInProgress",
+                        "Designer": "Saurav Farkade"
+                    },
+                    "Mass Properties": {
+                        "Area": "63.362 in^2",
+                        "Volume": "4.910 in^3"
+                    },
+                    "File Properties": {
+                        "Author": "Saurav Farkade",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "Assembly1",
+                        "Creation Date": "2025-May-27 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 1,
+                "name": "Assembly1",
+                "externalId": "[\"QVNTRU1CTFkxLklBTQ==\"]",
+                "properties": {
+                    "Name": "Assembly1",
+                    "File Properties": {
+                        "Author": "Saurav Farkade",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "Assembly1",
+                        "Creation Date": "2025-May-27 00:00:00"
+                    }
+                }
+            }
+        ]
+    }
+}
