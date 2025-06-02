@@ -1,0 +1,8 @@
+{
+    "bucketKey": "check-3bucket",
+    "objectId": "urn:adsk.objects:os.object:check-3bucket/scissors.iam",
+    "objectKey": "scissors.iam",
+    "size": 140800,
+    "contentType": "application/octet-stream",
+    "location": "https://developer.api.autodesk.com/oss/v2/buckets/check-3bucket/objects/scissors.iam"
+}

@@ -1,0 +1,155 @@
+{
+    "data": {
+        "type": "properties",
+        "collection": [
+            {
+                "objectid": 6,
+                "name": "Solid1",
+                "externalId": "[\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4Mw==\",\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4M3w6fDBBREU3QzJDRjk3Rjc1RDAwOTk3NUY0RDcyMEQxRkE2QzE5RjQ4OTc=\",\"QkxBREVfTUFJTi5JUFR8Onw5QkFGQzNFMzRFQzMzOEM0OUUwQzUxRkIxQkYxMjAwOTk4NkJDMTVFfDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
+                "properties": {
+                    "Name": "Solid1",
+                    "Appearance": "244, 244, 244"
+                }
+            },
+            {
+                "objectid": 3,
+                "name": "blade_main:1",
+                "externalId": "[\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4Mw==\",\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4M3w6fDBBREU3QzJDRjk3Rjc1RDAwOTk3NUY0RDcyMEQxRkE2QzE5RjQ4OTc=\"]",
+                "properties": {
+                    "Name": "blade_main:1",
+                    "Component Name": "blade_main",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "(NULL)",
+                        "Designer": "Autodesk, Inc."
+                    },
+                    "Mass Properties": {
+                        "Area": "499.242 mm^2",
+                        "Volume": "194.249 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "Autodesk, Inc.",
+                        "Organization": "Autodesk",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "blade_main",
+                        "Creation Date": "2000-May-26 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 7,
+                "name": "Solid1",
+                "externalId": "[\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4Mw==\",\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4M3w6fEI3MTAzQ0EyNzhBNzVDQUQ4RjdEMDY1QUNEQTBDMkU4MERBMEI3REM=\",\"QkxBREVfVE9QLklQVHw6fDVCMDhDMTk3MjI3NkJERUFERENEMTBDNjA0NTZGQUMyM0Q1RjMyQ0J8OnxEQTRCOTIzN0JBQ0NDREYxOUMwNzYwQ0FCN0FFQzRBODM1OTAxMEIw\"]",
+                "properties": {
+                    "Name": "Solid1",
+                    "Appearance": "255, 255, 255"
+                }
+            },
+            {
+                "objectid": 4,
+                "name": "blade_top:1",
+                "externalId": "[\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4Mw==\",\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4M3w6fEI3MTAzQ0EyNzhBNzVDQUQ4RjdEMDY1QUNEQTBDMkU4MERBMEI3REM=\"]",
+                "properties": {
+                    "Name": "blade_top:1",
+                    "Component Name": "blade_top",
+                    "Design Tracking Properties": {
+                        "Project": "Inventor Samples",
+                        "File Subtype": "Modeling",
+                        "Design State": "(NULL)",
+                        "Designer": "Autodesk, Inc."
+                    },
+                    "Mass Properties": {
+                        "Area": "361.054 mm^2",
+                        "Volume": "124.575 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "Autodesk, Inc.",
+                        "Organization": "Autodesk",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "blade_top",
+                        "Revision": "A",
+                        "Creation Date": "2000-May-27 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 8,
+                "name": "Solid1",
+                "externalId": "[\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4Mw==\",\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4M3w6fDEwNDdCNTY4ODE0MzgyNjAyODZBOEU3QTU3RTA3QzUzNDQ1Q0VCMTk=\",\"U0NJU1NPUl9TUFJJTkcuSVBUfDp8NTZEOTA4QzQ2NjdEOEUxREI2ODExMDc1NUVDMTUyOTg3MDVFMjYzMnw6fERBNEI5MjM3QkFDQ0NERjE5QzA3NjBDQUI3QUVDNEE4MzU5MDEwQjA=\"]",
+                "properties": {
+                    "Name": "Solid1",
+                    "Appearance": "66, 66, 66"
+                }
+            },
+            {
+                "objectid": 5,
+                "name": "scissor_spring:1",
+                "externalId": "[\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4Mw==\",\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4M3w6fDEwNDdCNTY4ODE0MzgyNjAyODZBOEU3QTU3RTA3QzUzNDQ1Q0VCMTk=\"]",
+                "properties": {
+                    "Name": "scissor_spring:1",
+                    "Component Name": "scissor_spring",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "(NULL)",
+                        "Designer": "Autodesk, Inc."
+                    },
+                    "Mass Properties": {
+                        "Area": "169.192 mm^2",
+                        "Volume": "15.308 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "Autodesk, Inc.",
+                        "Organization": "Autodesk",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "scissor_spring",
+                        "Creation Date": "2000-May-30 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 2,
+                "name": "scissors",
+                "externalId": "[\"U0NJU1NPUlMuSUFNfDp8NzQwQzUzNjg5RDFDNEFBRUM3RkJCMDRENzM4RUUzRkQ2ODY1QzM4Mw==\"]",
+                "properties": {
+                    "Name": "scissors",
+                    "Component Name": "scissors",
+                    "Summary Properties": {
+                        "Subject": "Inventor Samples"
+                    },
+                    "Design Tracking Properties": {
+                        "File Subtype": "Assembly",
+                        "Estimated Cost": "$20.00",
+                        "Design State": "Released",
+                        "Designer": "Autodesk, Inc."
+                    },
+                    "Mass Properties": {
+                        "Area": "1029.488 mm^2",
+                        "Volume": "334.132 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "Autodesk, Inc.",
+                        "Organization": "Autodesk",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "scissor",
+                        "Creation Date": "2000-May-30 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 1,
+                "name": "scissors",
+                "externalId": "[\"U0NJU1NPUlMuSUFN\"]",
+                "properties": {
+                    "Name": "scissors",
+                    "File Properties": {
+                        "Author": "Autodesk, Inc.",
+                        "Organization": "Autodesk",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "scissor",
+                        "Creation Date": "2000-May-30 00:00:00"
+                    }
+                }
+            }
+        ]
+    }
+}

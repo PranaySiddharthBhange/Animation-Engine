@@ -1,0 +1,49 @@
+{
+    "data": {
+        "type": "objects",
+        "objects": [
+            {
+                "objectid": 1,
+                "objects": [
+                    {
+                        "objectid": 2,
+                        "objects": [
+                            {
+                                "objectid": 3,
+                                "objects": [
+                                    {
+                                        "objectid": 6,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "blade_main:1"
+                            },
+                            {
+                                "objectid": 4,
+                                "objects": [
+                                    {
+                                        "objectid": 7,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "blade_top:1"
+                            },
+                            {
+                                "objectid": 5,
+                                "objects": [
+                                    {
+                                        "objectid": 8,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "scissor_spring:1"
+                            }
+                        ],
+                        "name": "scissors"
+                    }
+                ],
+                "name": "scissors"
+            }
+        ]
+    }
+}

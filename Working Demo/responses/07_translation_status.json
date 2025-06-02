@@ -1,0 +1,78 @@
+{
+    "type": "manifest",
+    "hasThumbnail": "true",
+    "status": "success",
+    "progress": "complete",
+    "region": "US",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC9zY2lzc29ycy5pYW0",
+    "version": "1.0",
+    "derivatives": [
+        {
+            "name": "scissors.iam",
+            "hasThumbnail": "true",
+            "status": "success",
+            "progress": "complete",
+            "outputType": "svf2",
+            "children": [
+                {
+                    "guid": "fa69ddbb-0395-471b-8ba9-0df2600c9d4e",
+                    "type": "geometry",
+                    "role": "3d",
+                    "name": "Scene",
+                    "status": "success",
+                    "progress": "complete",
+                    "hasThumbnail": "true",
+                    "children": [
+                        {
+                            "guid": "40d0c743-b97f-417b-b34a-9906794f1d23",
+                            "type": "resource",
+                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC9zY2lzc29ycy5pYW0/output/1/scissors.svf.png01_thumb_400x400.png",
+                            "resolution": [
+                                400,
+                                400
+                            ],
+                            "mime": "image/png",
+                            "role": "thumbnail"
+                        },
+                        {
+                            "guid": "7571d64b-849e-4fed-8cc0-8cd03a70d8a9",
+                            "type": "resource",
+                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC9zY2lzc29ycy5pYW0/output/1/scissors.svf.png01_thumb_200x200.png",
+                            "resolution": [
+                                200,
+                                200
+                            ],
+                            "mime": "image/png",
+                            "role": "thumbnail"
+                        },
+                        {
+                            "guid": "9c4cec8f-febc-4b30-8bdb-f7643c1c4638",
+                            "type": "resource",
+                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC9zY2lzc29ycy5pYW0/output/1/scissors.svf.png01_thumb_100x100.png",
+                            "resolution": [
+                                100,
+                                100
+                            ],
+                            "mime": "image/png",
+                            "role": "thumbnail"
+                        },
+                        {
+                            "role": "graphics",
+                            "mime": "application/autodesk-svf2",
+                            "guid": "f357b1f8-5bba-4581-8664-fecbb05fe617",
+                            "type": "resource"
+                        }
+                    ]
+                },
+                {
+                    "guid": "9b606874-cf94-4868-ad3d-be15c172c13b",
+                    "type": "resource",
+                    "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC9zY2lzc29ycy5pYW0/output/1/properties.db",
+                    "role": "Autodesk.CloudPlatform.PropertyDatabase",
+                    "mime": "application/autodesk-db",
+                    "status": "success"
+                }
+            ]
+        }
+    ]
+}
