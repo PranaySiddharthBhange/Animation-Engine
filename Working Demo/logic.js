@@ -1,5 +1,11 @@
 
-// Initialize the dashboard first
+// Toggle sidebar on mobile
+document.getElementById('sidebarToggle').addEventListener('click', function () {
+    document.getElementById('dashboard').classList.toggle('active');
+    this.classList.toggle('active');
+});
+
+// Initialize the dashboard
 document.addEventListener('DOMContentLoaded', function () {
     // Ensure dashboard is visible
     const dashboard = document.getElementById('dashboard');
@@ -7,78 +13,56 @@ document.addEventListener('DOMContentLoaded', function () {
     dashboard.style.visibility = 'visible';
 
     // Fragment count element
-    const header = document.querySelector('.dashboard-header');
-    const countEl = document.createElement('div');
-    countEl.className = 'fragment-count';
-    countEl.textContent = '0 fragments';
-    header.appendChild(countEl);
-
-    // Initialize auto animate button
-    document.getElementById('autoAnimateBtn').onclick = autoAnimateWithGemini;
+    const countEl = document.getElementById('fragmentCount');
+    countEl.textContent = 'Loading fragments...';
 });
-
 
 // --- Autodesk Viewer Setup ---
 const options = {
     env: 'AutodeskProduction',
-    accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6ImI4YjJkMzNhLTFlOTYtNDYwNS1iMWE4LTgwYjRhNWE4YjNlNyIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2F1dG9kZXNrLmNvbSIsImNsaWVudF9pZCI6IldBMkt6OTF4VlVmQXBJR1lteWg4dkFGM1lVbENRb3FCV3k5SHVrOXoyUkxtcEI5YiIsInNjb3BlIjpbImRhdGE6d3JpdGUiLCJkYXRhOnJlYWQiLCJidWNrZXQ6Y3JlYXRlIiwiYnVja2V0OmRlbGV0ZSJdLCJpc3MiOiJodHRwczovL2RldmVsb3Blci5hcGkuYXV0b2Rlc2suY29tIiwiZXhwIjoxNzQ4NTI1NDM2LCJqdGkiOiJBVC01NjNlMjMyNi1jZmU3LTQxZGItYTM1ZC02ZjJlOTU3NDg3NGYifQ.C8v4MwZ07oqNCT2NcDSlyHgqQe0kee6WJFj9WBhkpwMe_PwCQgO4G47gO034m4SoY2okrUSO-Z9KCjqR921YqXeONBborf_HoaLJ9vNhrfxAs8bMKq43Tq0mr4NRSpO6Iq7jRVliamX7wZ8A2Feq4Ls7ypiBS_CIMpz2fYFBYPhmiPe14sPI9HY44lm6UmR7kziW-iyGlL3KaKXZG25G3t7vdxRqnrxS-DWGt2HxGEf1AHrYawPxq-SfUgrGFd2OMx8t4kIiRzQ5mSFImYSs2GVeWe1YpV7TyNBHdyVjJnaKaVpMiY524u90fIYf9yPIUSTdLwKvO5m8afsmwALifg'
+    accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpyZWFkIiwiYnVja2V0OmNyZWF0ZSIsImJ1Y2tldDpkZWxldGUiXSwiY2xpZW50X2lkIjoiV0EyS3o5MXhWVWZBcElHWW15aDh2QUYzWVVsQ1FvcUJXeTlIdWs5ejJSTG1wQjliIiwiaXNzIjoiaHR0cHM6Ly9kZXZlbG9wZXIuYXBpLmF1dG9kZXNrLmNvbSIsImF1ZCI6Imh0dHBzOi8vYXV0b2Rlc2suY29tIiwianRpIjoiY3NyVlFVRnZIWWdueVgwSUZUVVlOVVUwYVFtMkQxMFRRdmhoZlM3bGN4R25UVGlMamtxVmdKQlBWY3huWk9qOCIsImV4cCI6MTc0ODg2MDc4NX0.eokOs6IAr63QC0N5FlO4sBDfUTVeVGeX_IdLVM-PkcQi_Ye3R4k8Ql6VgL72EtHGgG9Tpa4Z6sppLXguWZ3Sn3idJvf3QmOJAwPo-63S1sYQg5CEjljgfbphVMGiDWmkTFGwRXxhBZOK4Z2Mw0JzMZKZ36pWV3v68D70XuCcBDGtcZjyf5yWREYxZMpBIcyQ87mW4xwoGfxtu35xky9Q8CEyvWsUoImYQpkfAHiWR-vftD72BLD-es9p_nP3dRsKnr41P_aRq-fq3tsn4QIj2GnsDK5OlDTSjgXuXsUFtr3vA62OlhxO_Vdtc7Hkt1oy5dg-UUoB18fbXL-cp4pMiw'
 };
-const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC9zY2lzc29ycy5pYW0';
-
-
+const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC8wMTUtYnJzLmlhbQ';
 
 let viewer;
 let fragmentToDbIdMap = {};
-let animationInterval = null;
-let animationSpeed = 1000; // Default animation speed in ms
+let animationQueue = [];
+let activeAnimations = {};
+let isAnimating = false;
+let savedState = null;
+let lastAnimationCommands = [];
+let recordedChunks = [];
+let mediaRecorder;
+let recordedVideoUrl = null;
 
 Autodesk.Viewing.Initializer(options, () => {
     viewer = new Autodesk.Viewing.GuiViewer3D(document.getElementById('viewer'));
     viewer.start();
-    viewer.setTheme('light-theme');
+    viewer.setTheme('dark-theme');
     Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
 });
-
-
 
 function onDocumentLoadSuccess(doc) {
     const viewable = doc.getRoot().getDefaultGeometry();
     viewer.loadDocumentNode(doc, viewable).then(() => {
         logToConsole("Model loaded successfully");
+        document.querySelector('.viewer-overlay span').textContent = "Model loaded successfully";
         viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, () => {
-            logToConsole("Geometry loaded. Fragments available");
-            populateFragmentDropdown();
+            logToConsole("Geometry loaded");
+            populateFragmentCount();
         });
     });
 }
 
 function onDocumentLoadFailure(code, message) {
     logToConsole(`Could not load document (${code}): ${message}`, true);
+    document.querySelector('.viewer-overlay span').textContent = "Failed to load model";
 }
 
 function logToConsole(message, isError = false) {
     const logOutput = document.getElementById("logOutput");
-    const entry = document.createElement("div");
-    entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
-    entry.style.color = isError ? "#e74c3c" : "#2ecc71";
-    logOutput.appendChild(entry);
-    logOutput.scrollTop = logOutput.scrollHeight;
-}
-
-function logModelTree() {
-    const tree = viewer.model.getInstanceTree();
-    if (!tree) {
-        logToConsole("Instance tree not loaded", true);
-        return;
-    }
-
-    logToConsole("==== Model Structure ====");
-    tree.enumNodeChildren(tree.getRootId(), function (dbId) {
-        const name = tree.getNodeName(dbId);
-        tree.enumNodeFragments(dbId, function (fragId) {
-            logToConsole(`Fragment: ${fragId} → dbId: ${dbId} (${name})`);
-        });
-    }, true);
+    logOutput.innerHTML = `<div class="log-entry">[${new Date().toLocaleTimeString()}] ${message}</div>`;
+    logOutput.style.color = isError ? "#ef4444" : "#10b981";
 }
 
 function resetAllFragments() {
@@ -111,134 +95,45 @@ function resetAllFragments() {
     logToConsole("Reset all fragments to original state");
 }
 
-function populateFragmentDropdown() {
+function populateFragmentCount() {
     const tree = viewer.model.getInstanceTree();
     if (!tree) {
         logToConsole("Instance tree not loaded", true);
         return;
     }
 
-    const dropdown = document.getElementById("fragmentSelect");
-    dropdown.innerHTML = '<option disabled selected>-- Select Fragment --</option>';
-    fragmentToDbIdMap = {};
-
     let fragmentCount = 0;
     tree.enumNodeChildren(tree.getRootId(), function (dbId) {
-        const name = tree.getNodeName(dbId);
         tree.enumNodeFragments(dbId, function (fragId) {
             fragmentCount++;
-            fragmentToDbIdMap[fragId] = dbId;
-            const option = document.createElement("option");
-            option.value = fragId;
-            option.textContent = `Fragment ${fragId} → ${name}`;
-            dropdown.appendChild(option);
         });
     }, true);
 
     // Update fragment info
-    document.querySelector('.fragment-count').textContent = `${fragmentCount} fragments`;
+    document.getElementById('fragmentCount').textContent = `${fragmentCount} fragments`;
     logToConsole(`Loaded ${fragmentCount} fragments`);
+}
 
-    // Add event listener to update fragment info when selected
-    dropdown.addEventListener('change', function () {
-        if (this.value) {
-            const dbId = fragmentToDbIdMap[this.value];
-            document.getElementById('currentFragment').textContent = this.value;
-            document.getElementById('currentDbId').textContent = dbId;
-
-            // Get current name
-            const tree = viewer.model.getInstanceTree();
-            const node = tree.getNodeName(dbId);
-            logToConsole(`Selected fragment: ${this.value} (dbId: ${dbId}, ${node})`);
+// Easing functions for smooth animations
+const easingFunctions = {
+    linear: t => t,
+    easeIn: t => t * t,
+    easeOut: t => t * (2 - t),
+    easeInOut: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+    bounce: t => {
+        if (t < 1 / 2.75) {
+            return 7.5625 * t * t;
+        } else if (t < 2 / 2.75) {
+            return 7.5625 * (t -= 1.5 / 2.75) * t + 0.75;
+        } else if (t < 2.5 / 2.75) {
+            return 7.5625 * (t -= 2.25 / 2.75) * t + 0.9375;
+        } else {
+            return 7.5625 * (t -= 2.625 / 2.75) * t + 0.984375;
         }
-    });
-}
-
-function scaleSelectedFragment() {
-    const fragId = document.getElementById("fragmentSelect").value;
-    if (!fragId) {
-        logToConsole("Please select a fragment first", true);
-        return;
     }
+};
 
-    const factor = parseFloat(document.getElementById("scaleFactor").value) || 1.5;
-    const model = viewer.model;
-    const fragProxy = viewer.impl.getFragmentProxy(model, parseInt(fragId));
-    if (!fragProxy) {
-        logToConsole("Could not get fragment proxy", true);
-        return;
-    }
-
-    fragProxy.getAnimTransform();
-    fragProxy.scale.x *= factor;
-    fragProxy.scale.y *= factor;
-    fragProxy.scale.z *= factor;
-    fragProxy.updateAnimTransform();
-    viewer.impl.invalidate(true);
-
-    logToConsole(`Fragment ${fragId} scaled by ${factor}x`);
-}
-
-function rotateSelectedFragment() {
-    const fragId = document.getElementById("fragmentSelect").value;
-    if (!fragId) {
-        logToConsole("Please select a fragment first", true);
-        return;
-    }
-
-    const angleDeg = parseFloat(document.getElementById("rotateAngle").value) || 45;
-    const axisVal = document.getElementById("rotateAxis").value;
-    let axis;
-    if (axisVal === "x") axis = new THREE.Vector3(1, 0, 0);
-    else if (axisVal === "y") axis = new THREE.Vector3(0, 1, 0);
-    else axis = new THREE.Vector3(0, 0, 1);
-
-    const angleRad = angleDeg * Math.PI / 180;
-    const model = viewer.model;
-    const fragProxy = viewer.impl.getFragmentProxy(model, parseInt(fragId));
-    if (!fragProxy) {
-        logToConsole("Could not get fragment proxy", true);
-        return;
-    }
-
-    fragProxy.getAnimTransform();
-    const q = new THREE.Quaternion();
-    q.setFromAxisAngle(axis, angleRad);
-    fragProxy.quaternion.multiplyQuaternions(q, fragProxy.quaternion);
-    fragProxy.updateAnimTransform();
-    viewer.impl.invalidate(true);
-
-    logToConsole(`Fragment ${fragId} rotated ${angleDeg}° around ${axisVal.toUpperCase()} axis`);
-}
-
-function translateSelectedFragment() {
-    const fragId = document.getElementById("fragmentSelect").value;
-    if (!fragId) {
-        logToConsole("Please select a fragment first", true);
-        return;
-    }
-
-    const dx = parseFloat(document.getElementById("translateX").value) || 0;
-    const dy = parseFloat(document.getElementById("translateY").value) || 0;
-    const dz = parseFloat(document.getElementById("translateZ").value) || 0;
-    const model = viewer.model;
-    const fragProxy = viewer.impl.getFragmentProxy(model, parseInt(fragId));
-    if (!fragProxy) {
-        logToConsole("Could not get fragment proxy", true);
-        return;
-    }
-
-    fragProxy.getAnimTransform();
-    fragProxy.position.x += dx;
-    fragProxy.position.y += dy;
-    fragProxy.position.z += dz;
-    fragProxy.updateAnimTransform();
-    viewer.impl.invalidate(true);
-
-    logToConsole(`Fragment ${fragId} moved by (${dx}, ${dy}, ${dz})`);
-}
-
-// --- Enhanced Gemini Integration for Flexible Animation ---
+// --- Enhanced Gemini Integration for Smooth Animation ---
 async function getGeminiAnimationCommands() {
     const apiKey = 'AIzaSyDhUtvjS8lgDcsWH85lDC8pnMdeSce9cok';
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey;
@@ -284,23 +179,21 @@ Guidelines:
 3. Rotations: Use angles between 10-180 degrees, any axis
 4. Scaling: Use factors between 0.5-2.0
 5. Translations: Keep movements reasonable (0-50 units)
-6. Include 10-20 commands in the sequence
+6. Include atlest 8-12 commands in the sequence
 
 Generate only the JSON array with no additional text.`;
 
     const body = {
-        contents: [{
-            parts: [{
-                text: prompt
-            }]
-        }],
+        contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
             temperature: 0.7,
             maxOutputTokens: 1000
         }
     };
 
-    logToConsole("Generating animation sequence");
+    logToConsole("Generating animation sequence with Gemini AI");
+    document.getElementById('autoAnimateBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+    document.getElementById('autoAnimateBtn').classList.add('shimmer');
 
     try {
         const res = await fetch(url, {
@@ -318,55 +211,191 @@ Generate only the JSON array with no additional text.`;
         } else if (text.startsWith("```")) {
             text = text.substring(3, text.length - 3).trim();
         }
+        logToConsole(text);
+        if (!text) {
+            logToConsole("No commands generated by Gemini", true);
+            return [];
+        }
+
 
         return JSON.parse(text);
+
+
     } catch (e) {
         logToConsole(`Gemini response error: ${e}`, true);
         return [];
+    } finally {
+        document.getElementById('autoAnimateBtn').innerHTML = '<i class="fas fa-play"></i> Generate & Animate';
+        document.getElementById('autoAnimateBtn').classList.remove('shimmer');
     }
 }
 
-function executeAnimationCommand(cmd) {
-    try {
+// Execute a single animation command with smooth transition
+function executeSmoothAnimation(cmd) {
+    return new Promise((resolve) => {
+        const fragId = cmd.fragmentId;
+        const model = viewer.model;
+        const fragProxy = viewer.impl.getFragmentProxy(model, parseInt(fragId));
+
+        if (!fragProxy) {
+            logToConsole(`Fragment ${fragId} not found`, true);
+            resolve();
+            return;
+        }
+
+        // Get original state
+        fragProxy.getAnimTransform();
+        const originalPosition = new THREE.Vector3().copy(fragProxy.position);
+        const originalScale = new THREE.Vector3().copy(fragProxy.scale);
+        const originalQuaternion = new THREE.Quaternion().copy(fragProxy.quaternion);
+
+        // Calculate target state
+        let targetPosition, targetScale, targetQuaternion;
+
         switch (cmd.action) {
             case "rotate":
-                // Set up rotation
-                document.getElementById("fragmentSelect").value = cmd.fragmentId;
-                document.getElementById("rotateAxis").value = cmd.params.axis;
-                document.getElementById("rotateAngle").value = cmd.params.angle;
-                rotateSelectedFragment();
+                const axisVal = cmd.params.axis || 'z';
+                let axis;
+                if (axisVal === "x") axis = new THREE.Vector3(1, 0, 0);
+                else if (axisVal === "y") axis = new THREE.Vector3(0, 1, 0);
+                else axis = new THREE.Vector3(0, 0, 1);
+
+                const angleDeg = cmd.params.angle || 45;
+                const angleRad = angleDeg * Math.PI / 180;
+
+                targetQuaternion = new THREE.Quaternion().setFromAxisAngle(axis, angleRad);
+                targetQuaternion.multiply(originalQuaternion);
+                targetPosition = originalPosition.clone();
+                targetScale = originalScale.clone();
                 break;
 
             case "scale":
-                document.getElementById("fragmentSelect").value = cmd.fragmentId;
-                document.getElementById("scaleFactor").value = cmd.params.factor;
-                scaleSelectedFragment();
+                const factor = cmd.params.factor || 1.5;
+                targetScale = new THREE.Vector3(
+                    originalScale.x * factor,
+                    originalScale.y * factor,
+                    originalScale.z * factor
+                );
+                targetPosition = originalPosition.clone();
+                targetQuaternion = originalQuaternion.clone();
                 break;
 
             case "translate":
-                document.getElementById("fragmentSelect").value = cmd.fragmentId;
-                document.getElementById("translateX").value = cmd.params.x;
-                document.getElementById("translateY").value = cmd.params.y;
-                document.getElementById("translateZ").value = cmd.params.z;
-                translateSelectedFragment();
+                targetPosition = new THREE.Vector3(
+                    originalPosition.x + (cmd.params.x || 0),
+                    originalPosition.y + (cmd.params.y || 0),
+                    originalPosition.z + (cmd.params.z || 0)
+                );
+                targetScale = originalScale.clone();
+                targetQuaternion = originalQuaternion.clone();
                 break;
-
-            default:
-                logToConsole(`Unknown action: ${cmd.action}`, true);
         }
 
-        logToConsole(`Executed: ${cmd.action} on fragment ${cmd.fragmentId}`);
+        // Animation parameters
+        const duration = parseInt(document.getElementById("animationDuration").value) || 1000;
+        const easingType = document.getElementById("easingType").value;
+        const startTime = performance.now();
+        const endTime = startTime + duration;
+
+        // Create animation ID
+        const animId = `frag-${fragId}-${Date.now()}`;
+        activeAnimations[animId] = true;
+
+        // Animation update function
+        function animate(currentTime) {
+            if (!activeAnimations[animId]) {
+                resolve();
+                return;
+            }
+
+            // Calculate progress (0 to 1)
+            let progress = (currentTime - startTime) / duration;
+            if (progress > 1) progress = 1;
+
+            // Apply easing
+            const easeFunc = easingFunctions[easingType] || easingFunctions.linear;
+            const easedProgress = easeFunc(progress);
+
+            // Apply transformations
+            switch (cmd.action) {
+                case "rotate":
+                    fragProxy.quaternion.slerpQuaternions(
+                        originalQuaternion,
+                        targetQuaternion,
+                        easedProgress
+                    );
+                    break;
+
+                case "scale":
+                    fragProxy.scale.lerpVectors(
+                        originalScale,
+                        targetScale,
+                        easedProgress
+                    );
+                    break;
+
+                case "translate":
+                    fragProxy.position.lerpVectors(
+                        originalPosition,
+                        targetPosition,
+                        easedProgress
+                    );
+                    break;
+            }
+
+            fragProxy.updateAnimTransform();
+            viewer.impl.invalidate(true);
+
+            // Update progress bar
+            document.getElementById('aiProgressBar').style.width = `${progress * 100}%`;
+
+            // Continue animation if not finished
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                delete activeAnimations[animId];
+                resolve();
+            }
+        }
+
+        // Start animation
+        requestAnimationFrame(animate);
+    });
+}
+
+// Execute the animation queue
+async function executeAnimationQueue(commands) {
+    if (isAnimating) return;
+
+    isAnimating = true;
+    document.getElementById('aiProgressBar').style.width = '0%';
+
+    try {
+        for (let i = 0; i < commands.length; i++) {
+            if (!isAnimating) break;
+
+            const cmd = commands[i];
+            logToConsole(`Executing: ${cmd.action} on fragment ${cmd.fragmentId}`);
+
+            await executeSmoothAnimation(cmd);
+        }
+
+        logToConsole("Animation sequence completed");
     } catch (e) {
-        logToConsole(`Error executing command: ${e}`, true);
+        logToConsole(`Animation error: ${e}`, true);
+    } finally {
+        isAnimating = false;
+        document.getElementById('autoAnimateBtn').innerHTML = '<i class="fas fa-play"></i> Generate & Animate';
     }
 }
 
 async function autoAnimateWithGemini() {
-    // Stop any existing animations
-    stopAnimations();
+    if (isAnimating) {
+        stopAnimations();
+        return;
+    }
 
-    // Get animation speed from input
-    animationSpeed = parseInt(document.getElementById("animationSpeed").value) || 1000;
+    document.getElementById('autoAnimateBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
 
     const commands = await getGeminiAnimationCommands();
     if (commands.length === 0) {
@@ -374,24 +403,132 @@ async function autoAnimateWithGemini() {
         return;
     }
 
-    logToConsole(`Starting animation sequence with ${commands.length} commands`);
+    // Store commands for video export
+    lastAnimationCommands = commands;
 
-    let index = 0;
-    animationInterval = setInterval(() => {
-        if (index < commands.length) {
-            executeAnimationCommand(commands[index]);
-            index++;
-        } else {
-            stopAnimations();
-            logToConsole("Animation sequence completed");
-        }
-    }, animationSpeed);
+    logToConsole(`Starting animation sequence with ${commands.length} commands`);
+    document.getElementById('autoAnimateBtn').innerHTML = '<i class="fas fa-stop"></i> Stop Animation';
+
+    executeAnimationQueue(commands);
 }
 
 function stopAnimations() {
-    if (animationInterval) {
-        clearInterval(animationInterval);
-        animationInterval = null;
-        logToConsole("Animation stopped");
+    isAnimating = false;
+    activeAnimations = {};
+    logToConsole("Animation stopped");
+    document.getElementById('aiProgressBar').style.width = '0%';
+    document.getElementById('autoAnimateBtn').innerHTML = '<i class="fas fa-play"></i> Generate & Animate';
+}
+
+// Video Export Functions
+function showExportModal() {
+    document.getElementById('videoModal').classList.add('active');
+    document.getElementById('downloadContainer').style.display = 'none';
+    document.getElementById('videoPreview').src = '';
+}
+
+function closeExportModal() {
+    document.getElementById('videoModal').classList.remove('active');
+}
+
+function startVideoExport() {
+    const quality = document.getElementById('videoQuality').value;
+    const animationDuration = parseInt(document.getElementById("animationDuration").value) || 1000;
+
+    // Calculate total animation time in seconds
+    const totalSeconds = lastAnimationCommands.length * (animationDuration / 1000);
+
+    logToConsole(`Starting video export: ${quality} quality, ${totalSeconds.toFixed(1)}s`);
+
+    // Reset progress bar
+    const progressBar = document.getElementById('exportProgressBar');
+    progressBar.style.width = '0%';
+
+    // Hide download button until ready
+    document.getElementById('downloadContainer').style.display = 'none';
+
+    // Capture the viewer canvas
+    const canvas = viewer.impl.canvas;
+
+    // Set up media recorder
+    recordedChunks = [];
+
+    try {
+        const fps = 30; // Fixed frame rate
+        const stream = canvas.captureStream(fps);
+        mediaRecorder = new MediaRecorder(stream, {
+            mimeType: 'video/webm;codecs=vp9',
+            videoBitsPerSecond: quality === 'high' ? 5000000 :
+                quality === 'medium' ? 2500000 : 1000000
+        });
+
+        mediaRecorder.ondataavailable = function (e) {
+            if (e.data.size > 0) {
+                recordedChunks.push(e.data);
+            }
+        };
+
+        mediaRecorder.onstop = function () {
+            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+            recordedVideoUrl = URL.createObjectURL(blob);
+
+            // Show the preview
+            const videoPreview = document.getElementById('videoPreview');
+            videoPreview.src = recordedVideoUrl;
+
+            // Show download button
+            document.getElementById('downloadContainer').style.display = 'block';
+            logToConsole("Video export completed! Ready for download.");
+        };
+
+        // Start recording
+        mediaRecorder.start();
+
+        // Reset the model
+        resetAllFragments();
+
+        // Start animation after a short delay
+        setTimeout(() => {
+            if (lastAnimationCommands.length > 0) {
+                // Execute animation for recording
+                executeAnimationQueue(lastAnimationCommands);
+
+                // Set timer to stop recording
+                setTimeout(() => {
+                    if (mediaRecorder && mediaRecorder.state === 'recording') {
+                        mediaRecorder.stop();
+                    }
+                }, totalSeconds * 1000);
+
+                // Update progress bar
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 5;
+                    if (progress > 100) {
+                        clearInterval(interval);
+                    } else {
+                        progressBar.style.width = `${progress}%`;
+                    }
+                }, (totalSeconds * 1000) / 20);
+
+            } else {
+                logToConsole("No animation commands available", true);
+                mediaRecorder.stop();
+            }
+        }, 500);
+
+    } catch (e) {
+        logToConsole(`Video export error: ${e}`, true);
+    }
+}
+
+function downloadVideo() {
+    if (recordedVideoUrl) {
+        const a = document.createElement('a');
+        a.href = recordedVideoUrl;
+        a.download = 'ai-animation-export.webm';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
 }
