@@ -12,37 +12,67 @@
                                 "objectid": 3,
                                 "objects": [
                                     {
-                                        "objectid": 6,
+                                        "objectid": 9,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "blade_main:1"
+                                "name": "004.00.01-rolik:1"
                             },
                             {
                                 "objectid": 4,
                                 "objects": [
                                     {
-                                        "objectid": 7,
+                                        "objectid": 10,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "blade_top:1"
+                                "name": "004.00.04-vtulka:1"
                             },
                             {
                                 "objectid": 5,
                                 "objects": [
                                     {
-                                        "objectid": 8,
+                                        "objectid": 11,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "scissor_spring:1"
+                                "name": "004.00.03-kronshtein:1"
+                            },
+                            {
+                                "objectid": 6,
+                                "objects": [
+                                    {
+                                        "objectid": 12,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "004.00.02-vilka:1"
+                            },
+                            {
+                                "objectid": 7,
+                                "objects": [
+                                    {
+                                        "objectid": 13,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "004.00.06-os:1"
+                            },
+                            {
+                                "objectid": 8,
+                                "objects": [
+                                    {
+                                        "objectid": 14,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "004.00.05-planka:1"
                             }
                         ],
-                        "name": "scissors"
+                        "name": "004-BN"
                     }
                 ],
-                "name": "scissors"
+                "name": "004-BN"
             }
         ]
     }

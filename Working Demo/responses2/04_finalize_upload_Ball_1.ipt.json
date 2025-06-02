@@ -1,8 +1,0 @@
-{
-    "bucketKey": "newestbucket",
-    "objectId": "urn:adsk.objects:os.object:newestbucket/Ball_1.ipt",
-    "objectKey": "Ball_1.ipt",
-    "size": 136704,
-    "contentType": "application/octet-stream",
-    "location": "https://developer.api.autodesk.com/oss/v2/buckets/newestbucket/objects/Ball_1.ipt"
-}

@@ -1,8 +1,0 @@
-{
-    "bucketKey": "newestbucket",
-    "objectId": "urn:adsk.objects:os.object:newestbucket/Grip_1.ipt",
-    "objectKey": "Grip_1.ipt",
-    "size": 143872,
-    "contentType": "application/octet-stream",
-    "location": "https://developer.api.autodesk.com/oss/v2/buckets/newestbucket/objects/Grip_1.ipt"
-}

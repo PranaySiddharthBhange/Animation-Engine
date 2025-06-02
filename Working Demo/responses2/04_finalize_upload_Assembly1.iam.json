@@ -1,8 +1,0 @@
-{
-    "bucketKey": "newestbucket",
-    "objectId": "urn:adsk.objects:os.object:newestbucket/Assembly1.iam",
-    "objectKey": "Assembly1.iam",
-    "size": 325120,
-    "contentType": "application/octet-stream",
-    "location": "https://developer.api.autodesk.com/oss/v2/buckets/newestbucket/objects/Assembly1.iam"
-}
