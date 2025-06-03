@@ -133,6 +133,7 @@ const easingFunctions = {
     }
 };
 
+// Get animation commands from Gemini AI
 
 async function getGeminiAnimationCommands() {
     const apiKey = 'AIzaSyDhUtvjS8lgDcsWH85lDC8pnMdeSce9cok';
@@ -207,7 +208,7 @@ async function getGeminiAnimationCommands() {
         // --- Step 5: Generate prompt for Gemini ---
         const prompt = `
 You are an expert 3D animation assistant for Autodesk Forge models. 
-Generate a sequence of animation commands for the following fragments that will create a logical, visually appealing EXPLODED VIEW animation.
+Generate a sequence of animation commands for the following fragments that will create a logical, visually appealing animation of disassembly.
 
 ${hierarchyDescription}
 
@@ -231,12 +232,12 @@ Command format (JSON array of objects):
 ]
 
 Guidelines:
-1. Create an exploded view showing assembly relationships
+1. Create an disassembly view showing assembly relationships
 2. Move parts along logical axes based on their position in the assembly
-3. Rotate rotating components (shaft, rotor) to show movement
+3. Rotate rotating components (shaft, rotor, screws) to show movements of disassembly
 4. Scale small parts to make them more visible
-5. Use translations between 20-100 units depending on part size
-6. Include 8-12 commands for a comprehensive animation at the end assembly state should at the start position
+5. Use reasonable translations depending on part size for disassembly
+6. Include 8-12 commands for a comprehensive animation at the end assembly should disassemble completely in logical way
 7. Prioritize moving outer components first then inner ones
 8. Consider mechanical relationships between parts
 
@@ -284,9 +285,6 @@ Generate only the JSON array with no additional text.
         btn.classList.remove('shimmer');
     }
 }
-
-
-
 
 // Execute a single animation command with smooth transition
 function executeSmoothAnimation(cmd) {
