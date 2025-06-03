@@ -9,7 +9,6 @@ CLIENT_SECRET = "Jx4HqWtqC9HA23nWnCti59M7nkb0av9x8hroTMnpGurBQl8VyPIARAEA820PQAX
 BUCKET_KEY = "check-3bucket"
 POLICY_KEY = "transient"
 FOLDER_PATH = "upload"
-ASSEMBLY_FILE = "015-brs.iam"
 RESPONSES_FOLDER = "responses"
 
 os.makedirs(RESPONSES_FOLDER, exist_ok=True)
@@ -111,8 +110,16 @@ def upload_all_files(access_token):
 
 def base64_encode_urn(urn):
     return base64.b64encode(urn.encode('utf-8')).decode('utf-8').replace('=', '').replace('+', '-').replace('/', '_')
-def link_references(access_token):
-    assembly_urn = f"urn:adsk.objects:os.object:{BUCKET_KEY}/{ASSEMBLY_FILE}"
+
+def detect_assembly_file():
+    for root, dirs, files in os.walk(FOLDER_PATH):
+        for file in files:
+            if file.lower().endswith(".iam"):
+                return file
+    return None
+
+def link_references(access_token, assembly_file):
+    assembly_urn = f"urn:adsk.objects:os.object:{BUCKET_KEY}/{assembly_file}"
     encoded_urn = base64_encode_urn(assembly_urn)
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/references"
     headers = {
@@ -121,15 +128,11 @@ def link_references(access_token):
     }
 
     references = []
-    # Walk through all folders and subfolders
     for root, dirs, files in os.walk(FOLDER_PATH):
         for file_name in files:
             if file_name.lower().endswith('.ipt'):
-                # Get relative path from the main folder
                 rel_path = os.path.relpath(os.path.join(root, file_name), FOLDER_PATH)
-                # Convert Windows paths to Unix-style if needed
                 rel_path = rel_path.replace('\\', '/')
-                
                 references.append({
                     "urn": f"urn:adsk.objects:os.object:{BUCKET_KEY}/{file_name}",
                     "relativePath": rel_path,
@@ -138,7 +141,7 @@ def link_references(access_token):
 
     payload = {
         "urn": assembly_urn,
-        "filename": ASSEMBLY_FILE,
+        "filename": assembly_file,
         "references": references
     }
 
@@ -148,8 +151,8 @@ def link_references(access_token):
         print("✅ References linked.")
     return response.ok
 
-def start_translation_job(access_token):
-    assembly_urn = f"urn:adsk.objects:os.object:{BUCKET_KEY}/{ASSEMBLY_FILE}"
+def start_translation_job(access_token, assembly_file):
+    assembly_urn = f"urn:adsk.objects:os.object:{BUCKET_KEY}/{assembly_file}"
     encoded_urn = base64_encode_urn(assembly_urn)
     url = "https://developer.api.autodesk.com/modelderivative/v2/designdata/job"
     headers = {
@@ -219,58 +222,42 @@ def retrieve_list_of_viewable_files(access_token, encoded_urn):
     else:
         print("❌ Error retrieving viewable files.")
         return None
-    
+
 def get_object_hierarchy(access_token, encoded_urn, guid_viewable):
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/metadata/{guid_viewable}"
     headers = {"Authorization": f"Bearer {access_token}"}
-
-    max_retries = 10
-    delay = 10 
-
-    for attempt in range(max_retries):
+    for attempt in range(10):
         response = requests.get(url, headers=headers)
         data = response.json()
         save_response_to_file("09_object_hierarchy", data)
-
         if not response.ok:
             print("❌ Error retrieving object hierarchy.")
             return
-
         if data.get("result") == "success" and "data" not in data:
-            print(f"⏳ Properties still extracting... retrying in {delay} seconds ({attempt + 1}/{max_retries})")
-            time.sleep(delay)
+            print(f"⏳ Properties still extracting... retrying ({attempt + 1}/10)")
+            time.sleep(10)
             continue
-
         print("✅ Object hierarchy retrieved successfully.")
         return
+    print("❌ Timed out waiting for object hierarchy.")
 
-    print("❌ Timed out waiting for object hierarchy to be available.")
-    
 def retrieve_properties_all_objects(access_token, encoded_urn, guid_viewable):
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/metadata/{guid_viewable}/properties"
     headers = {"Authorization": f"Bearer {access_token}"}
-
-    max_retries = 10
-    delay = 10 
-
-    for attempt in range(max_retries):
+    for attempt in range(10):
         response = requests.get(url, headers=headers)
         if not response.ok:
             print("❌ Error retrieving properties.")
             return None
-
         data = response.json()
         save_response_to_file("10_properties_all_objects", data)
-
         if data.get("result") == "success" and "data" not in data:
-            print(f"⏳ Properties still extracting... retrying in {delay} seconds ({attempt + 1}/{max_retries})")
-            time.sleep(delay)
+            print(f"⏳ Properties still extracting... retrying ({attempt + 1}/10)")
+            time.sleep(10)
             continue
-
         print("✅ Properties retrieved successfully.")
         return data
-
-    print("❌ Timed out waiting for properties to be available.")
+    print("❌ Timed out waiting for properties.")
     return None
 
 if __name__ == "__main__":
@@ -287,11 +274,17 @@ if __name__ == "__main__":
 
     upload_all_files(token)
 
-    if not link_references(token):
+    assembly_file = detect_assembly_file()
+    if not assembly_file:
+        print("❌ No assembly (.iam) file found.")
+        exit(1)
+    print(f"✅ Detected assembly file: {assembly_file}")
+
+    if not link_references(token, assembly_file):
         print("❌ Failed to link references.")
         exit(1)
 
-    encoded_urn = start_translation_job(token)
+    encoded_urn = start_translation_job(token, assembly_file)
     if not encoded_urn:
         print("❌ Failed to start translation job.")
         exit(1)
@@ -299,8 +292,6 @@ if __name__ == "__main__":
     check_translation_status(token, encoded_urn)
 
     guid_viewable = retrieve_list_of_viewable_files(token, encoded_urn)
-
-    get_object_hierarchy(token, encoded_urn, guid_viewable)
-
-    retrieve_properties_all_objects(token, encoded_urn, guid_viewable)
-   
+    if guid_viewable:
+        get_object_hierarchy(token, encoded_urn, guid_viewable)
+        retrieve_properties_all_objects(token, encoded_urn, guid_viewable)
