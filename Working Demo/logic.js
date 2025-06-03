@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
 // --- Autodesk Viewer Setup ---
 const options = {
     env: 'AutodeskProduction',
-    accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpyZWFkIiwiYnVja2V0OmNyZWF0ZSIsImJ1Y2tldDpkZWxldGUiXSwiY2xpZW50X2lkIjoiV0EyS3o5MXhWVWZBcElHWW15aDh2QUYzWVVsQ1FvcUJXeTlIdWs5ejJSTG1wQjliIiwiaXNzIjoiaHR0cHM6Ly9kZXZlbG9wZXIuYXBpLmF1dG9kZXNrLmNvbSIsImF1ZCI6Imh0dHBzOi8vYXV0b2Rlc2suY29tIiwianRpIjoiVUszVkloeHBIQ250VHNJNmRpdTlOelBPVGlmWTlmdW9kOXdieWpqcHpxcjdBR1RUVXVBbGttZ0h1VHhUZnBwZSIsImV4cCI6MTc0ODg3MTk2MX0.BRGoPo0aPVjBBFMzugGjy-nVo5RfRJ1ZDUKs8VdVaF-_BvoUkgwjRXbA1JnFnTHTXzBMXYGZzjNCg_Sj-rx8cOMe65pTfd2YlajAIOCqtLikdUFI7u_FOuqMF2HMJpvuPsbUQaHrXkpp3diTbGIVezU7vbvpb9REW5-y2nVysWrV7w7AKsc5tGsLsuLaPQsMC8hbPRSWuL1eFP7f2vmRY-PG7vZFSPnXCinUBj5RQzM764jdsIM6VpK6z4f3lJN4GR8R2vrmWfFq_La2tOyzdYEDkl6s-NBxwQv-FKVbH5XkNYfpHCXkeFSTScKSY4s9zqiU96FXCeFacDxn0G5VgQ'
+    accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlhrUFpfSmhoXzlTYzNZS01oRERBZFBWeFowOF9SUzI1NiIsInBpLmF0bSI6ImFzc2MifQ.eyJzY29wZSI6WyJkYXRhOndyaXRlIiwiZGF0YTpyZWFkIiwiYnVja2V0OmNyZWF0ZSIsImJ1Y2tldDpkZWxldGUiXSwiY2xpZW50X2lkIjoiV0EyS3o5MXhWVWZBcElHWW15aDh2QUYzWVVsQ1FvcUJXeTlIdWs5ejJSTG1wQjliIiwiaXNzIjoiaHR0cHM6Ly9kZXZlbG9wZXIuYXBpLmF1dG9kZXNrLmNvbSIsImF1ZCI6Imh0dHBzOi8vYXV0b2Rlc2suY29tIiwianRpIjoiYWx5amp3bWpzNDBEZUNzeHVZM1kwZ3hzdmdwckVWVm1mNXN1ZXNLaXRqUHJDbFE5TEc5UHpLc0VWa2pMNkljdyIsImV4cCI6MTc0ODkyODg1Nn0.eIur-o6YA5LOI7dE0z7mK8k5S9HuaOxq0W0Equ4ehh7eJwlmbVNDrmbhR-Hxxp05bOy67qnsEOP-mBCy3CSf-FWklh19H0US6u6sXGlG3VzaNsgMvZR9xpJmGq-wXgmpAx0P1Z-wCSGUp-32DEsQtBezFUlrOIhmcWiWAwg57CsboLCWxngGcLfzNxiDvSjtFoDM1vIWPGO9Rawhn4Vn7HCNPGTXx3L0bDbZhYpvBNfpLudyIE6zCglSUWnRhvOdAUG1J-L0qdA1b1jcEFlRFS-MoBa8u7NZf0Fq95QXgr3D4VKFfg828j2BbxzkLC3RdR8rZ6yMnUV0_HvdnK3bZw'
 };
-const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC8wMDQtQk4uaWFt';
+const documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6Y2hlY2stM2J1Y2tldC8wMTUtYnJzLmlhbQ';
 
 let viewer;
 let fragmentToDbIdMap = {};
@@ -133,28 +133,85 @@ const easingFunctions = {
     }
 };
 
-// --- Enhanced Gemini Integration for Smooth Animation ---
+
 async function getGeminiAnimationCommands() {
     const apiKey = 'AIzaSyDhUtvjS8lgDcsWH85lDC8pnMdeSce9cok';
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey;
 
-    // Create a description of available fragments
-    const fragmentDescriptions = [];
-    const tree = viewer.model.getInstanceTree();
-    tree.enumNodeChildren(tree.getRootId(), function (dbId) {
-        const name = tree.getNodeName(dbId);
-        tree.enumNodeFragments(dbId, function (fragId) {
-            fragmentDescriptions.push({
-                fragmentId: fragId,
-                dbId: dbId,
-                name: name
-            });
-        });
-    }, true);
+    // UI Feedback Start
+    logToConsole("Generating animation sequence with Gemini AI");
+    const btn = document.getElementById('autoAnimateBtn');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+    btn.classList.add('shimmer');
 
-    const prompt =
-        `You are an expert 3D animation assistant for Autodesk Forge models. 
-Generate a sequence of animation commands for the following fragments that will create a logical, visually appealing animation.
+    try {
+        // --- Step 1: Fetch hierarchy and properties JSON files ---
+        const [hierarchyRes, propertiesRes] = await Promise.all([
+            fetch('responses/09_object_hierarchy.json'),
+            fetch('responses/10_properties_all_objects.json')
+        ]);
+
+        if (!hierarchyRes.ok || !propertiesRes.ok) {
+            throw new Error("Failed to fetch hierarchy or properties data.");
+        }
+
+        const hierarchyData = await hierarchyRes.json();
+        const propertiesData = await propertiesRes.json();
+
+        // --- Step 2: Build hierarchy description ---
+        function describeHierarchy(node, level = 0) {
+            let description = '  '.repeat(level) + `- ${node.name} (ID: ${node.objectid})\n`;
+            if (node.objects) {
+                node.objects.forEach(child => {
+                    description += describeHierarchy(child, level + 1);
+                });
+            }
+            return description;
+        }
+
+        let hierarchyDescription = "Model Hierarchy:\n";
+        hierarchyData.data.objects.forEach(root => {
+            hierarchyDescription += describeHierarchy(root);
+        });
+
+        // --- Step 3: Build properties description ---
+        let propertiesDescription = "Key Properties:\n";
+        propertiesData.data.collection.forEach(item => {
+            propertiesDescription += `- ${item.name} (ID: ${item.objectid}):\n`;
+            for (const [category, props] of Object.entries(item.properties)) {
+                if (typeof props === 'object') {
+                    propertiesDescription += `  • ${category}:\n`;
+                    for (const [key, value] of Object.entries(props)) {
+                        propertiesDescription += `    ◦ ${key}: ${value}\n`;
+                    }
+                } else {
+                    propertiesDescription += `  • ${category}: ${props}\n`;
+                }
+            }
+        });
+
+        // --- Step 4: Create fragment descriptions from the model ---
+        const fragmentDescriptions = [];
+        const tree = viewer.model.getInstanceTree();
+        tree.enumNodeChildren(tree.getRootId(), function (dbId) {
+            const name = tree.getNodeName(dbId);
+            tree.enumNodeFragments(dbId, function (fragId) {
+                fragmentDescriptions.push({
+                    fragmentId: fragId,
+                    dbId: dbId,
+                    name: name
+                });
+            });
+        }, true);
+
+        // --- Step 5: Generate prompt for Gemini ---
+        const prompt = `
+You are an expert 3D animation assistant for Autodesk Forge models. 
+Generate a sequence of animation commands for the following fragments that will create a logical, visually appealing EXPLODED VIEW animation.
+
+${hierarchyDescription}
+
+${propertiesDescription}
 
 Available fragments (fragmentId: name):
 ${fragmentDescriptions.map(f => `- ${f.fragmentId}: ${f.name}`).join('\n')}
@@ -174,28 +231,27 @@ Command format (JSON array of objects):
 ]
 
 Guidelines:
-1. Create a logical animation sequence (e.g., parts moving together, mechanical movements)
-2. Use a variety of actions across multiple fragments
-3. Rotations: Use angles between 10-180 degrees, any axis
-4. Scaling: Use factors between 0.5-2.0
-5. Translations: Keep movements reasonable (0-50 units)
-6. Include atlest 8-12 commands in the sequence
+1. Create an exploded view showing assembly relationships
+2. Move parts along logical axes based on their position in the assembly
+3. Rotate rotating components (shaft, rotor) to show movement
+4. Scale small parts to make them more visible
+5. Use translations between 20-100 units depending on part size
+6. Include 8-12 commands for a comprehensive animation at the end assembly state should at the start position
+7. Prioritize moving outer components first then inner ones
+8. Consider mechanical relationships between parts
 
-Generate only the JSON array with no additional text.`;
+Generate only the JSON array with no additional text.
+        `.trim();
 
-    const body = {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 1000
-        }
-    };
+        const body = {
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 1000
+            }
+        };
 
-    logToConsole("Generating animation sequence with Gemini AI");
-    document.getElementById('autoAnimateBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-    document.getElementById('autoAnimateBtn').classList.add('shimmer');
-
-    try {
+        // --- Step 6: Send prompt to Gemini ---
         const res = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -203,32 +259,34 @@ Generate only the JSON array with no additional text.`;
         });
 
         const data = await res.json();
-        let text = data.candidates[0].content.parts[0].text.trim();
+        let text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
-        // Clean up the response
+        // --- Step 7: Clean response ---
         if (text.startsWith("```json")) {
-            text = text.substring(7, text.length - 3).trim();
+            text = text.slice(7, -3).trim();
         } else if (text.startsWith("```")) {
-            text = text.substring(3, text.length - 3).trim();
+            text = text.slice(3, -3).trim();
         }
-        logToConsole(text);
+
         if (!text) {
             logToConsole("No commands generated by Gemini", true);
             return [];
         }
 
-
         return JSON.parse(text);
-
 
     } catch (e) {
         logToConsole(`Gemini response error: ${e}`, true);
         return [];
     } finally {
-        document.getElementById('autoAnimateBtn').innerHTML = '<i class="fas fa-play"></i> Generate & Animate';
-        document.getElementById('autoAnimateBtn').classList.remove('shimmer');
+        // UI Feedback End
+        btn.innerHTML = '<i class="fas fa-play"></i> Generate & Animate';
+        btn.classList.remove('shimmer');
     }
 }
+
+
+
 
 // Execute a single animation command with smooth transition
 function executeSmoothAnimation(cmd) {

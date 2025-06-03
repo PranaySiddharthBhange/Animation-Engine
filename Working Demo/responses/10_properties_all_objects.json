@@ -3,436 +3,315 @@
         "type": "properties",
         "collection": [
             {
-                "objectid": 15,
+                "objectid": 11,
                 "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8QjFENTc4MTExMUQ4NEY3QjNGRTQ1QTA4NTJFNTk3NThDRDdBODdFNQ==\",\"MDAyLjEwLVBMSVRBLklQVHw6fEQzQzAxQkMzNkNFMTNBOUY1RDE2MjhFRTQyOTM1NkJFNTZFNTEzQzN8OnxEQTRCOTIzN0JBQ0NDREYxOUMwNzYwQ0FCN0FFQzRBODM1OTAxMEIw\"]",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QjFENTc4MTExMUQ4NEY3QjNGRTQ1QTA4NTJFNTk3NThDRDdBODdFNQ==\",\"MDEtQkFTRS5JUFR8OnxGMjNDNUM2QkZEODA3NTNCRjZCQjBGRkQ3MjA0REY4RDQ3RjFBM0E4fDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
                 "properties": {
                     "Name": "Solid1",
-                    "Appearance": "151, 151, 170"
+                    "Appearance": [
+                        "90, 98, 102",
+                        "190, 188, 186",
+                        "190, 188, 186:1"
+                    ]
                 }
             },
             {
                 "objectid": 3,
-                "name": "002.10-plita:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8QjFENTc4MTExMUQ4NEY3QjNGRTQ1QTA4NTJFNTk3NThDRDdBODdFNQ==\"]",
+                "name": "01-base:1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QjFENTc4MTExMUQ4NEY3QjNGRTQ1QTA4NTJFNTk3NThDRDdBODdFNQ==\"]",
                 "properties": {
-                    "Name": "002.10-plita:1",
-                    "Component Name": "002.10-plita",
+                    "Name": "01-base:1",
+                    "Component Name": "01-base",
                     "Design Tracking Properties": {
                         "File Subtype": "Modeling",
                         "Design State": "WorkInProgress",
                         "Designer": "DuctopwH"
                     },
                     "Mass Properties": {
-                        "Area": "71211.290 mm^2",
-                        "Volume": "269220.258 mm^3"
+                        "Area": "30080.708 mm^2",
+                        "Volume": "134748.336 mm^3"
                     },
                     "File Properties": {
                         "Author": "DuctopwH",
                         "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-10",
-                        "Creation Date": "2021-Oct-17 00:00:00"
+                        "Part Number": "01-base",
+                        "Creation Date": "2025-Mar-09 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 12,
+                "name": "Solid1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8NDcyOEEyNjQ5OEE3NDQxQTAzQTM3NUVCMDI4MEI2NUMyNEE4Q0JEOQ==\",\"MDEtQkFTRV9USFJFQUQuSVBUfDp8RjIzQzVDNkJGRDgwNzUzQkY2QkIwRkZENzIwNERGOEQ0N0YxQTNBOHw6fERBNEI5MjM3QkFDQ0NERjE5QzA3NjBDQUI3QUVDNEE4MzU5MDEwQjA=\"]",
+                "properties": {
+                    "Name": "Solid1",
+                    "Appearance": [
+                        "90, 98, 102",
+                        "90, 98, 102",
+                        "190, 188, 186:1"
+                    ]
+                }
+            },
+            {
+                "objectid": 4,
+                "name": "01-base_thread:1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8NDcyOEEyNjQ5OEE3NDQxQTAzQTM3NUVCMDI4MEI2NUMyNEE4Q0JEOQ==\"]",
+                "properties": {
+                    "Name": "01-base_thread:1",
+                    "Component Name": "01-base_thread",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "DuctopwH"
+                    },
+                    "Mass Properties": {
+                        "Area": "31183.874 mm^2",
+                        "Volume": "134059.504 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "DuctopwH",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "01-base",
+                        "Creation Date": "2025-Mar-09 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 13,
+                "name": "Solid1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QkQzMDdBM0VDMzI5RTEwQTJDRkY4RkI4NzQ4MDgyM0RBMTE0RjhGNA==\",\"MDItQlJBQ0tFVC5JUFR8OnwzRUVFQTEzMjIzNjZCNjU3RUIxNTBFMTUzQzExM0JEQUNEMjZGQURGfDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
+                "properties": {
+                    "Name": "Solid1",
+                    "Appearance": "190, 188, 186:2"
+                }
+            },
+            {
+                "objectid": 5,
+                "name": "02-bracket:1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QkQzMDdBM0VDMzI5RTEwQTJDRkY4RkI4NzQ4MDgyM0RBMTE0RjhGNA==\"]",
+                "properties": {
+                    "Name": "02-bracket:1",
+                    "Component Name": "02-bracket",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "DuctopwH"
+                    },
+                    "Mass Properties": {
+                        "Area": "16615.315 mm^2",
+                        "Volume": "63772.819 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "DuctopwH",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "02-bracket",
+                        "Creation Date": "2025-Mar-09 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 14,
+                "name": "Solid1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QjRDOTZEODA4NTRERDI3RTc2RDhDQzlFMjE5NjBFRUJEQTUyRTk2Mg==\",\"MDItQlJBQ0tFVC5JUFR8OnwzRUVFQTEzMjIzNjZCNjU3RUIxNTBFMTUzQzExM0JEQUNEMjZGQURGfDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
+                "properties": {
+                    "Name": "Solid1",
+                    "Appearance": "190, 188, 186:2"
+                }
+            },
+            {
+                "objectid": 6,
+                "name": "02-bracket:2",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QjRDOTZEODA4NTRERDI3RTc2RDhDQzlFMjE5NjBFRUJEQTUyRTk2Mg==\"]",
+                "properties": {
+                    "Name": "02-bracket:2",
+                    "Component Name": "02-bracket",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "DuctopwH"
+                    },
+                    "Mass Properties": {
+                        "Area": "16615.315 mm^2",
+                        "Volume": "63772.819 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "DuctopwH",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "02-bracket",
+                        "Creation Date": "2025-Mar-09 00:00:00"
+                    }
+                }
+            },
+            {
+                "objectid": 15,
+                "name": "Solid1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8RjFBQkQ2NzAzNThFMDM2QzMxMjk2RTY2QjNCNjZDMzgyQUMwMDgxMg==\",\"MDMtQlVTSElORy5JUFR8OnwwRDM5REVGRkUxQkIxQTMzQzVBQkRCODIzMzEzNUNEQzAwNjZCNTQ4fDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
+                "properties": {
+                    "Name": "Solid1",
+                    "Appearance": "203, 154, 59"
+                }
+            },
+            {
+                "objectid": 7,
+                "name": "03-bushing:1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8RjFBQkQ2NzAzNThFMDM2QzMxMjk2RTY2QjNCNjZDMzgyQUMwMDgxMg==\"]",
+                "properties": {
+                    "Name": "03-bushing:1",
+                    "Component Name": "03-bushing",
+                    "Design Tracking Properties": {
+                        "File Subtype": "Modeling",
+                        "Design State": "WorkInProgress",
+                        "Designer": "DuctopwH"
+                    },
+                    "Mass Properties": {
+                        "Area": "4557.113 mm^2",
+                        "Volume": "5348.300 mm^3"
+                    },
+                    "File Properties": {
+                        "Author": "DuctopwH",
+                        "Original System": "Autodesk Inventor 2026",
+                        "Part Number": "03-bushing",
+                        "Creation Date": "2025-Mar-09 00:00:00"
                     }
                 }
             },
             {
                 "objectid": 16,
                 "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8MzVFOTk1QzEwN0E3MUNBRUI4MzNCQjNCNzlGOUY1NDc4MUIzM0ZBMQ==\",\"MDAyLjA5LUZMQU5FQy5JUFR8OnxCQTM0OTg2NTNGRTIwNUZEMTk1NTJDQzE5N0E5NkIxRDI1NzBDRDJBfDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QjcxMDNDQTI3OEE3NUNBRDhGN0QwNjVBQ0RBMEMyRTgwREEwQjdEQw==\",\"MDMtQlVTSElORy5JUFR8OnwwRDM5REVGRkUxQkIxQTMzQzVBQkRCODIzMzEzNUNEQzAwNjZCNTQ4fDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
                 "properties": {
                     "Name": "Solid1",
-                    "Appearance": "190, 188, 186"
+                    "Appearance": "203, 154, 59"
                 }
             },
             {
-                "objectid": 4,
-                "name": "002.09-flanec:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8MzVFOTk1QzEwN0E3MUNBRUI4MzNCQjNCNzlGOUY1NDc4MUIzM0ZBMQ==\"]",
+                "objectid": 8,
+                "name": "03-bushing:2",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QjcxMDNDQTI3OEE3NUNBRDhGN0QwNjVBQ0RBMEMyRTgwREEwQjdEQw==\"]",
                 "properties": {
-                    "Name": "002.09-flanec:1",
-                    "Component Name": "002.09-flanec",
+                    "Name": "03-bushing:2",
+                    "Component Name": "03-bushing",
                     "Design Tracking Properties": {
                         "File Subtype": "Modeling",
                         "Design State": "WorkInProgress",
                         "Designer": "DuctopwH"
                     },
                     "Mass Properties": {
-                        "Area": "15123.472 mm^2",
-                        "Volume": "55542.423 mm^3"
+                        "Area": "4557.113 mm^2",
+                        "Volume": "5348.300 mm^3"
                     },
                     "File Properties": {
                         "Author": "DuctopwH",
                         "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-09",
-                        "Creation Date": "2021-Oct-17 00:00:00"
+                        "Part Number": "03-bushing",
+                        "Creation Date": "2025-Mar-09 00:00:00"
                     }
                 }
             },
             {
                 "objectid": 17,
                 "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8NjIxNkY4QTc1RkQ1QkIzRDVGMjJCNkY5OTU4Q0RFREUzRkMwODZDMg==\",\"MDAyLjAxLUtPUlBVUy5JUFR8Onw2ODY0MzAxRUU3MEQ3MEU4NjMzN0I3OTQyNDI5OUMyNkU0NjEwN0Q4fDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8MDcxNkQ5NzA4RDMyMUZGQjZBMDA4MTg2MTQ3NzlFNzc5OTI1MzY1Qw==\",\"MDQtUk9MTEVSLklQVHw6fERGRkU5MjE4NzQzNjU4OTRDRjMxMTY2Mzk0NEY1OEM1OUM3MTFFRjV8OnxEQTRCOTIzN0JBQ0NDREYxOUMwNzYwQ0FCN0FFQzRBODM1OTAxMEIw\"]",
                 "properties": {
                     "Name": "Solid1",
-                    "Appearance": "190, 188, 186"
+                    "Appearance": "208, 55, 55"
                 }
             },
             {
-                "objectid": 5,
-                "name": "002.01-korpus:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8NjIxNkY4QTc1RkQ1QkIzRDVGMjJCNkY5OTU4Q0RFREUzRkMwODZDMg==\"]",
+                "objectid": 9,
+                "name": "04-roller:1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8MDcxNkQ5NzA4RDMyMUZGQjZBMDA4MTg2MTQ3NzlFNzc5OTI1MzY1Qw==\"]",
                 "properties": {
-                    "Name": "002.01-korpus:1",
-                    "Component Name": "002.01-korpus",
+                    "Name": "04-roller:1",
+                    "Component Name": "04-roller",
                     "Design Tracking Properties": {
                         "File Subtype": "Modeling",
                         "Design State": "WorkInProgress",
                         "Designer": "DuctopwH"
                     },
                     "Mass Properties": {
-                        "Area": "19541.786 mm^2",
-                        "Volume": "25198.637 mm^3"
+                        "Area": "52238.397 mm^2",
+                        "Volume": "175039.966 mm^3"
                     },
                     "File Properties": {
                         "Author": "DuctopwH",
                         "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "pt1",
-                        "Creation Date": "2021-Oct-15 00:00:00"
+                        "Part Number": "04-roller",
+                        "Creation Date": "2025-Mar-09 00:00:00"
                     }
                 }
             },
             {
                 "objectid": 18,
                 "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8OUQ4OTc0QkFEREZDMEU1MzMwMDgyOUYzN0U1RkM4OEIwRjVDRTYxQg==\",\"MDAyLjAyLU9TTk9WQU5JRS5JUFR8OnxFMTRGMTVDQTIwMjg4NjI5NjYyMUEyOTUxN0U0RTQ2REI1RDE0QzhBfDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QjNGMEM3RjZCQjc2M0FGMUJFOTFEOUU3NEVBQkZFQjE5OURDMUYxRg==\",\"MDUtU1BJTkRFTC5JUFR8Onw3MUNEN0YyMTAwNTc2OTdEMjUwN0RGNkMyQUY3RkE4OERBRTA2NzYzfDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
                 "properties": {
                     "Name": "Solid1",
-                    "Appearance": "190, 188, 186"
-                }
-            },
-            {
-                "objectid": 6,
-                "name": "002.02-osnovanie:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8OUQ4OTc0QkFEREZDMEU1MzMwMDgyOUYzN0U1RkM4OEIwRjVDRTYxQg==\"]",
-                "properties": {
-                    "Name": "002.02-osnovanie:1",
-                    "Component Name": "002.02-osnovanie",
-                    "Design Tracking Properties": {
-                        "File Subtype": "Modeling",
-                        "Design State": "WorkInProgress",
-                        "Designer": "DuctopwH"
-                    },
-                    "Mass Properties": {
-                        "Area": "2936.144 mm^2",
-                        "Volume": "3112.293 mm^3"
-                    },
-                    "File Properties": {
-                        "Author": "DuctopwH",
-                        "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-02",
-                        "Creation Date": "2021-Oct-15 00:00:00"
-                    }
-                }
-            },
-            {
-                "objectid": 19,
-                "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8MUI0QTM2NEY3NkU5RkE4MDczNTE2MTAwRUQ2NTU5MEM1MEE2RDVFOQ==\",\"MDAyLjA0LVRFUk1JTkFMLklQVHw6fEE0RTIzRDNFRTNGMTU5RTAzNTk5MjM0M0U0QkU4ODE4OEY5RTczRkN8OnxEQTRCOTIzN0JBQ0NDREYxOUMwNzYwQ0FCN0FFQzRBODM1OTAxMEIw\"]",
-                "properties": {
-                    "Name": "Solid1",
-                    "Appearance": "235, 235, 235"
-                }
-            },
-            {
-                "objectid": 7,
-                "name": "002.04-terminal:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8MUI0QTM2NEY3NkU5RkE4MDczNTE2MTAwRUQ2NTU5MEM1MEE2RDVFOQ==\"]",
-                "properties": {
-                    "Name": "002.04-terminal:1",
-                    "Component Name": "002.04-terminal",
-                    "Design Tracking Properties": {
-                        "File Subtype": "Modeling",
-                        "Design State": "WorkInProgress",
-                        "Designer": "DuctopwH"
-                    },
-                    "Mass Properties": {
-                        "Area": "336.242 mm^2",
-                        "Volume": "236.572 mm^3"
-                    },
-                    "File Properties": {
-                        "Author": "DuctopwH",
-                        "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-04",
-                        "Creation Date": "2021-Oct-15 00:00:00"
-                    }
-                }
-            },
-            {
-                "objectid": 20,
-                "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8MTkxODdEQzk4RENFNTJGQTRDNEU4RTA1QjM0MUE5Qjc3QTUxRkQyNg==\",\"MDAyLjA0LVRFUk1JTkFMLklQVHw6fEE0RTIzRDNFRTNGMTU5RTAzNTk5MjM0M0U0QkU4ODE4OEY5RTczRkN8OnxEQTRCOTIzN0JBQ0NDREYxOUMwNzYwQ0FCN0FFQzRBODM1OTAxMEIw\"]",
-                "properties": {
-                    "Name": "Solid1",
-                    "Appearance": "235, 235, 235"
-                }
-            },
-            {
-                "objectid": 8,
-                "name": "002.04-terminal:2",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8MTkxODdEQzk4RENFNTJGQTRDNEU4RTA1QjM0MUE5Qjc3QTUxRkQyNg==\"]",
-                "properties": {
-                    "Name": "002.04-terminal:2",
-                    "Component Name": "002.04-terminal",
-                    "Design Tracking Properties": {
-                        "File Subtype": "Modeling",
-                        "Design State": "WorkInProgress",
-                        "Designer": "DuctopwH"
-                    },
-                    "Mass Properties": {
-                        "Area": "336.242 mm^2",
-                        "Volume": "236.572 mm^3"
-                    },
-                    "File Properties": {
-                        "Author": "DuctopwH",
-                        "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-04",
-                        "Creation Date": "2021-Oct-15 00:00:00"
-                    }
-                }
-            },
-            {
-                "objectid": 21,
-                "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8OEFEQTY2MEUwNkI3ODdGMjQ1NjY3OTQzREM5NDhEQUZBQjk5N0UyNQ==\",\"MDAyLjA4LUtSWVNIS0EuSVBUfDp8RTU1RTQ5MTZGNUIzRkVDNkU5RkY5QzIzRDZCMDdERENBMzYyMUFEQXw6fERBNEI5MjM3QkFDQ0NERjE5QzA3NjBDQUI3QUVDNEE4MzU5MDEwQjA=\"]",
-                "properties": {
-                    "Name": "Solid1",
-                    "Appearance": "190, 188, 186"
-                }
-            },
-            {
-                "objectid": 9,
-                "name": "002.08-kryshka:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8OEFEQTY2MEUwNkI3ODdGMjQ1NjY3OTQzREM5NDhEQUZBQjk5N0UyNQ==\"]",
-                "properties": {
-                    "Name": "002.08-kryshka:1",
-                    "Component Name": "002.08-kryshka",
-                    "Design Tracking Properties": {
-                        "File Subtype": "Modeling",
-                        "Design State": "WorkInProgress",
-                        "Designer": "DuctopwH"
-                    },
-                    "Mass Properties": {
-                        "Area": "6671.506 mm^2",
-                        "Volume": "8612.024 mm^3"
-                    },
-                    "File Properties": {
-                        "Author": "DuctopwH",
-                        "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-08",
-                        "Creation Date": "2021-Oct-17 00:00:00"
-                    }
-                }
-            },
-            {
-                "objectid": 22,
-                "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8NkM0QzA0QkU4RjgyQTRFMDUzQkRFMDNERDcxNkQ1OUM4NDFDRkRBOQ==\",\"MDAyLjA2LVJPVE9SLklQVHw6fDQ3QzA1RTk1RDIzOURGMjJBMEJCNDc4NDMxNTM2N0ZCMzk1ODJDOUR8OnxEQTRCOTIzN0JBQ0NDREYxOUMwNzYwQ0FCN0FFQzRBODM1OTAxMEIw\"]",
-                "properties": {
-                    "Name": "Solid1",
-                    "Appearance": "190, 188, 186"
+                    "Appearance": [
+                        "190, 188, 186:1",
+                        "190, 188, 186:2"
+                    ]
                 }
             },
             {
                 "objectid": 10,
-                "name": "002.06-rotor:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8NkM0QzA0QkU4RjgyQTRFMDUzQkRFMDNERDcxNkQ1OUM4NDFDRkRBOQ==\"]",
+                "name": "05-spindel:1",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\",\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1fDp8QjNGMEM3RjZCQjc2M0FGMUJFOTFEOUU3NEVBQkZFQjE5OURDMUYxRg==\"]",
                 "properties": {
-                    "Name": "002.06-rotor:1",
-                    "Component Name": "002.06-rotor",
+                    "Name": "05-spindel:1",
+                    "Component Name": "05-spindel",
                     "Design Tracking Properties": {
                         "File Subtype": "Modeling",
                         "Design State": "WorkInProgress",
                         "Designer": "DuctopwH"
                     },
                     "Mass Properties": {
-                        "Area": "1404.458 mm^2",
-                        "Volume": "985.346 mm^3"
+                        "Area": "6911.778 mm^2",
+                        "Volume": "23173.351 mm^3"
                     },
                     "File Properties": {
                         "Author": "DuctopwH",
                         "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-06",
-                        "Creation Date": "2021-Oct-15 00:00:00"
-                    }
-                }
-            },
-            {
-                "objectid": 23,
-                "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8NjE1M0YwQjk3RkI0NDQyMENENDEzQTM3OTc5RjhFNjIxOUZDM0YzNg==\",\"MDAyLjA1LVZBTC5JUFR8OnxDMkQ0NkIwRUM2Q0I5QzFEMUY4MDhFQkEyNDJBQkQxM0Q2OEI3MTE3fDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
-                "properties": {
-                    "Name": "Solid1",
-                    "Appearance": "190, 188, 186"
-                }
-            },
-            {
-                "objectid": 11,
-                "name": "002.05-val:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8NjE1M0YwQjk3RkI0NDQyMENENDEzQTM3OTc5RjhFNjIxOUZDM0YzNg==\"]",
-                "properties": {
-                    "Name": "002.05-val:1",
-                    "Component Name": "002.05-val",
-                    "Design Tracking Properties": {
-                        "File Subtype": "Modeling",
-                        "Design State": "WorkInProgress",
-                        "Designer": "DuctopwH"
-                    },
-                    "Mass Properties": {
-                        "Area": "611.510 mm^2",
-                        "Volume": "548.784 mm^3"
-                    },
-                    "File Properties": {
-                        "Author": "DuctopwH",
-                        "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-05",
-                        "Creation Date": "2021-Oct-15 00:00:00"
-                    }
-                }
-            },
-            {
-                "objectid": 24,
-                "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8Q0UwOUIxMjdENDhGODM4NjhBNDU2NDVFMjQ2RDNCNTJGNEJERUNCRQ==\",\"MDAyLjAzLVZUVUxLQS5JUFR8OnwwRUFDRTRGMDM2QzM0QkY3RDE0NTNGMjZBREMwODYwNDYzMDJDM0UwfDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
-                "properties": {
-                    "Name": "Solid1",
-                    "Appearance": "105, 77, 59"
-                }
-            },
-            {
-                "objectid": 12,
-                "name": "002.03-vtulka:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8Q0UwOUIxMjdENDhGODM4NjhBNDU2NDVFMjQ2RDNCNTJGNEJERUNCRQ==\"]",
-                "properties": {
-                    "Name": "002.03-vtulka:1",
-                    "Component Name": "002.03-vtulka",
-                    "Design Tracking Properties": {
-                        "File Subtype": "Modeling",
-                        "Design State": "WorkInProgress",
-                        "Designer": "DuctopwH"
-                    },
-                    "Mass Properties": {
-                        "Area": "328.296 mm^2",
-                        "Volume": "207.345 mm^3"
-                    },
-                    "File Properties": {
-                        "Author": "DuctopwH",
-                        "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-03",
-                        "Creation Date": "2021-Oct-15 00:00:00"
-                    }
-                }
-            },
-            {
-                "objectid": 25,
-                "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8M0YxNTIyRDAyNTU5MjI4NEMzQTczNjI2NEM0NzBENTJGQTg3OENEMA==\",\"MDAyLjAzLVZUVUxLQS5JUFR8OnwwRUFDRTRGMDM2QzM0QkY3RDE0NTNGMjZBREMwODYwNDYzMDJDM0UwfDp8REE0QjkyMzdCQUNDQ0RGMTlDMDc2MENBQjdBRUM0QTgzNTkwMTBCMA==\"]",
-                "properties": {
-                    "Name": "Solid1",
-                    "Appearance": "105, 77, 59"
-                }
-            },
-            {
-                "objectid": 13,
-                "name": "002.03-vtulka:2",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8M0YxNTIyRDAyNTU5MjI4NEMzQTczNjI2NEM0NzBENTJGQTg3OENEMA==\"]",
-                "properties": {
-                    "Name": "002.03-vtulka:2",
-                    "Component Name": "002.03-vtulka",
-                    "Design Tracking Properties": {
-                        "File Subtype": "Modeling",
-                        "Design State": "WorkInProgress",
-                        "Designer": "DuctopwH"
-                    },
-                    "Mass Properties": {
-                        "Area": "328.296 mm^2",
-                        "Volume": "207.345 mm^3"
-                    },
-                    "File Properties": {
-                        "Author": "DuctopwH",
-                        "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-03",
-                        "Creation Date": "2021-Oct-15 00:00:00"
-                    }
-                }
-            },
-            {
-                "objectid": 26,
-                "name": "Solid1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8N0E5Q0ExNERDQUIyRkZEQ0ZDNzkwREFDM0FGRTVCQTVCRTI5MjgyMw==\",\"MDAyLjA3LUtSWUxDSEFUS0EuSVBUfDp8MkM3RENCRTkxNzdDRjcwNDFEQ0MwNjNBRUQ4NzhFM0JDMDU5MjRCNHw6fERBNEI5MjM3QkFDQ0NERjE5QzA3NjBDQUI3QUVDNEE4MzU5MDEwQjA=\"]",
-                "properties": {
-                    "Name": "Solid1",
-                    "Appearance": "255, 128, 0"
-                }
-            },
-            {
-                "objectid": 14,
-                "name": "002.07-krylchatka:1",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\",\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIzfDp8N0E5Q0ExNERDQUIyRkZEQ0ZDNzkwREFDM0FGRTVCQTVCRTI5MjgyMw==\"]",
-                "properties": {
-                    "Name": "002.07-krylchatka:1",
-                    "Component Name": "002.07-krylchatka",
-                    "Design Tracking Properties": {
-                        "File Subtype": "Modeling",
-                        "Design State": "WorkInProgress",
-                        "Designer": "DuctopwH"
-                    },
-                    "Mass Properties": {
-                        "Area": "21257.850 mm^2",
-                        "Volume": "20205.635 mm^3"
-                    },
-                    "File Properties": {
-                        "Author": "DuctopwH",
-                        "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "18102021-002-07",
-                        "Creation Date": "2021-Oct-17 00:00:00"
+                        "Part Number": "05-spindel",
+                        "Creation Date": "2025-Mar-09 00:00:00"
                     }
                 }
             },
             {
                 "objectid": 2,
-                "name": "002-ANM",
-                "externalId": "[\"MDAyLUFOTS5JQU18OnxFQzEwMjVENEIwQjlGMzZDMzYyNUM2QzcxQ0NEQThENzY3MzBFOTIz\"]",
+                "name": "015-brs",
+                "externalId": "[\"MDE1LUJSUy5JQU18OnxEMkEyNEEwNTBCMTg2REE1OTYzMUE2N0FFODc5MTE4NjlDQkZDNDc1\"]",
                 "properties": {
-                    "Name": "002-ANM",
-                    "Component Name": "002-ANM",
+                    "Name": "015-brs",
+                    "Component Name": "015-brs",
                     "Design Tracking Properties": {
                         "File Subtype": "Assembly",
                         "Design State": "WorkInProgress",
                         "Designer": "DuctopwH"
                     },
                     "Mass Properties": {
-                        "Area": "140087.092 mm^2",
-                        "Volume": "384313.233 mm^3"
+                        "Area": "162759.613 mm^2",
+                        "Volume": "605263.396 mm^3"
                     },
                     "File Properties": {
                         "Author": "DuctopwH",
                         "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "Anemometr",
-                        "Creation Date": "2021-Oct-17 00:00:00"
+                        "Part Number": "015-brs",
+                        "Creation Date": "2025-Mar-10 00:00:00"
                     }
                 }
             },
             {
                 "objectid": 1,
-                "name": "002-ANM",
-                "externalId": "[\"MDAyLUFOTS5JQU0=\"]",
+                "name": "015-brs",
+                "externalId": "[\"MDE1LUJSUy5JQU0=\"]",
                 "properties": {
-                    "Name": "002-ANM",
+                    "Name": "015-brs",
                     "File Properties": {
                         "Author": "DuctopwH",
                         "Original System": "Autodesk Inventor 2026",
-                        "Part Number": "Anemometr",
-                        "Creation Date": "2021-Oct-17 00:00:00"
+                        "Part Number": "015-brs",
+                        "Creation Date": "2025-Mar-10 00:00:00"
                     }
                 }
             }

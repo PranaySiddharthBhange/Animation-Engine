@@ -12,127 +12,87 @@
                                 "objectid": 3,
                                 "objects": [
                                     {
+                                        "objectid": 11,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "01-base:1"
+                            },
+                            {
+                                "objectid": 4,
+                                "objects": [
+                                    {
+                                        "objectid": 12,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "01-base_thread:1"
+                            },
+                            {
+                                "objectid": 5,
+                                "objects": [
+                                    {
+                                        "objectid": 13,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "02-bracket:1"
+                            },
+                            {
+                                "objectid": 6,
+                                "objects": [
+                                    {
+                                        "objectid": 14,
+                                        "name": "Solid1"
+                                    }
+                                ],
+                                "name": "02-bracket:2"
+                            },
+                            {
+                                "objectid": 7,
+                                "objects": [
+                                    {
                                         "objectid": 15,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "002.10-plita:1"
+                                "name": "03-bushing:1"
                             },
                             {
-                                "objectid": 4,
+                                "objectid": 8,
                                 "objects": [
                                     {
                                         "objectid": 16,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "002.09-flanec:1"
+                                "name": "03-bushing:2"
                             },
                             {
-                                "objectid": 5,
+                                "objectid": 9,
                                 "objects": [
                                     {
                                         "objectid": 17,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "002.01-korpus:1"
+                                "name": "04-roller:1"
                             },
                             {
-                                "objectid": 6,
+                                "objectid": 10,
                                 "objects": [
                                     {
                                         "objectid": 18,
                                         "name": "Solid1"
                                     }
                                 ],
-                                "name": "002.02-osnovanie:1"
-                            },
-                            {
-                                "objectid": 7,
-                                "objects": [
-                                    {
-                                        "objectid": 19,
-                                        "name": "Solid1"
-                                    }
-                                ],
-                                "name": "002.04-terminal:1"
-                            },
-                            {
-                                "objectid": 8,
-                                "objects": [
-                                    {
-                                        "objectid": 20,
-                                        "name": "Solid1"
-                                    }
-                                ],
-                                "name": "002.04-terminal:2"
-                            },
-                            {
-                                "objectid": 9,
-                                "objects": [
-                                    {
-                                        "objectid": 21,
-                                        "name": "Solid1"
-                                    }
-                                ],
-                                "name": "002.08-kryshka:1"
-                            },
-                            {
-                                "objectid": 10,
-                                "objects": [
-                                    {
-                                        "objectid": 22,
-                                        "name": "Solid1"
-                                    }
-                                ],
-                                "name": "002.06-rotor:1"
-                            },
-                            {
-                                "objectid": 11,
-                                "objects": [
-                                    {
-                                        "objectid": 23,
-                                        "name": "Solid1"
-                                    }
-                                ],
-                                "name": "002.05-val:1"
-                            },
-                            {
-                                "objectid": 12,
-                                "objects": [
-                                    {
-                                        "objectid": 24,
-                                        "name": "Solid1"
-                                    }
-                                ],
-                                "name": "002.03-vtulka:1"
-                            },
-                            {
-                                "objectid": 13,
-                                "objects": [
-                                    {
-                                        "objectid": 25,
-                                        "name": "Solid1"
-                                    }
-                                ],
-                                "name": "002.03-vtulka:2"
-                            },
-                            {
-                                "objectid": 14,
-                                "objects": [
-                                    {
-                                        "objectid": 26,
-                                        "name": "Solid1"
-                                    }
-                                ],
-                                "name": "002.07-krylchatka:1"
+                                "name": "05-spindel:1"
                             }
                         ],
-                        "name": "002-ANM"
+                        "name": "015-brs"
                     }
                 ],
-                "name": "002-ANM"
+                "name": "015-brs"
             }
         ]
     }
