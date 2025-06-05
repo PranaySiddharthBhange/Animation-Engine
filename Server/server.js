@@ -6,9 +6,17 @@ const path = require('path');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const FormData = require('form-data');
+require('dotenv').config(); // Load environment variables
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Forge credentials from environment variables
+const FORGE_CLIENT_ID = process.env.FORGE_CLIENT_ID;
+const FORGE_CLIENT_SECRET = process.env.FORGE_CLIENT_SECRET;
+
+// Global session storage
+const sessions = {};
 
 // Configure storage for uploaded ZIP files
 const storage = multer.diskStorage({
@@ -35,19 +43,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Endpoint to handle processing requests
-app.post('/process', upload.single('zipfile'), async (req, res) => {
+app.post('/process', upload.single('zipfile'), (req, res) => {
   try {
-    const { clientId, clientSecret } = req.body;
-    if (!clientId || !clientSecret) {
-      return res.status(400).json({ error: 'Client ID and Secret are required' });
-    }
-    
     if (!req.file) {
       return res.status(400).json({ error: 'ZIP file is required' });
     }
 
     const zipPath = req.file.path;
     const sessionId = uuidv4();
+  
+
+    // Create session entry
+    sessions[sessionId] = {
+      status: 'queued',
+      message: 'Processing started',
+      progress: 0
+    };
 
     // Create session directories
     const sessionFolder = `session_${sessionId}`;
@@ -60,26 +71,161 @@ app.post('/process', upload.single('zipfile'), async (req, res) => {
     const zip = new AdmZip(zipPath);
     zip.extractAllTo(uploadPath, true);
 
-    // Process files
-    const result = await processFiles(clientId, clientSecret, uploadPath, responsePath);
+    // Start background processing
+    processFiles(sessionId, uploadPath, responsePath);
+
     res.json({
       success: true,
-      message: 'Processing completed successfully',
-      sessionId,
-      bucketKey: result.bucketKey,
-      assemblyFile: result.assemblyFile,
-      encodedUrn: result.encodedUrn
+      message: 'Processing started',
+      sessionId
     });
   } catch (error) {
     res.status(500).json({ 
       error: error.message,
-      details: error.response?.data || error.stack 
+      details: error.stack 
     });
   } finally {
     // Clean up uploaded ZIP file
     if (req.file) fs.unlink(req.file.path, () => {});
   }
 });
+
+// Session status endpoint
+app.get('/status/:sessionId', (req, res) => {
+  const sessionId = req.params.sessionId;
+  const session = sessions[sessionId];
+  
+  if (!session) {
+    return res.status(404).json({ error: 'Session not found' });
+  }
+  
+  res.json({
+    status: session.status,
+    message: session.message,
+    progress: session.progress,
+    result: session.result,
+    error: session.error
+  });
+});
+
+
+
+app.get('/generate-animation/:sessionId', async (req, res) => {
+  const sessionId = req.params.sessionId;
+  if (!sessionId || !sessions[sessionId]) {
+    return res.status(400).json({ error: 'Invalid or missing sessionId' });
+  }
+
+  const responsePath = path.join('responses', `session_${sessionId}`);
+  const hierarchyPath = path.join(responsePath, '09_object_hierarchy.json');
+  const propertiesPath = path.join(responsePath, '10_properties_all_objects.json');
+
+  try {
+    const hierarchyData = JSON.parse(fs.readFileSync(hierarchyPath, 'utf-8'));
+    const propertiesData = JSON.parse(fs.readFileSync(propertiesPath, 'utf-8'));
+
+    // Describe hierarchy
+    function describeHierarchy(node, level = 0) {
+      let description = '  '.repeat(level) + `- ${node.name} (ID: ${node.objectid})\n`;
+      if (node.objects) {
+        node.objects.forEach(child => {
+          description += describeHierarchy(child, level + 1);
+        });
+      }
+      return description;
+    }
+
+    let hierarchyDescription = "Model Hierarchy:\n";
+    hierarchyData.data.objects.forEach(root => {
+      hierarchyDescription += describeHierarchy(root);
+    });
+
+    // Describe properties
+    let propertiesDescription = "Key Properties:\n";
+    propertiesData.data.collection.forEach(item => {
+      propertiesDescription += `- ${item.name} (ID: ${item.objectid}):\n`;
+      for (const [category, props] of Object.entries(item.properties)) {
+        if (typeof props === 'object') {
+          propertiesDescription += `  • ${category}:\n`;
+          for (const [key, value] of Object.entries(props)) {
+            propertiesDescription += `    ◦ ${key}: ${value}\n`;
+          }
+        } else {
+          propertiesDescription += `  • ${category}: ${props}\n`;
+        }
+      }
+    });
+
+    const prompt = `
+You are an expert 3D animation assistant for Autodesk Forge models. 
+Generate a sequence of animation commands for the following fragments that will create a logical, visually appealing animation of disassembly.
+
+${hierarchyDescription}
+
+${propertiesDescription}
+
+Command format (JSON array of objects):
+[
+  {
+    "fragmentId": <number>,
+    "action": "rotate" | "scale" | "translate",
+    "params": {
+      // For "rotate": "axis" ("x","y","z"), "angle": <degrees>
+      // For "scale": "factor": <number>
+      // For "translate": "x": <number>, "y": <number>, "z": <number>
+    }
+  }
+]
+
+Guidelines:
+1. Disassemble outer to inner parts.
+2. Logical, mechanical motions.
+3. 20-30 steps to fully disassemble and reassemble.
+Return only JSON, no extra text.
+`.trim();
+
+    const geminiRes = await axios.post(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + process.env.GEMINI_API_KEY,
+      {
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 1000
+        }
+      },
+      {
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+
+    let text = geminiRes.data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+
+    // Clean code blocks (if present)
+    if (text.startsWith("```json")) text = text.replace(/^```json/, "").replace(/```$/, "").trim();
+    else if (text.startsWith("```")) text = text.replace(/^```/, "").replace(/```$/, "").trim();
+
+    // Log raw text for debugging
+    console.log("Gemini raw response:", text);
+
+    // Try to parse JSON
+    let commands;
+    try {
+      commands = JSON.parse(text);
+    } catch (parseError) {
+      console.error("JSON parse failed:", parseError.message);
+      return res.status(500).json({ error: "Gemini returned invalid JSON", rawText: text });
+    }
+
+    return res.json(commands);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to generate animation", details: err.message });
+  }
+});
+
+
+
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -100,9 +246,17 @@ function base64EncodeUrn(urn) {
     .replace(/\//g, '_');
 }
 
+// Update session status helper
+function updateSession(sessionId, update) {
+  sessions[sessionId] = {
+    ...sessions[sessionId],
+    ...update
+  };
+}
+
 // Forge API functions
-async function getAccessToken(clientId, clientSecret, responsePath) {
-  const credentials = `${clientId}:${clientSecret}`;
+async function getAccessToken(responsePath) {
+  const credentials = `${FORGE_CLIENT_ID}:${FORGE_CLIENT_SECRET}`;
   const encodedCredentials = Buffer.from(credentials).toString('base64');
   
   try {
@@ -290,8 +444,6 @@ async function linkReferences(accessToken, bucketKey, assemblyFile, folderPath, 
       }
     }
 
-    console.log(references);
-
     const url = `https://developer.api.autodesk.com/modelderivative/v2/designdata/${encodedUrn}/references`;
     
     const response = await axios.post(
@@ -366,7 +518,7 @@ async function checkTranslationStatus(accessToken, encodedUrn, responsePath) {
         }
       });
       
-      saveResponseToFile(responsePath, `07_translation_status_${attempt}`, response.data);
+      saveResponseToFile(responsePath, `07_translation_status`, response.data);
       
       const status = response.data.status;
       if (status === 'success') return true;
@@ -417,7 +569,7 @@ async function getObjectHierarchy(accessToken, encodedUrn, guidViewable, respons
         }
       });
       
-      saveResponseToFile(responsePath, `09_object_hierarchy_${attempt}`, response.data);
+      saveResponseToFile(responsePath, `09_object_hierarchy`, response.data);
       
       if (response.data.data) {
         return response.data;
@@ -444,7 +596,7 @@ async function retrievePropertiesAllObjects(accessToken, encodedUrn, guidViewabl
         }
       });
       
-      saveResponseToFile(responsePath, `10_properties_all_objects_${attempt}`, response.data);
+      saveResponseToFile(responsePath, `10_properties_all_objects`, response.data);
       
       if (response.data.data) {
         return response.data;
@@ -461,49 +613,117 @@ async function retrievePropertiesAllObjects(accessToken, encodedUrn, guidViewabl
 }
 
 // Main processing function
-async function processFiles(clientId, clientSecret, folderPath, responsePath) {
-  // Get access token
-  const accessToken = await getAccessToken(clientId, clientSecret, responsePath);
-  if (!accessToken) throw new Error('Failed to get access token');
+async function processFiles(sessionId, folderPath, responsePath) {
+  try {
+    updateSession(sessionId, {
+      status: 'processing',
+      message: 'Getting access token',
+      progress: 5
+    });
 
-  // Create bucket
-  const bucketKey = `bucket_${uuidv4().replace(/-/g, '')}`;
-  const bucketCreated = await createBucket(accessToken, bucketKey, responsePath);
-  if (!bucketCreated) throw new Error('Failed to create bucket');
+    // Get access token
+    const accessToken = await getAccessToken(responsePath);
+    if (!accessToken) throw new Error('Failed to get access token');
 
-  // Upload files
-  await uploadAllFiles(accessToken, bucketKey, folderPath, responsePath);
+    updateSession(sessionId, {
+      message: 'Creating bucket',
+      progress: 10
+    });
+    
+    // Create bucket
+    const bucketKey = `bucket_${uuidv4().replace(/-/g, '')}`;
+    const bucketCreated = await createBucket(accessToken, bucketKey, responsePath);
+    if (!bucketCreated) throw new Error('Failed to create bucket');
 
-  // Find assembly file
-  const assemblyFile = detectAssemblyFile(folderPath);
-  if (!assemblyFile) throw new Error('No assembly (.iam) file found');
+    updateSession(sessionId, {
+      message: 'Uploading files',
+      progress: 20
+    });
+    
+    // Upload files
+    await uploadAllFiles(accessToken, bucketKey, folderPath, responsePath);
 
-  // Link references and start translation
-  const linked = await linkReferences(accessToken, bucketKey, assemblyFile, folderPath, responsePath);
-  if (!linked) throw new Error('Failed to link references');
-  
-  const encodedUrn = await startTranslationJob(accessToken, bucketKey, assemblyFile, responsePath);
-  if (!encodedUrn) throw new Error('Failed to start translation job');
+    updateSession(sessionId, {
+      message: 'Detecting assembly',
+      progress: 30
+    });
+    
+    // Find assembly file
+    const assemblyFile = detectAssemblyFile(folderPath);
+    if (!assemblyFile) throw new Error('No assembly (.iam) file found');
 
-  // Check translation status
-  await checkTranslationStatus(accessToken, encodedUrn, responsePath);
+    updateSession(sessionId, {
+      message: 'Linking references',
+      progress: 40
+    });
+    
+    // Link references and start translation
+    const linked = await linkReferences(accessToken, bucketKey, assemblyFile, folderPath, responsePath);
+    if (!linked) throw new Error('Failed to link references');
 
-  // Retrieve metadata
-  const guidViewable = await retrieveListOfViewableFiles(accessToken, encodedUrn, responsePath);
-  if (!guidViewable) throw new Error('Failed to retrieve viewable files');
+    updateSession(sessionId, {
+      message: 'Starting translation',
+      progress: 50
+    });
+    
+    const encodedUrn = await startTranslationJob(accessToken, bucketKey, assemblyFile, responsePath);
+    if (!encodedUrn) throw new Error('Failed to start translation job');
 
-  // Get hierarchy and properties
-  await getObjectHierarchy(accessToken, encodedUrn, guidViewable, responsePath);
-  await retrievePropertiesAllObjects(accessToken, encodedUrn, guidViewable, responsePath);
+    updateSession(sessionId, {
+      message: 'Translating model (this may take several minutes)',
+      progress: 60
+    });
+    
+    // Check translation status
+    await checkTranslationStatus(accessToken, encodedUrn, responsePath);
 
-  return {
-    bucketKey,
-    assemblyFile,
-    encodedUrn
-  };
+    updateSession(sessionId, {
+      message: 'Retrieving viewables',
+      progress: 70
+    });
+    
+    // Retrieve metadata
+    const guidViewable = await retrieveListOfViewableFiles(accessToken, encodedUrn, responsePath);
+    if (!guidViewable) throw new Error('Failed to retrieve viewable files');
+
+    updateSession(sessionId, {
+      message: 'Extracting hierarchy',
+      progress: 80
+    });
+    
+    // Get hierarchy and properties
+    await getObjectHierarchy(accessToken, encodedUrn, guidViewable, responsePath);
+
+    updateSession(sessionId, {
+      message: 'Retrieving properties',
+      progress: 90
+    });
+    
+    await retrievePropertiesAllObjects(accessToken, encodedUrn, guidViewable, responsePath);
+
+    updateSession(sessionId, {
+      status: 'completed',
+      message: 'Processing finished',
+      progress: 100,
+      result: {
+        accessToken,
+        encodedUrn
+      }
+    });
+  } catch (error) {
+    updateSession(sessionId, {
+      status: 'failed',
+      message: 'Processing failed',
+      error: error.message,
+      details: error.stack
+    });
+  }
 }
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+  if (!FORGE_CLIENT_ID || !FORGE_CLIENT_SECRET) {
+    console.error('Missing Forge credentials in environment variables!');
+  }
 });
