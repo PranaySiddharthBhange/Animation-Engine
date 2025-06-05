@@ -1,8 +1,8 @@
 {
-    "bucketKey": "check-3bucket",
-    "objectId": "urn:adsk.objects:os.object:check-3bucket/05-spindel.stp",
+    "bucketKey": "june4_2025",
+    "objectId": "urn:adsk.objects:os.object:june4_2025/05-spindel.stp",
     "objectKey": "05-spindel.stp",
     "size": 21522,
     "contentType": "application/octet-stream",
-    "location": "https://developer.api.autodesk.com/oss/v2/buckets/check-3bucket/objects/05-spindel.stp"
+    "location": "https://developer.api.autodesk.com/oss/v2/buckets/june4_2025/objects/05-spindel.stp"
 }

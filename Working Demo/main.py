@@ -3,21 +3,21 @@ import base64
 import os
 import time
 import json
-
-CLIENT_ID = "WA2Kz91xVUfApIGYmyh8vAF3YUlCQoqBWy9Huk9z2RLmpB9b"
-CLIENT_SECRET = "Jx4HqWtqC9HA23nWnCti59M7nkb0av9x8hroTMnpGurBQl8VyPIARAEA820PQAXX"
-BUCKET_KEY = "check-3bucket"
+ 
+CLIENT_ID = "Kx5ZBaHiGk9aWpiSYTNKLWpuIJehrigAOV6sSng7D60kXGAq"
+CLIENT_SECRET = "r1AqeIwZQlj9Adnac88IbML01OGt9DHAKum741XBRFXMwbXuWzsf5aGVorDagXJq"
+BUCKET_KEY = "june4_2025"
 POLICY_KEY = "transient"
 FOLDER_PATH = "upload"
 RESPONSES_FOLDER = "responses"
-
+ 
 os.makedirs(RESPONSES_FOLDER, exist_ok=True)
-
+ 
 def save_response_to_file(step_name, response_data):
     path = os.path.join(RESPONSES_FOLDER, f"{step_name}.json")
     with open(path, "w") as f:
         json.dump(response_data, f, indent=4)
-
+ 
 def get_access_token():
     credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
     encoded_credentials = base64.b64encode(credentials.encode("ascii")).decode("ascii")
@@ -30,7 +30,7 @@ def get_access_token():
         "grant_type": "client_credentials",
         "scope": "data:write data:read bucket:create bucket:delete"
     }
-
+ 
     response = requests.post(
         "https://developer.api.autodesk.com/authentication/v2/token",
         headers=auth_headers,
@@ -40,7 +40,7 @@ def get_access_token():
         save_response_to_file("01_get_access_token", response.json())
         return response.json().get("access_token")
     return None
-
+ 
 def create_bucket(access_token):
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -51,16 +51,16 @@ def create_bucket(access_token):
         "policyKey": POLICY_KEY,
         "access": "full"
     }
-
+ 
     response = requests.post(
         "https://developer.api.autodesk.com/oss/v2/buckets",
         headers=headers,
         json=payload
     )
-
+ 
     save_response_to_file("02_create_bucket", response.json())
     return BUCKET_KEY if response.ok or response.status_code == 409 else None
-
+ 
 def get_signed_url(access_token, file_name):
     url = f"https://developer.api.autodesk.com/oss/v2/buckets/{BUCKET_KEY}/objects/{file_name}/signeds3upload?minutesExpiration=60"
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -69,13 +69,13 @@ def get_signed_url(access_token, file_name):
         save_response_to_file(f"03_get_signed_url_{file_name}", response.json())
         return response.json()
     return None
-
+ 
 def upload_file_to_s3(signed_url, file_path):
     with open(file_path, 'rb') as f:
         headers = {"Content-Type": "application/octet-stream"}
         response = requests.put(signed_url, data=f, headers=headers)
         return response.status_code in [200, 204]
-
+ 
 def finalize_upload(access_token, file_name, upload_key):
     url = f"https://developer.api.autodesk.com/oss/v2/buckets/{BUCKET_KEY}/objects/{file_name}/signeds3upload"
     headers = {
@@ -88,11 +88,11 @@ def finalize_upload(access_token, file_name, upload_key):
         "access": "full",
         "uploadKey": upload_key
     }
-
+ 
     response = requests.post(url, headers=headers, json=payload)
     save_response_to_file(f"04_finalize_upload_{file_name}", response.json())
     return response.ok
-
+ 
 def upload_all_files(access_token):
     for root, dirs, files in os.walk(FOLDER_PATH):
         for file_name in files:
@@ -100,24 +100,24 @@ def upload_all_files(access_token):
             signed_data = get_signed_url(access_token, file_name)
             if not signed_data:
                 continue
-
+ 
             upload_key = signed_data.get("uploadKey")
             signed_url = signed_data.get("urls")[0]
-
+ 
             if upload_file_to_s3(signed_url, full_path):
                 finalize_upload(access_token, file_name, upload_key)
     print("✅ All files uploaded and finalized.")
-
+ 
 def base64_encode_urn(urn):
     return base64.b64encode(urn.encode('utf-8')).decode('utf-8').replace('=', '').replace('+', '-').replace('/', '_')
-
+ 
 def detect_assembly_file():
     for root, dirs, files in os.walk(FOLDER_PATH):
         for file in files:
             if file.lower().endswith(".iam"):
                 return file
     return None
-
+ 
 def link_references(access_token, assembly_file):
     assembly_urn = f"urn:adsk.objects:os.object:{BUCKET_KEY}/{assembly_file}"
     encoded_urn = base64_encode_urn(assembly_urn)
@@ -126,7 +126,7 @@ def link_references(access_token, assembly_file):
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json"
     }
-
+ 
     references = []
     for root, dirs, files in os.walk(FOLDER_PATH):
         for file_name in files:
@@ -138,19 +138,19 @@ def link_references(access_token, assembly_file):
                     "relativePath": rel_path,
                     "filename": file_name
                 })
-
+ 
     payload = {
         "urn": assembly_urn,
         "filename": assembly_file,
         "references": references
     }
-
+ 
     response = requests.post(url, headers=headers, json=payload)
     save_response_to_file("05_link_references", response.json())
     if response.ok:
         print("✅ References linked.")
     return response.ok
-
+ 
 def start_translation_job(access_token, assembly_file):
     assembly_urn = f"urn:adsk.objects:os.object:{BUCKET_KEY}/{assembly_file}"
     encoded_urn = base64_encode_urn(assembly_urn)
@@ -174,26 +174,26 @@ def start_translation_job(access_token, assembly_file):
             ]
         }
     }
-
+ 
     response = requests.post(url, headers=headers, json=payload)
     save_response_to_file("06_start_translation_job", response.json())
     if response.ok:
         print("✅ Translation job started.")
         return encoded_urn
     return None
-
+ 
 def check_translation_status(access_token, encoded_urn):
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/manifest"
     headers = {"Authorization": f"Bearer {access_token}"}
-
+ 
     while True:
         response = requests.get(url, headers=headers)
         save_response_to_file("07_translation_status", response.json())
-
+ 
         if not response.ok:
             print("❌ Error checking translation status.")
             break
-
+ 
         status = response.json().get("status", "unknown")
         if status == "success":
             print("✅ Translation completed.")
@@ -203,7 +203,7 @@ def check_translation_status(access_token, encoded_urn):
             break
         else:
             time.sleep(30)
-
+ 
 def retrieve_list_of_viewable_files(access_token, encoded_urn):
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/metadata"
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -212,7 +212,7 @@ def retrieve_list_of_viewable_files(access_token, encoded_urn):
         data = response.json()
         save_response_to_file("08_metadata", data)
         print("✅ Metadata retrieved successfully.")
-
+ 
         metadata_list = data.get("data", {}).get("metadata", [])
         if metadata_list:
             return metadata_list[0].get("guid")
@@ -222,7 +222,7 @@ def retrieve_list_of_viewable_files(access_token, encoded_urn):
     else:
         print("❌ Error retrieving viewable files.")
         return None
-
+ 
 def get_object_hierarchy(access_token, encoded_urn, guid_viewable):
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/metadata/{guid_viewable}"
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -240,7 +240,7 @@ def get_object_hierarchy(access_token, encoded_urn, guid_viewable):
         print("✅ Object hierarchy retrieved successfully.")
         return
     print("❌ Timed out waiting for object hierarchy.")
-
+ 
 def retrieve_properties_all_objects(access_token, encoded_urn, guid_viewable):
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/metadata/{guid_viewable}/properties"
     headers = {"Authorization": f"Bearer {access_token}"}
@@ -259,38 +259,38 @@ def retrieve_properties_all_objects(access_token, encoded_urn, guid_viewable):
         return data
     print("❌ Timed out waiting for properties.")
     return None
-
+ 
 if __name__ == "__main__":
     token = get_access_token()
     if not token:
         print("❌ Failed to get access token.")
         exit(1)
     print("✅ Access token retrieved.")
-
+ 
     if not create_bucket(token):
         print("❌ Failed to create bucket.")
         exit(1)
     print("✅ Bucket ready.")
-
+ 
     upload_all_files(token)
-
+ 
     assembly_file = detect_assembly_file()
     if not assembly_file:
         print("❌ No assembly (.iam) file found.")
         exit(1)
     print(f"✅ Detected assembly file: {assembly_file}")
-
+ 
     if not link_references(token, assembly_file):
         print("❌ Failed to link references.")
         exit(1)
-
+ 
     encoded_urn = start_translation_job(token, assembly_file)
     if not encoded_urn:
         print("❌ Failed to start translation job.")
         exit(1)
-
+ 
     check_translation_status(token, encoded_urn)
-
+ 
     guid_viewable = retrieve_list_of_viewable_files(token, encoded_urn)
     if guid_viewable:
         get_object_hierarchy(token, encoded_urn, guid_viewable)

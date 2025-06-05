@@ -1,8 +1,8 @@
 {
-    "bucketKey": "check-3bucket",
-    "objectId": "urn:adsk.objects:os.object:check-3bucket/01-base.ipt",
+    "bucketKey": "june4_2025",
+    "objectId": "urn:adsk.objects:os.object:june4_2025/01-base.ipt",
     "objectKey": "01-base.ipt",
     "size": 182784,
     "contentType": "application/octet-stream",
-    "location": "https://developer.api.autodesk.com/oss/v2/buckets/check-3bucket/objects/01-base.ipt"
+    "location": "https://developer.api.autodesk.com/oss/v2/buckets/june4_2025/objects/01-base.ipt"
 }
