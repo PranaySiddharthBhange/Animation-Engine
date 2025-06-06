@@ -108,8 +108,6 @@ app.get('/status/:sessionId', (req, res) => {
   });
 });
 
-
-
 app.get('/generate-animation/:sessionId', async (req, res) => {
   const sessionId = req.params.sessionId;
   if (!sessionId || !sessions[sessionId]) {
@@ -223,8 +221,6 @@ Return only JSON, no extra text.
     res.status(500).json({ error: "Failed to generate animation", details: err.message });
   }
 });
-
-
 
 
 // Health check endpoint
