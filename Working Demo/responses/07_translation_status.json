@@ -1,78 +1,25 @@
 {
     "type": "manifest",
-    "hasThumbnail": "true",
-    "status": "success",
+    "hasThumbnail": "false",
+    "status": "failed",
     "progress": "complete",
     "region": "US",
-    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTRfMjAyNS8wMTUtYnJzLmlhbQ",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTRfMjAyNS9UdW5lci5pYW0",
     "version": "1.0",
     "derivatives": [
         {
-            "name": "015-brs.iam",
-            "hasThumbnail": "true",
-            "status": "success",
+            "name": "LMV Bubble",
+            "hasThumbnail": "false",
+            "status": "failed",
             "progress": "complete",
-            "outputType": "svf2",
-            "children": [
+            "messages": [
                 {
-                    "guid": "51b79d28-a104-451a-af9c-1fac041209ff",
-                    "type": "geometry",
-                    "role": "3d",
-                    "name": "Scene",
-                    "status": "success",
-                    "progress": "complete",
-                    "hasThumbnail": "true",
-                    "children": [
-                        {
-                            "guid": "3f706b18-7db6-4a40-a82c-93d7ccbb1e96",
-                            "type": "resource",
-                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTRfMjAyNS8wMTUtYnJzLmlhbQ/output/1/015-brs.svf.png01_thumb_400x400.png",
-                            "resolution": [
-                                400,
-                                400
-                            ],
-                            "mime": "image/png",
-                            "role": "thumbnail"
-                        },
-                        {
-                            "guid": "96ce5ffb-faad-4c94-9e69-6bb0ac06eb9e",
-                            "type": "resource",
-                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTRfMjAyNS8wMTUtYnJzLmlhbQ/output/1/015-brs.svf.png01_thumb_200x200.png",
-                            "resolution": [
-                                200,
-                                200
-                            ],
-                            "mime": "image/png",
-                            "role": "thumbnail"
-                        },
-                        {
-                            "guid": "fbadd3ab-2b58-43a0-8193-97722dcfdb3b",
-                            "type": "resource",
-                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTRfMjAyNS8wMTUtYnJzLmlhbQ/output/1/015-brs.svf.png01_thumb_100x100.png",
-                            "resolution": [
-                                100,
-                                100
-                            ],
-                            "mime": "image/png",
-                            "role": "thumbnail"
-                        },
-                        {
-                            "role": "graphics",
-                            "mime": "application/autodesk-svf2",
-                            "guid": "78c08e56-715d-421f-80c7-071dd7d059e6",
-                            "type": "resource"
-                        }
-                    ]
-                },
-                {
-                    "guid": "42d6cce7-7caf-4636-8545-fedc96c73ce6",
-                    "type": "resource",
-                    "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTRfMjAyNS8wMTUtYnJzLmlhbQ/output/1/properties.db",
-                    "role": "Autodesk.CloudPlatform.PropertyDatabase",
-                    "mime": "application/autodesk-db",
-                    "status": "success"
+                    "type": "error",
+                    "message": "Tr worker fail to download.",
+                    "code": "TranslationWorker-InternalFailure"
                 }
-            ]
+            ],
+            "outputType": "svf2"
         }
     ]
 }

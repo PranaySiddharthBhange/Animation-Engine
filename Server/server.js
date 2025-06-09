@@ -7,17 +7,13 @@ const path = require('path');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const FormData = require('form-data');
-require('dotenv').config(); // Load environment variables
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Forge credentials from environment variables
 const FORGE_CLIENT_ID = process.env.FORGE_CLIENT_ID;
 const FORGE_CLIENT_SECRET = process.env.FORGE_CLIENT_SECRET;
-
-// Global session storage
-const sessions = {};
 
 // Configure storage for uploaded ZIP files
 const storage = multer.diskStorage({
@@ -30,19 +26,50 @@ const storage = multer.diskStorage({
     cb(null, `${uuidv4()}-${file.originalname}`);
   }
 });
-
 const upload = multer({ storage });
-
 // Create necessary directories
 ['uploads', 'responses'].forEach(dir => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
 });
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+// Session management functions
+function getSession(sessionId) {
+  try {
+    const sessionPath = path.join('responses', `session_${sessionId}`, 'session.json');
+    if (fs.existsSync(sessionPath)) {
+      return JSON.parse(fs.readFileSync(sessionPath, 'utf-8'));
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error reading session ${sessionId}:`, error);
+    return null;
+  }
+}
+function updateSession(sessionId, update) {
+  const sessionFolder = path.join('responses', `session_${sessionId}`);
+  const sessionPath = path.join(sessionFolder, 'session.json');
+
+  try {
+    let session = {};
+    if (fs.existsSync(sessionPath)) {
+      session = JSON.parse(fs.readFileSync(sessionPath, 'utf-8'));
+    }
+
+    const updatedSession = { ...session, ...update };
+    fs.mkdirSync(sessionFolder, { recursive: true });
+    fs.writeFileSync(sessionPath, JSON.stringify(updatedSession, null, 2));
+
+    return updatedSession;
+  } catch (error) {
+    console.error(`Error updating session ${sessionId}:`, error);
+    return null;
+  }
+}
 // Endpoint to handle processing requests
 app.post('/process', upload.single('zipfile'), (req, res) => {
   try {
@@ -52,14 +79,13 @@ app.post('/process', upload.single('zipfile'), (req, res) => {
 
     const zipPath = req.file.path;
     const sessionId = uuidv4();
-  
 
     // Create session entry
-    sessions[sessionId] = {
+    updateSession(sessionId, {
       status: 'queued',
       message: 'Processing started',
       progress: 0
-    };
+    });
 
     // Create session directories
     const sessionFolder = `session_${sessionId}`;
@@ -81,25 +107,24 @@ app.post('/process', upload.single('zipfile'), (req, res) => {
       sessionId
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       error: error.message,
-      details: error.stack 
+      details: error.stack
     });
   } finally {
     // Clean up uploaded ZIP file
-    if (req.file) fs.unlink(req.file.path, () => {});
+    if (req.file) fs.unlink(req.file.path, () => { });
   }
 });
-
 // Session status endpoint
 app.get('/status/:sessionId', (req, res) => {
   const sessionId = req.params.sessionId;
-  const session = sessions[sessionId];
-  
+  const session = getSession(sessionId);
+
   if (!session) {
     return res.status(404).json({ error: 'Session not found' });
   }
-  
+
   res.json({
     status: session.status,
     message: session.message,
@@ -108,10 +133,11 @@ app.get('/status/:sessionId', (req, res) => {
     error: session.error
   });
 });
-
 app.get('/generate-animation/:sessionId', async (req, res) => {
   const sessionId = req.params.sessionId;
-  if (!sessionId || !sessions[sessionId]) {
+  const session = getSession(sessionId);
+
+  if (!session) {
     return res.status(400).json({ error: 'Invalid or missing sessionId' });
   }
 
@@ -155,6 +181,7 @@ app.get('/generate-animation/:sessionId', async (req, res) => {
       }
     });
 
+
     const prompt = `
 You are an expert 3D animation assistant for Autodesk Forge models. 
 Generate a sequence of animation commands for the following fragments that will create a logical, visually appealing animation of disassembly.
@@ -177,10 +204,16 @@ Command format (JSON array of objects):
 ]
 
 Guidelines:
-1. Disassemble outer to inner parts.
-2. Logical, mechanical motions.
-3. 20-30 steps to fully disassemble and reassemble.
-Return only JSON, no extra text.
+1. Create an disassembly view showing assembly relationships
+2. Move parts along logical axes based on their position in the assembly
+3. Rotate rotating components (shaft, rotor, screws) to show movements of disassembly
+4. Scale small parts to make them more visible
+5. Use reasonable translations depending on part size for disassembly
+6. Include 20-30 commands for a comprehensive animation at the end assembly should disassemble completely and then reassemble
+7. Prioritize moving outer components first then inner ones
+8. Consider mechanical relationships between parts
+
+Generate only the JSON array with no additional text.
 `.trim();
 
     const geminiRes = await axios.post(
@@ -199,7 +232,7 @@ Return only JSON, no extra text.
 
     let text = geminiRes.data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
 
-    // Clean code blocks (if present)
+    // Clean code blocks
     if (text.startsWith("```json")) text = text.replace(/^```json/, "").replace(/```$/, "").trim();
     else if (text.startsWith("```")) text = text.replace(/^```/, "").replace(/```$/, "").trim();
 
@@ -222,19 +255,15 @@ Return only JSON, no extra text.
     res.status(500).json({ error: "Failed to generate animation", details: err.message });
   }
 });
-
-
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('Server is healthy');
 });
-
 // Helper function to save API responses
 function saveResponseToFile(responsePath, stepName, data) {
   const filePath = path.join(responsePath, `${stepName}.json`);
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
-
 // Base64 encode URN helper
 function base64EncodeUrn(urn) {
   return Buffer.from(urn).toString('base64')
@@ -242,20 +271,11 @@ function base64EncodeUrn(urn) {
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
 }
-
-// Update session status helper
-function updateSession(sessionId, update) {
-  sessions[sessionId] = {
-    ...sessions[sessionId],
-    ...update
-  };
-}
-
 // Forge API functions
 async function getAccessToken(responsePath) {
   const credentials = `${FORGE_CLIENT_ID}:${FORGE_CLIENT_SECRET}`;
   const encodedCredentials = Buffer.from(credentials).toString('base64');
-  
+
   try {
     const response = await axios.post(
       'https://developer.api.autodesk.com/authentication/v2/token',
@@ -278,7 +298,6 @@ async function getAccessToken(responsePath) {
     throw new Error(`Access token error: ${error.response?.data || error.message}`);
   }
 }
-
 async function createBucket(accessToken, bucketKey, responsePath) {
   try {
     const response = await axios.post(
@@ -299,18 +318,17 @@ async function createBucket(accessToken, bucketKey, responsePath) {
     saveResponseToFile(responsePath, '02_create_bucket', response.data);
     return true;
   } catch (error) {
-    if (error.response?.status === 409) { // Bucket already exists
+    if (error.response?.status === 409) {
       return true;
     }
     throw new Error(`Bucket creation failed: ${error.response?.data || error.message}`);
   }
 }
-
 async function getSignedUrl(accessToken, bucketKey, fileName, responsePath) {
   try {
     const encodedFileName = encodeURIComponent(fileName);
     const url = `https://developer.api.autodesk.com/oss/v2/buckets/${bucketKey}/objects/${encodedFileName}/signeds3upload?minutesExpiration=60`;
-    
+
     const response = await axios.get(url, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
@@ -326,7 +344,6 @@ async function getSignedUrl(accessToken, bucketKey, fileName, responsePath) {
     throw new Error(`Signed URL failed for ${fileName}: ${error.response?.data || error.message}`);
   }
 }
-
 async function uploadFileToS3(signedUrl, filePath) {
   try {
     const fileData = fs.readFileSync(filePath);
@@ -340,11 +357,10 @@ async function uploadFileToS3(signedUrl, filePath) {
     throw new Error(`S3 upload failed for ${filePath}: ${error.message}`);
   }
 }
-
 async function finalizeUpload(accessToken, bucketKey, fileName, uploadKey, responsePath) {
   try {
     const url = `https://developer.api.autodesk.com/oss/v2/buckets/${bucketKey}/objects/${fileName}/signeds3upload`;
-    
+
     const response = await axios.post(
       url,
       {
@@ -367,10 +383,9 @@ async function finalizeUpload(accessToken, bucketKey, fileName, uploadKey, respo
     throw new Error(`Finalize upload failed for ${fileName}: ${error.response?.data || error.message}`);
   }
 }
-
 async function uploadAllFiles(accessToken, bucketKey, folderPath, responsePath) {
   const files = [];
-  
+
   function walkDir(dir) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
@@ -392,18 +407,18 @@ async function uploadAllFiles(accessToken, bucketKey, folderPath, responsePath) 
   for (const file of files) {
     try {
       const { signedUrl, uploadKey } = await getSignedUrl(
-        accessToken, 
-        bucketKey, 
-        file.name, 
+        accessToken,
+        bucketKey,
+        file.name,
         responsePath
       );
-      
+
       await uploadFileToS3(signedUrl, file.path);
       await finalizeUpload(
-        accessToken, 
-        bucketKey, 
-        file.name, 
-        uploadKey, 
+        accessToken,
+        bucketKey,
+        file.name,
+        uploadKey,
         responsePath
       );
     } catch (error) {
@@ -411,7 +426,6 @@ async function uploadAllFiles(accessToken, bucketKey, folderPath, responsePath) 
     }
   }
 }
-
 function detectAssemblyFile(folderPath) {
   const files = fs.readdirSync(folderPath, { recursive: true });
   for (const file of files) {
@@ -421,15 +435,14 @@ function detectAssemblyFile(folderPath) {
   }
   return null;
 }
-
 async function linkReferences(accessToken, bucketKey, assemblyFile, folderPath, responsePath) {
   try {
     const assemblyUrn = `urn:adsk.objects:os.object:${bucketKey}/${assemblyFile}`;
     const encodedUrn = base64EncodeUrn(assemblyUrn);
-    
+
     const references = [];
     const files = fs.readdirSync(folderPath, { recursive: true });
-    
+
     for (const file of files) {
       if (typeof file === 'string' && file.toLowerCase().endsWith('.ipt')) {
         const relPath = path.relative(folderPath, path.join(folderPath, file)).replace(/\\/g, '/');
@@ -442,7 +455,7 @@ async function linkReferences(accessToken, bucketKey, assemblyFile, folderPath, 
     }
 
     const url = `https://developer.api.autodesk.com/modelderivative/v2/designdata/${encodedUrn}/references`;
-    
+
     const response = await axios.post(
       url,
       {
@@ -464,14 +477,13 @@ async function linkReferences(accessToken, bucketKey, assemblyFile, folderPath, 
     throw new Error(`Link references failed: ${error.response?.data || error.message}`);
   }
 }
-
 async function startTranslationJob(accessToken, bucketKey, assemblyFile, responsePath) {
   try {
     const assemblyUrn = `urn:adsk.objects:os.object:${bucketKey}/${assemblyFile}`;
     const encodedUrn = base64EncodeUrn(assemblyUrn);
-    
+
     const url = "https://developer.api.autodesk.com/modelderivative/v2/designdata/job";
-    
+
     const response = await axios.post(
       url,
       {
@@ -503,112 +515,107 @@ async function startTranslationJob(accessToken, bucketKey, assemblyFile, respons
     throw new Error(`Translation job failed: ${error.response?.data || error.message}`);
   }
 }
-
 async function checkTranslationStatus(accessToken, encodedUrn, responsePath) {
+  const intervalMs = 10_000; // 10 seconds
+  const maxAttempts = 18; // 30 minutes total (10 seconds * 18 attempts)
+
   try {
     const url = `https://developer.api.autodesk.com/modelderivative/v2/designdata/${encodedUrn}/manifest`;
-    
-    for (let attempt = 0; attempt < 20; attempt++) {
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
       const response = await axios.get(url, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      
-      saveResponseToFile(responsePath, `07_translation_status`, response.data);
-      
+
+      saveResponseToFile(responsePath, `07_translation_status_attempt_${attempt + 1}`, response.data);
+
       const status = response.data.status;
       if (status === 'success') return true;
       if (status === 'failed' || status === 'timeout') {
         throw new Error(`Translation ${status}`);
       }
-      
-      // Wait 30 seconds before next check
-      await new Promise(resolve => setTimeout(resolve, 30000));
+
+      await new Promise(resolve => setTimeout(resolve, intervalMs));
     }
-    
-    throw new Error('Translation timeout after 10 minutes');
+
+    throw new Error('Translation timeout after 30 minutes');
   } catch (error) {
     throw new Error(`Translation status check failed: ${error.message}`);
   }
 }
-
 async function retrieveListOfViewableFiles(accessToken, encodedUrn, responsePath) {
   try {
     const url = `https://developer.api.autodesk.com/modelderivative/v2/designdata/${encodedUrn}/metadata`;
-    
+
     const response = await axios.get(url, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }
     });
-    
+
     saveResponseToFile(responsePath, '08_metadata', response.data);
-    
+
     if (response.data.data?.metadata?.length > 0) {
       return response.data.data.metadata[0].guid;
     }
-    
+
     throw new Error('No viewable files found');
   } catch (error) {
     throw new Error(`Viewable files retrieval failed: ${error.response?.data || error.message}`);
   }
 }
-
 async function getObjectHierarchy(accessToken, encodedUrn, guidViewable, responsePath) {
   try {
     const url = `https://developer.api.autodesk.com/modelderivative/v2/designdata/${encodedUrn}/metadata/${guidViewable}`;
-    
+
     for (let attempt = 0; attempt < 10; attempt++) {
       const response = await axios.get(url, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      
+
       saveResponseToFile(responsePath, `09_object_hierarchy`, response.data);
-      
+
       if (response.data.data) {
         return response.data;
       }
-      
-      // Wait 10 seconds before next check
+
       await new Promise(resolve => setTimeout(resolve, 10000));
     }
-    
+
     throw new Error('Object hierarchy extraction timeout');
   } catch (error) {
     throw new Error(`Object hierarchy failed: ${error.response?.data || error.message}`);
   }
 }
-
 async function retrievePropertiesAllObjects(accessToken, encodedUrn, guidViewable, responsePath) {
   try {
     const url = `https://developer.api.autodesk.com/modelderivative/v2/designdata/${encodedUrn}/metadata/${guidViewable}/properties`;
-    
+
     for (let attempt = 0; attempt < 10; attempt++) {
       const response = await axios.get(url, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      
+
       saveResponseToFile(responsePath, `10_properties_all_objects`, response.data);
-      
+
       if (response.data.data) {
         return response.data;
       }
-      
-      // Wait 10 seconds before next check
+
       await new Promise(resolve => setTimeout(resolve, 10000));
     }
-    
+
     throw new Error('Properties extraction timeout');
   } catch (error) {
     throw new Error(`Properties retrieval failed: ${error.response?.data || error.message}`);
   }
 }
-
 // Main processing function
 async function processFiles(sessionId, folderPath, responsePath) {
   try {
@@ -618,7 +625,6 @@ async function processFiles(sessionId, folderPath, responsePath) {
       progress: 5
     });
 
-    // Get access token
     const accessToken = await getAccessToken(responsePath);
     if (!accessToken) throw new Error('Failed to get access token');
 
@@ -626,8 +632,7 @@ async function processFiles(sessionId, folderPath, responsePath) {
       message: 'Creating bucket',
       progress: 10
     });
-    
-    // Create bucket
+
     const bucketKey = `bucket_${uuidv4().replace(/-/g, '')}`;
     const bucketCreated = await createBucket(accessToken, bucketKey, responsePath);
     if (!bucketCreated) throw new Error('Failed to create bucket');
@@ -636,16 +641,14 @@ async function processFiles(sessionId, folderPath, responsePath) {
       message: 'Uploading files',
       progress: 20
     });
-    
-    // Upload files
+
     await uploadAllFiles(accessToken, bucketKey, folderPath, responsePath);
 
     updateSession(sessionId, {
       message: 'Detecting assembly',
       progress: 30
     });
-    
-    // Find assembly file
+
     const assemblyFile = detectAssemblyFile(folderPath);
     if (!assemblyFile) throw new Error('No assembly (.iam) file found');
 
@@ -653,8 +656,7 @@ async function processFiles(sessionId, folderPath, responsePath) {
       message: 'Linking references',
       progress: 40
     });
-    
-    // Link references and start translation
+
     const linked = await linkReferences(accessToken, bucketKey, assemblyFile, folderPath, responsePath);
     if (!linked) throw new Error('Failed to link references');
 
@@ -662,7 +664,7 @@ async function processFiles(sessionId, folderPath, responsePath) {
       message: 'Starting translation',
       progress: 50
     });
-    
+
     const encodedUrn = await startTranslationJob(accessToken, bucketKey, assemblyFile, responsePath);
     if (!encodedUrn) throw new Error('Failed to start translation job');
 
@@ -670,16 +672,14 @@ async function processFiles(sessionId, folderPath, responsePath) {
       message: 'Translating model (this may take several minutes)',
       progress: 60
     });
-    
-    // Check translation status
+
     await checkTranslationStatus(accessToken, encodedUrn, responsePath);
 
     updateSession(sessionId, {
       message: 'Retrieving viewables',
       progress: 70
     });
-    
-    // Retrieve metadata
+
     const guidViewable = await retrieveListOfViewableFiles(accessToken, encodedUrn, responsePath);
     if (!guidViewable) throw new Error('Failed to retrieve viewable files');
 
@@ -687,15 +687,14 @@ async function processFiles(sessionId, folderPath, responsePath) {
       message: 'Extracting hierarchy',
       progress: 80
     });
-    
-    // Get hierarchy and properties
+
     await getObjectHierarchy(accessToken, encodedUrn, guidViewable, responsePath);
 
     updateSession(sessionId, {
       message: 'Retrieving properties',
       progress: 90
     });
-    
+
     await retrievePropertiesAllObjects(accessToken, encodedUrn, guidViewable, responsePath);
 
     updateSession(sessionId, {
@@ -714,12 +713,56 @@ async function processFiles(sessionId, folderPath, responsePath) {
       error: error.message,
       details: error.stack
     });
+  } finally {
+    // Clean up unzipped files
+    try {
+      fs.rmSync(folderPath, { recursive: true, force: true });
+      console.log(`Cleaned up folder: ${folderPath}`);
+    } catch (cleanupError) {
+      console.error(`Cleanup failed for ${folderPath}:`, cleanupError);
+    }
   }
 }
+// Session cleanup on startup
+function cleanupOldSessions() {
+  const now = Date.now();
+  const maxAge = 24 * 60 * 60 * 1000; // 24 hours
 
+  try {
+    const sessionDirs = fs.readdirSync('responses')
+      .filter(dir => dir.startsWith('session_'))
+      .map(dir => ({
+        path: path.join('responses', dir),
+        name: dir,
+        sessionId: dir.replace('session_', '')
+      }));
+
+    for (const sessionDir of sessionDirs) {
+      try {
+        const session = getSession(sessionDir.sessionId);
+        if (!session) continue;
+
+        // Delete sessions older than maxAge
+        const createdTime = new Date(session.createdAt || 0).getTime();
+        if (now - createdTime > maxAge) {
+          fs.rmSync(sessionDir.path, { recursive: true, force: true });
+          console.log(`Cleaned up old session: ${sessionDir.name}`);
+        }
+      } catch (error) {
+        console.error(`Error cleaning session ${sessionDir.name}:`, error);
+      }
+    }
+  } catch (error) {
+    console.error('Session cleanup failed:', error);
+  }
+}
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+
+  // Add creation timestamp to session files
+  cleanupOldSessions();
+
   if (!FORGE_CLIENT_ID || !FORGE_CLIENT_SECRET) {
     console.error('Missing Forge credentials in environment variables!');
   }
