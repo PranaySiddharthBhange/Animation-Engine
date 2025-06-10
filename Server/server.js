@@ -209,9 +209,10 @@ Guidelines:
 3. Rotate rotating components (shaft, rotor, screws) to show movements of disassembly
 4. Scale small parts to make them more visible
 5. Use reasonable translations depending on part size for disassembly
-6. Include 20-30 commands for a comprehensive animation at the end assembly should disassemble completely and then reassemble
+6. Include 8-12 commands for a comprehensive animation at the end assembly should disassemble completely and then reassemble
 7. Prioritize moving outer components first then inner ones
 8. Consider mechanical relationships between parts
+9. Also add rotation for parts that have rotational movement
 
 Generate only the JSON array with no additional text.
 `.trim();
@@ -723,45 +724,11 @@ async function processFiles(sessionId, folderPath, responsePath) {
     }
   }
 }
-// Session cleanup on startup
-function cleanupOldSessions() {
-  const now = Date.now();
-  const maxAge = 24 * 60 * 60 * 1000; // 24 hours
 
-  try {
-    const sessionDirs = fs.readdirSync('responses')
-      .filter(dir => dir.startsWith('session_'))
-      .map(dir => ({
-        path: path.join('responses', dir),
-        name: dir,
-        sessionId: dir.replace('session_', '')
-      }));
 
-    for (const sessionDir of sessionDirs) {
-      try {
-        const session = getSession(sessionDir.sessionId);
-        if (!session) continue;
-
-        // Delete sessions older than maxAge
-        const createdTime = new Date(session.createdAt || 0).getTime();
-        if (now - createdTime > maxAge) {
-          fs.rmSync(sessionDir.path, { recursive: true, force: true });
-          console.log(`Cleaned up old session: ${sessionDir.name}`);
-        }
-      } catch (error) {
-        console.error(`Error cleaning session ${sessionDir.name}:`, error);
-      }
-    }
-  } catch (error) {
-    console.error('Session cleanup failed:', error);
-  }
-}
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-
-  // Add creation timestamp to session files
-  cleanupOldSessions();
 
   if (!FORGE_CLIENT_ID || !FORGE_CLIENT_SECRET) {
     console.error('Missing Forge credentials in environment variables!');
