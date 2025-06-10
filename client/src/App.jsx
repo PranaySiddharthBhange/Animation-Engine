@@ -1,13 +1,17 @@
-import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import UploadPage from './pages/UploadPage';
+import ViewerPage from './pages/ViewerPage';
 
 function App() {
   return (
-    <div>
-      <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<UploadPage />} />
+        <Route path="/viewer" element={<ViewerPage />} />
+      </Routes>
+    </Router>
+   
+  );
 }
 
-export default App
+export default App;
