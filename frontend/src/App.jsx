@@ -1,9 +1,9 @@
-// src/App.jsx
-import React from 'react';
-import RouteHandler from './routes/RouteHandler';
+import Dummy from "./components/Dummy"
 
 function App() {
-  return <RouteHandler />;
+  return (
+    <Dummy/>
+  )
 }
 
-export default App;
+export default App

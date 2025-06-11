@@ -1,6 +1,6 @@
 import React from "react";
 
-const App = () => {
+const Dummy = () => {
   return (
     <div className="flex h-screen bg-black text-white font-sans">
       {/* Sidebar - DO NOT CHANGE */}
@@ -72,4 +72,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Dummy;
