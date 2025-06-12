@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Upload, FileArchive, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 
 const API_BASE_URL = 'https://animation-server.onrender.com';
 
-// Memoized ModelViewer to avoid unnecessary re-renders
-const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }) => {
+const ModelViewer = ({ accessToken, encodedUrn, sessionId, onTokenExpired }) => {
   const viewerContainer = useRef(null);
   const viewerRef = useRef(null);
   const tokenRefreshInterval = useRef(null);
@@ -14,13 +13,17 @@ const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }
     try {
       const response = await fetch(`${API_BASE_URL}/auth`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ sessionId }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        if (['SESSION_EXPIRED', 'SESSION_NOT_FOUND'].includes(errorData.code)) {
+        console.error('Token refresh failed:', errorData);
+        
+        if (errorData.code === 'SESSION_EXPIRED' || errorData.code === 'SESSION_NOT_FOUND') {
           onTokenExpired('Session expired. Please process a new file.');
           return null;
         }
@@ -29,12 +32,15 @@ const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }
 
       const data = await response.json();
       setCurrentToken(data.accessToken);
-
+      
       if (viewerRef.current && window.Autodesk?.Viewing?.endpoint) {
         window.Autodesk.Viewing.endpoint.setAccessToken(data.accessToken);
       }
+      
+      console.log('Token refreshed successfully');
       return data.accessToken;
     } catch (error) {
+      console.error('Token refresh error:', error);
       onTokenExpired('Failed to refresh access token. Please try again.');
       return null;
     }
@@ -54,6 +60,7 @@ const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }
             viewerContainer.current,
             { extensions: [] }
           );
+
           viewerRef.current = viewer;
           viewer.start();
 
@@ -65,6 +72,7 @@ const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }
               viewer.loadDocumentNode(doc, viewable);
             },
             error => {
+              console.error('Failed to load document:', error);
               if (error.message && error.message.includes('401')) {
                 refreshToken();
               }
@@ -72,9 +80,12 @@ const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }
           );
         });
 
-        tokenRefreshInterval.current = setInterval(refreshToken, 50 * 60 * 1000);
+        tokenRefreshInterval.current = setInterval(() => {
+          refreshToken();
+        }, 50 * 60 * 1000);
+
       } catch (error) {
-        // Optionally show error UI
+        console.error('Failed to initialize viewer:', error);
       }
     };
 
@@ -83,7 +94,9 @@ const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }
     }
 
     return () => {
-      if (tokenRefreshInterval.current) clearInterval(tokenRefreshInterval.current);
+      if (tokenRefreshInterval.current) {
+        clearInterval(tokenRefreshInterval.current);
+      }
       if (viewerRef.current) {
         viewerRef.current.finish();
         viewerRef.current = null;
@@ -96,11 +109,14 @@ const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }
   }, [accessToken]);
 
   return (
-    <div ref={viewerContainer} className="w-full h-full" />
+    <div
+      ref={viewerContainer}
+      className="w-full h-full"
+    />
   );
-});
+};
 
-const UploadPage = memo(({ onProcessingStart }) => {
+const UploadPage = ({ onProcessingStart }) => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
@@ -121,6 +137,7 @@ const UploadPage = memo(({ onProcessingStart }) => {
       setError('Please select a file first');
       return;
     }
+
     setIsUploading(true);
     setError('');
 
@@ -133,19 +150,28 @@ const UploadPage = memo(({ onProcessingStart }) => {
         body: formData,
       });
 
-      const data = await response.json();
       if (!response.ok) {
-        setError(data.error || 'Upload failed');
+        const errorData = await response.json();
+        setError(errorData.error || 'Upload failed');
         return;
       }
 
+      const data = await response.json();
+
       if (data.success && data.sessionId) {
+        const sessionData = {
+          sessionId: data.sessionId,
+          timestamp: Date.now(),
+          message: data.message
+        };
+
         onProcessingStart(data.sessionId);
       } else {
         setError(data.error || 'Failed to start processing');
       }
-    } catch {
+    } catch (err) {
       setError('Upload failed. Please try again.');
+      console.error('Upload error:', err);
     } finally {
       setIsUploading(false);
     }
@@ -159,6 +185,7 @@ const UploadPage = memo(({ onProcessingStart }) => {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Upload ZIP File</h1>
           <p className="text-gray-600">Select a ZIP file to process</p>
         </div>
+
         <div className="space-y-6">
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-indigo-400 transition-colors">
             <input
@@ -183,12 +210,14 @@ const UploadPage = memo(({ onProcessingStart }) => {
               </div>
             </label>
           </div>
+
           {error && (
             <div className="flex items-center space-x-2 text-red-600 text-sm">
               <AlertCircle className="h-4 w-4" />
               <span>{error}</span>
             </div>
           )}
+
           <button
             onClick={handleUpload}
             disabled={!file || isUploading}
@@ -200,9 +229,9 @@ const UploadPage = memo(({ onProcessingStart }) => {
       </div>
     </div>
   );
-});
+};
 
-const ProcessingPage = memo(({ sessionId, onComplete, onError }) => {
+const ProcessingPage = ({ sessionId, onComplete, onError }) => {
   const [status, setStatus] = useState('processing');
   const [message, setMessage] = useState('Starting...');
   const [progress, setProgress] = useState(0);
@@ -221,17 +250,21 @@ const ProcessingPage = memo(({ sessionId, onComplete, onError }) => {
 
         if (data.status === 'completed') {
           clearInterval(intervalId);
-          onComplete({
+
+          const resultData = {
             accessToken: data.result.accessToken,
             encodedUrn: data.result.encodedUrn,
-            sessionId,
+            sessionId: sessionId,
             timestamp: Date.now()
-          });
+          };
+
+          onComplete(resultData);
         } else if (data.status === 'error') {
           clearInterval(intervalId);
-          onError(data.message || 'Processing failed');
+          onError('Processing failed');
         }
-      } catch {
+      } catch (err) {
+        console.error('Status check error:', err);
         onError('Failed to check status');
       }
     };
@@ -250,6 +283,7 @@ const ProcessingPage = memo(({ sessionId, onComplete, onError }) => {
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Processing...</h1>
           <p className="text-gray-600">Please wait while we process your file</p>
         </div>
+
         <div className="space-y-6">
           <div>
             <div className="flex justify-between items-center mb-2">
@@ -263,9 +297,11 @@ const ProcessingPage = memo(({ sessionId, onComplete, onError }) => {
               />
             </div>
           </div>
+
           <div className="text-center">
             <p className="text-gray-700 font-medium">{message}</p>
           </div>
+
           <div className="text-xs text-gray-500 text-center">
             Session ID: {sessionId}
           </div>
@@ -273,16 +309,17 @@ const ProcessingPage = memo(({ sessionId, onComplete, onError }) => {
       </div>
     </div>
   );
-});
+};
 
-// Memoized CountdownTimer for performance
-const CountdownTimer = memo(({ expirationTime }) => {
+const CountdownTimer = ({ expirationTime }) => {
   const [timeLeft, setTimeLeft] = useState(expirationTime - Date.now());
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(Math.max(expirationTime - Date.now(), 0));
+      const remaining = expirationTime - Date.now();
+      setTimeLeft(remaining > 0 ? remaining : 0);
     }, 1000);
+
     return () => clearInterval(interval);
   }, [expirationTime]);
 
@@ -295,24 +332,27 @@ const CountdownTimer = memo(({ expirationTime }) => {
       {hours}h {minutes}m {seconds}s
     </span>
   );
-});
+};
 
-const ResultsPage = memo(({ resultData, onStartNew, onTokenExpired }) => {
+const ResultsPage = ({ resultData, onStartNew, onTokenExpired }) => {
   const expirationTime = resultData.timestamp + 23 * 60 * 60 * 1000;
   const [sessionValid, setSessionValid] = useState(Date.now() < expirationTime);
   const [tokenError, setTokenError] = useState(null);
 
-  const handleTokenExpired = useCallback((errorMessage) => {
+  const handleTokenExpired = (errorMessage) => {
     setTokenError(errorMessage);
     setSessionValid(false);
-    onTokenExpired();
-  }, [onTokenExpired]);
+  };
 
   useEffect(() => {
     if (!sessionValid) return;
+
     const interval = setInterval(() => {
-      if (Date.now() >= expirationTime) setSessionValid(false);
+      if (Date.now() >= expirationTime) {
+        setSessionValid(false);
+      }
     }, 1000);
+
     return () => clearInterval(interval);
   }, [sessionValid, expirationTime]);
 
@@ -351,6 +391,7 @@ const ResultsPage = memo(({ resultData, onStartNew, onTokenExpired }) => {
           Process Another
         </button>
       </div>
+
       <div className="flex-grow relative">
         <ModelViewer
           accessToken={resultData.accessToken}
@@ -361,14 +402,13 @@ const ResultsPage = memo(({ resultData, onStartNew, onTokenExpired }) => {
       </div>
     </div>
   );
-});
+};
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('upload');
   const [sessionId, setSessionId] = useState(null);
   const [resultData, setResultData] = useState(null);
 
-  // Restore session if valid
   useEffect(() => {
     const savedData = localStorage.getItem('viewerSession');
     if (savedData) {
@@ -384,35 +424,39 @@ const App = () => {
     }
   }, []);
 
-  const handleProcessingStart = useCallback((newSessionId) => {
+  const handleProcessingStart = (newSessionId) => {
     setSessionId(newSessionId);
     setCurrentPage('processing');
-  }, []);
+  };
 
-  const handleProcessingComplete = useCallback((data) => {
-    const fullData = { ...data, timestamp: Date.now() };
+  const handleProcessingComplete = (data) => {
+    const fullData = {
+      ...data,
+      timestamp: Date.now()
+    };
     localStorage.setItem('viewerSession', JSON.stringify(fullData));
     setResultData(fullData);
     setCurrentPage('results');
-  }, []);
+  };
 
-  const handleProcessingError = useCallback(() => {
+  const handleProcessingError = (error) => {
+    console.error('Processing error:', error);
     setCurrentPage('upload');
-  }, []);
+  };
 
-  const handleStartNew = useCallback(() => {
+  const handleStartNew = () => {
     localStorage.removeItem('viewerSession');
     setSessionId(null);
     setResultData(null);
     setCurrentPage('upload');
-  }, []);
+  };
 
-  const handleTokenExpired = useCallback(() => {
+  const handleTokenExpired = () => {
     localStorage.removeItem('viewerSession');
     setSessionId(null);
     setResultData(null);
     setCurrentPage('upload');
-  }, []);
+  };
 
   switch (currentPage) {
     case 'processing':
@@ -435,5 +479,6 @@ const App = () => {
       return <UploadPage onProcessingStart={handleProcessingStart} />;
   }
 };
+
 
 export default App;
