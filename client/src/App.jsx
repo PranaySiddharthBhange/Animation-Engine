@@ -4,13 +4,114 @@ import { Upload, FileArchive, CheckCircle, Clock, AlertCircle } from 'lucide-rea
 const API_BASE_URL = 'https://animation-server.onrender.com';
 
 // Memoized ModelViewer to avoid unnecessary re-renders
+// const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }) => {
+//   const viewerContainer = useRef(null);
+//   const viewerRef = useRef(null);
+//   const tokenRefreshInterval = useRef(null);
+//   const [currentToken, setCurrentToken] = useState(accessToken);
+
+//   const refreshToken = useCallback(async () => {
+//     try {
+//       const response = await fetch(`${API_BASE_URL}/auth`, {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ sessionId }),
+//       });
+
+//       if (!response.ok) {
+//         const errorData = await response.json();
+//         if (['SESSION_EXPIRED', 'SESSION_NOT_FOUND'].includes(errorData.code)) {
+//           onTokenExpired('Session expired. Please process a new file.');
+//           return null;
+//         }
+//         throw new Error(errorData.error || 'Token refresh failed');
+//       }
+
+//       const data = await response.json();
+//       setCurrentToken(data.accessToken);
+
+//       if (viewerRef.current && window.Autodesk?.Viewing?.endpoint) {
+//         window.Autodesk.Viewing.endpoint.setAccessToken(data.accessToken);
+//       }
+//       return data.accessToken;
+//     } catch (error) {
+//       onTokenExpired('Failed to refresh access token. Please try again.');
+//       return null;
+//     }
+//   }, [sessionId, onTokenExpired]);
+
+//   useEffect(() => {
+//     const initializeViewer = async () => {
+//       try {
+//         const options = {
+//           env: 'AutodeskProduction',
+//           accessToken: currentToken,
+//           api: 'derivativeV2'
+//         };
+
+//         window.Autodesk.Viewing.Initializer(options, () => {
+//           const viewer = new window.Autodesk.Viewing.GuiViewer3D(
+//             viewerContainer.current,
+//             { extensions: [] }
+//           );
+//           viewerRef.current = viewer;
+//           viewer.start();
+
+//           const documentId = `urn:${encodedUrn}`;
+//           window.Autodesk.Viewing.Document.load(
+//             documentId,
+//             doc => {
+//               const viewable = doc.getRoot().getDefaultGeometry();
+//               viewer.loadDocumentNode(doc, viewable);
+//             },
+//             error => {
+//               if (error.message && error.message.includes('401')) {
+//                 refreshToken();
+//               }
+//             }
+//           );
+//         });
+
+//         tokenRefreshInterval.current = setInterval(refreshToken, 50 * 60 * 1000);
+//       } catch (error) {
+//         // Optionally show error UI
+//       }
+//     };
+
+//     if (currentToken && encodedUrn) {
+//       initializeViewer();
+//     }
+
+//     return () => {
+//       if (tokenRefreshInterval.current) clearInterval(tokenRefreshInterval.current);
+//       if (viewerRef.current) {
+//         viewerRef.current.finish();
+//         viewerRef.current = null;
+//       }
+//     };
+//   }, [currentToken, encodedUrn, refreshToken]);
+
+//   useEffect(() => {
+//     setCurrentToken(accessToken);
+//   }, [accessToken]);
+
+//   return (
+//     <div ref={viewerContainer} className="w-full h-full" />
+//   );
+// });
+
+
 const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }) => {
   const viewerContainer = useRef(null);
   const viewerRef = useRef(null);
   const tokenRefreshInterval = useRef(null);
   const [currentToken, setCurrentToken] = useState(accessToken);
+  const isRefreshing = useRef(false);
 
+  // Refresh token and update viewer
   const refreshToken = useCallback(async () => {
+    if (isRefreshing.current) return null;
+    isRefreshing.current = true;
     try {
       const response = await fetch(`${API_BASE_URL}/auth`, {
         method: 'POST',
@@ -18,79 +119,93 @@ const ModelViewer = memo(({ accessToken, encodedUrn, sessionId, onTokenExpired }
         body: JSON.stringify({ sessionId }),
       });
 
+      const data = await response.json();
       if (!response.ok) {
-        const errorData = await response.json();
-        if (['SESSION_EXPIRED', 'SESSION_NOT_FOUND'].includes(errorData.code)) {
+        if (['SESSION_EXPIRED', 'SESSION_NOT_FOUND'].includes(data.code)) {
           onTokenExpired('Session expired. Please process a new file.');
           return null;
         }
-        throw new Error(errorData.error || 'Token refresh failed');
+        throw new Error(data.error || 'Token refresh failed');
       }
 
-      const data = await response.json();
       setCurrentToken(data.accessToken);
-
-      if (viewerRef.current && window.Autodesk?.Viewing?.endpoint) {
+      if (window.Autodesk?.Viewing?.endpoint) {
         window.Autodesk.Viewing.endpoint.setAccessToken(data.accessToken);
       }
       return data.accessToken;
     } catch (error) {
       onTokenExpired('Failed to refresh access token. Please try again.');
       return null;
+    } finally {
+      isRefreshing.current = false;
     }
   }, [sessionId, onTokenExpired]);
 
+  // Initialize viewer and handle token expiration
   useEffect(() => {
-    const initializeViewer = async () => {
-      try {
-        const options = {
-          env: 'AutodeskProduction',
-          accessToken: currentToken,
-          api: 'derivativeV2'
-        };
+    let isMounted = true;
+    let retryCount = 0;
 
-        window.Autodesk.Viewing.Initializer(options, () => {
-          const viewer = new window.Autodesk.Viewing.GuiViewer3D(
-            viewerContainer.current,
-            { extensions: [] }
-          );
-          viewerRef.current = viewer;
-          viewer.start();
+    const initializeViewer = async (tokenToUse) => {
+      if (!window.Autodesk?.Viewing) return;
+      const options = {
+        env: 'AutodeskProduction',
+        accessToken: tokenToUse,
+        api: 'derivativeV2'
+      };
 
-          const documentId = `urn:${encodedUrn}`;
+      window.Autodesk.Viewing.Initializer(options, () => {
+        if (!isMounted) return;
+        const viewer = new window.Autodesk.Viewing.GuiViewer3D(
+          viewerContainer.current,
+          { extensions: [] }
+        );
+        viewerRef.current = viewer;
+        viewer.start();
+
+        const documentId = `urn:${encodedUrn}`;
+        const loadDoc = (token) => {
           window.Autodesk.Viewing.Document.load(
             documentId,
             doc => {
               const viewable = doc.getRoot().getDefaultGeometry();
               viewer.loadDocumentNode(doc, viewable);
             },
-            error => {
-              if (error.message && error.message.includes('401')) {
-                refreshToken();
+            async error => {
+              // If 401, refresh token and retry once
+              if (error?.message?.includes('401') && retryCount < 2) {
+                retryCount++;
+                const newToken = await refreshToken();
+                if (newToken) {
+                  loadDoc(newToken);
+                }
+              } else {
+                onTokenExpired('Failed to load model. Please try again.');
               }
             }
           );
-        });
-
-        tokenRefreshInterval.current = setInterval(refreshToken, 50 * 60 * 1000);
-      } catch (error) {
-        // Optionally show error UI
-      }
+        };
+        loadDoc(tokenToUse);
+      });
     };
 
     if (currentToken && encodedUrn) {
-      initializeViewer();
+      initializeViewer(currentToken);
+      // Set up interval for token refresh
+      tokenRefreshInterval.current = setInterval(refreshToken, 50 * 60 * 1000);
     }
 
     return () => {
+      isMounted = false;
       if (tokenRefreshInterval.current) clearInterval(tokenRefreshInterval.current);
       if (viewerRef.current) {
         viewerRef.current.finish();
         viewerRef.current = null;
       }
     };
-  }, [currentToken, encodedUrn, refreshToken]);
+  }, [currentToken, encodedUrn, refreshToken, onTokenExpired]);
 
+  // Update token if prop changes
   useEffect(() => {
     setCurrentToken(accessToken);
   }, [accessToken]);
