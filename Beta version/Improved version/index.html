@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Animation Engine</title>
+
+    <!-- Autodesk Forge Viewer -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- Sidebar Dashboard -->
+        <aside id="dashboard">
+            <header class="dashboard-header">
+                <div class="logo-container">
+                    <div class="logo">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                </div>
+                <h1>AI Animation Engine</h1>
+                <p>Generate and preview smooth animations powered by AI</p>
+
+                <div class="fragment-counter">
+                    <div class="fragment-count">
+                        <i class="fas fa-cube"></i>
+                        <span id="fragmentCount">Loading fragments...</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 class="section-title">AI-Powered Animation</h3>
+                </div>
+                <p class="section-description">
+                    Generate logical animations using AI with smooth transitions
+                </p>
+
+                <!-- Animation Control Buttons -->
+                <div class="button-group">
+                    <button id="autoAnimateBtn" class="btn btn-success pulse" onclick="autoAnimateWithGemini()">
+                        <i class="fas fa-play"></i> Generate & Animate
+                    </button>
+                    <button class="btn btn-danger" onclick="stopAnimations()">
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-dark" onclick="resetAllFragments()">
+                        <i class="fas fa-undo"></i> Reset Model
+                    </button>
+                    <button class="btn btn-primary" onclick="showExportModal()">
+                        <i class="fas fa-video"></i> Export as Video
+                    </button>
+                </div>
+
+                <!-- Animation Settings -->
+                <div class="animation-controls">
+                    <div class="control-group">
+                        <label class="control-label">Duration (ms)</label>
+                        <input type="number" id="animationDuration" class="control-input" value="1000" min="100" step="100" />
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Easing</label>
+                        <select id="easingType" class="control-input">
+                            <option value="easeInOut">Ease In/Out</option>
+                            <option value="easeIn">Ease In</option>
+                            <option value="easeOut">Ease Out</option>
+                            <option value="linear">Linear</option>
+                            <option value="bounce">Bounce</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- AI Progress Bar -->
+                <div class="progress-container">
+                    <div id="aiProgressBar" class="progress-bar"></div>
+                </div>
+            </section>
+
+            <!-- Activity Log -->
+            <section class="status-container">
+                <div class="status-header">
+                    <i class="fas fa-terminal"></i>
+                    <h4>Activity Log</h4>
+                </div>
+                <div id="logOutput" class="log-output">
+                    <div class="log-entry">System initialized. Ready to generate animations.</div>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Forge Viewer Panel -->
+        <main id="viewer">
+            <div class="viewer-overlay">
+                <i class="fas fa-cube"></i>
+                <span>Autodesk Forge Viewer - Loading model...</span>
+            </div>
+        </main>
+
+        <!-- Sidebar Toggle -->
+        <div id="sidebarToggle" class="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+
+    <!-- Video Export Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Export Animation as Video</h3>
+                <button class="close-modal" onclick="closeExportModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Video Quality</label>
+                <select id="videoQuality" class="control-input">
+                    <option value="high">High (1080p)</option>
+                    <option value="medium" selected>Medium (720p)</option>
+                    <option value="low">Low (480p)</option>
+                </select>
+            </div>
+
+            <div class="export-progress">
+                <div id="exportProgressBar" class="export-progress-bar"></div>
+            </div>
+
+            <div class="video-preview-container">
+                <video id="videoPreview" controls></video>
+            </div>
+
+            <div id="downloadContainer" class="download-container">
+                <button class="download-btn" onclick="downloadVideo()">
+                    <i class="fas fa-download"></i> Download Video
+                </button>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeExportModal()">Cancel</button>
+                <button class="modal-btn modal-btn-primary" onclick="startVideoExport()">
+                    <i class="fas fa-download"></i> Export Video
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="logic.js"></script>
+</body>
+
+</html>
