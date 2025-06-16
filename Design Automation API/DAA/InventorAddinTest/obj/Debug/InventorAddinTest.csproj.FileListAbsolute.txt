@@ -1,0 +1,12 @@
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\bin\Debug\InventorThumbnailAddin.Inventor.addin
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\bin\Debug\InventorAddinTest.exe.config
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\bin\Debug\InventorAddinTest.exe
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\bin\Debug\InventorAddinTest.pdb
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\bin\Debug\InventorThumbnailAddin.dll
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\bin\Debug\Autodesk.Forge.DesignAutomation.Inventor.Utils.dll
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\bin\Debug\InventorThumbnailAddin.pdb
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\obj\Debug\InventorAddinTest.csproj.AssemblyReference.cache
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\obj\Debug\InventorAddinTest.csproj.CoreCompileInputs.cache
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\obj\Debug\Inventor.0FF8B20B.Up2Date
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\obj\Debug\InventorAddinTest.exe
+C:\Users\Omkar Auti\Desktop\InventorAddinTest\obj\Debug\InventorAddinTest.pdb
