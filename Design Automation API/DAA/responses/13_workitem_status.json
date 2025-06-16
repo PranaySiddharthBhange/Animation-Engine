@@ -1,0 +1,14 @@
+{
+    "status": "failedInstructions",
+    "reportUrl": "https://dasprod-store.s3.amazonaws.com/workItem/daa/6eeb10de258a4471977fc09126f7b758/report?X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEG4aCXVzLWVhc3QtMSJGMEQCIF7uJzProCFswz92%2FDroJuTU3ATnDkCNdmUwMkwd6QPIAiA%2BqppShxlQAefgIVXCRV%2FnTasZ5WP8nrolH%2B7cIT%2F5ICqAAwhXEAQaDDIyMDQ3MzE1MjMxMCIMaZs5Lf1cR3PSpv0wKt0CYlrpvHfUVzzwNp7trRlzpXZlivKKYQ2GmiLTeLFnylSpibvJYQwvh9c8fi8RrVUTbhUGSo4WFpG%2Fb5xpv6W8xm0GgDG1tPqz8bgbJluuDIGTAtuhiJZGdcEoDL3NlUXlc9eiTnlUa7TvzTfCDJaIQZAtCY6VwrNDyCpRJDNFO4vH3SSnLjbGtVpqPKfa1zafPhYnJirAD1e4lsWkM%2FFLj03d%2FxdczBS2KwZ7%2BNBUikldFgm2DHhs9KEvPdVxaLXC9h0wxXoBlHSHG5IUCFCi4j5SOSeCi6amAoSeKy%2Ff%2FckyTQy9T7kNwXot9JxLARW4ucCZsdNpxm%2FUHyvSqIzCoeCBSIUii0TxFjZWTkGB3gpbFfI9isobfp0i8%2Bfal7EpdBid7y1cR6eVmx0qDZ8j8hCXW4glIyrmvZII3ImMK20bTd%2FJJRhDFBq2pySnC3bOojFej6Tljl2AIIEULzDr4b7CBjqfAc4CqTLu7UlNDmNImPVOgEL2nsCqNLfi4rhDSf4YymG9k%2BKc5kIs17UFmS%2BScGtm5BJnuOjYi7dHyujRuKK9g6o2IiVUhDUsrlVxlqSLZ5A9%2FClP7HRpja80LWA7lTzqNdC7uWJHR2GuDsxxFDozp2%2FD37VWF1rmN2WwaB5YlyFbG5UgFn3es0JUl3Ze1ZEjHwHkw8BzszZ0sbgSVH01Wg%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIATGVJZKM3FOV5KYDF%2F20250616%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250616T060250Z&X-Amz-SignedHeaders=host&X-Amz-Signature=36cc21456fb26b2b988f5fea7418dada0366765a535e49f8ebc50f290ac9fa0e",
+    "activityId": "daa.joints_constraints_activity+my_current_version",
+    "stats": {
+        "timeQueued": "2025-06-16T06:01:55.8347775Z",
+        "timeDownloadStarted": "2025-06-16T06:01:55.941997Z",
+        "timeInstructionsStarted": "2025-06-16T06:01:56.3620692Z",
+        "timeInstructionsEnded": "2025-06-16T06:01:58.8893057Z",
+        "timeUploadEnded": "2025-06-16T06:01:58.8922276Z",
+        "timeFinished": "2025-06-16T06:01:59.2812802Z"
+    },
+    "id": "6eeb10de258a4471977fc09126f7b758"
+}
