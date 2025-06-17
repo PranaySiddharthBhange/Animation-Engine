@@ -1,4 +1,6 @@
-const API_BASE_URL = 'https://animation-server.onrender.com';
+
+
+const API_BASE_URL = 'https://animation-server.onrender.com'; // localhost:3000
 const STORAGE_KEY = 'Storage';
 const TOKEN_REFRESH_INTERVAL = 50*  60 * 1000; 
 const SESSION_EXPIRATION = 23 * 60 * 60 * 1000; 
