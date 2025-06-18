@@ -189,9 +189,16 @@ const processUpload = async (req, res) => {
     zip.extractAllTo(uploadPath, true);
 
     // TODO: Call Inventor API before processing and get joints and constraints data
-    const inventorService = new InventorService('uploads', 'outputs');
-    const assemblyRelationshipsData = await inventorService.getAssemblyRelationshipsData();
-    console.log('Assembly data: ', assemblyRelationshipsData);
+    var assemblyRelationshipsData = {};
+    try {
+      console.log('Starting Inventor API processing...');
+      const inventorService = new InventorService('uploads/session_' + sessionId , 'outputs');
+      assemblyRelationshipsData = await inventorService.getAssemblyRelationshipsData();
+      console.log('Assembly data: ', assemblyRelationshipsData);
+    } 
+    catch (e) {
+      console.log('Inventor API processing failed:', e.message);
+    }
 
     // Start background processing (non-blocking, does not delay response)
     processFiles(sessionId, uploadPath, responsePath).catch(error => {

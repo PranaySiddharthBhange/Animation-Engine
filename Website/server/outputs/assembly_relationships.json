@@ -1,0 +1,189 @@
+{
+  "documentType": "kAssemblyDocumentObject",
+  "displayName": "CasterWheel.iam",
+  "components": [
+    {
+      "parent": "Root",
+      "name": "axle:1",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "axlesupport:1",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "bolt:1",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "bolt:2",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "bolt:3",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "bolt:4",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "bush:1",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "bush:2",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "Topplate:1",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "nut:1",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "nut:2",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "nut:3",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "nut:4",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "axlesupport:2",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    },
+    {
+      "parent": "Root",
+      "name": "wheel 1:1",
+      "documentType": "kPartDocumentObject",
+      "children": []
+    }
+  ],
+  "constraints": [],
+  "joints": [
+    {
+      "name": "Rigid:1",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "bolt:2",
+      "occurrenceTwo": "Topplate:1"
+    },
+    {
+      "name": "Rotational:1",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "bolt:4",
+      "occurrenceTwo": "Topplate:1"
+    },
+    {
+      "name": "Rotational:2",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "bolt:3",
+      "occurrenceTwo": "Topplate:1"
+    },
+    {
+      "name": "Rotational:3",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "bolt:1",
+      "occurrenceTwo": "Topplate:1"
+    },
+    {
+      "name": "Rotational:4",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "axlesupport:1",
+      "occurrenceTwo": "Topplate:1"
+    },
+    {
+      "name": "Rotational:5",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "axlesupport:1",
+      "occurrenceTwo": "Topplate:1"
+    },
+    {
+      "name": "Rotational:6",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "axlesupport:2",
+      "occurrenceTwo": "Topplate:1"
+    },
+    {
+      "name": "Rotational:7",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "axle:1",
+      "occurrenceTwo": "axlesupport:1"
+    },
+    {
+      "name": "Rotational:8",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "bush:2",
+      "occurrenceTwo": "axlesupport:2"
+    },
+    {
+      "name": "Rotational:9",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "bush:1",
+      "occurrenceTwo": "axlesupport:1"
+    },
+    {
+      "name": "Rotational:10",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "nut:1",
+      "occurrenceTwo": "axlesupport:1"
+    },
+    {
+      "name": "Rotational:11",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "nut:2",
+      "occurrenceTwo": "axlesupport:2"
+    },
+    {
+      "name": "Rotational:12",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "nut:4",
+      "occurrenceTwo": "axlesupport:2"
+    },
+    {
+      "name": "Rotational:13",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "nut:3",
+      "occurrenceTwo": "axlesupport:1"
+    },
+    {
+      "name": "Cylindrical:1",
+      "type": "kAssemblyJointObject",
+      "occurrenceOne": "wheel 1:1",
+      "occurrenceTwo": "axle:1"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-const { spawn } = require('child_process');
+const { execFile } = require('child_process');
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -11,6 +11,7 @@ class InventorService {
         // Resolve to absolute paths relative to the project root
         this.inputFolder = path.resolve(process.cwd(), inputFolder);
         this.outputFolder = path.resolve(process.cwd(), outputFolder);
+        console.log(`1. InventorService initialized with \ninput: ${this.inputFolder}, \noutput: ${this.outputFolder}\n`);
     }
 
     /**
@@ -19,7 +20,11 @@ class InventorService {
      */
     async findAssemblyFile() {
         const files = await fs.readdir(this.inputFolder);
+        console.log(`2. Found files in input folder: `, files);
+
         const iamFile = files.find(f => f.toLowerCase().endsWith('.iam'));
+        console.log(`3. Found assembly file: ${iamFile}\n`);
+
         if (!iamFile) throw new Error('No .iam assembly file found in input folder');
         return path.join(this.inputFolder, iamFile);
     }
@@ -32,24 +37,15 @@ class InventorService {
      */
     static async runExporter(inputAssemblyPath, outputJsonPath) {
         return new Promise((resolve, reject) => {
-            const exePath = path.resolve(__dirname, '../../inventor/InventorExporterAlgo.exe');
+            const exePath = path.resolve(__dirname, '../inventor/InventorExporterAlgo.exe');
             const args = [inputAssemblyPath, outputJsonPath];
-            const exporter = spawn(exePath, args, { stdio: 'inherit' });
-
-            exporter.on('error', (err) => {
-                reject(new Error(`Failed to start InventorExporterAlgo.exe: ${err.message}`));
-            });
-
-            exporter.on('close', async (code) => {
-                if (code !== 0) {
-                    return reject(new Error(`InventorExporterAlgo.exe exited with code ${code}`));
+            execFile(exePath, args, (error, stdout, stderr) => {
+                if (error) {
+                    return reject(new Error(`Failed to run InventorExporterAlgo.exe: ${error.message}\n${stderr}`));
                 }
-                try {
-                    const data = await fs.readFile(outputJsonPath, 'utf-8');
-                    resolve(JSON.parse(data));
-                } catch (err) {
-                    reject(new Error(`Failed to read or parse output JSON: ${err.message}`));
-                }
+                fs.readFile(outputJsonPath, 'utf-8')
+                    .then(data => resolve(JSON.parse(data)))
+                    .catch(err => reject(new Error(`Failed to read or parse output JSON: ${err.message}`)));
             });
         });
     }
