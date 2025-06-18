@@ -48,7 +48,9 @@ const UploadPage = () => {
         throw new Error(errorData.error || 'Upload failed');
       }
 
-      const { sessionId } = await response.json();
+      const { sessionId, assemblyRelationshipsData } = await response.json();
+      console.log(assemblyRelationshipsData);
+      
       handleProcessingStart(sessionId);
     } catch (err) {
       setError(err.message || 'Upload failed. Please try again.');
