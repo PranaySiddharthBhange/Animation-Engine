@@ -1,28 +1,40 @@
-// App.js
-import React from 'react';
-import Button from './components/Button';
-import handleClick2 from './utils/handleClick2';
-import handleClick1 from './utils/handleClick1';
-
+import React, { useState, useRef, useCallback } from 'react';
+import ModelViewer from './components/ModelViewer.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import './App.css';
 
 const App = () => {
- 
+    const [viewer, setViewer] = useState(null);
+    const viewerRef = useRef();
 
-  return (
-    <div style={{ display: 'flex', gap: '10px' }}>
-      <Button
-        title="Button 1"
-        action={handleClick1}
-        style={{ backgroundColor: 'red', color: 'white', padding: '10px' }}
-      />
-      <Button
-        title="Button 2"
-        action={handleClick2}
-        style={{ backgroundColor: 'green', color: 'white', padding: '10px' }}
-      />
-    
-    </div>
-  );
+    const handleViewerInitialized = useCallback((viewerInstance) => {
+        viewerRef.current = viewerInstance;
+        setViewer(viewerInstance);
+    }, []);
+
+    return (
+        <div className="flex h-screen justify-around items-center bg-blue-300  border-2 border-red-500">
+           <div className=" w-1/3 bg-blue-500 flex items-center justify-center borde h-full">
+                <Dashboard viewer={viewer} />
+            </div>
+            <div className='bg-red-500 w-full h-full flex  flex-col justify-between'>
+               <div className='bg-green-500 h-full flex flex-col'>
+                <div className='bg-yellow-500 h-1/4'>Viewer</div>
+                <div className='h-full'>
+                    <ModelViewer onViewerInitialized={handleViewerInitialized} />
+                </div>
+               </div>
+               <div className='bg-yellow-500 h-1/4'>Buttons</div>
+            </div>
+            {/* Left side: Model Viewer */}
+            {/* <div className="w-1/2 border border-green-500 bg-red-400">
+                <ModelViewer onViewerInitialized={handleViewerInitialized} />
+            </div> */}
+
+            {/* Right side: Dashboard */}
+           
+        </div>
+    );
 };
 
 export default App;
