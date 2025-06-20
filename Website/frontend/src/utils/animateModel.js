@@ -6,8 +6,22 @@ const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemi
 // Store initial fragment states
 const initialFragmentStates = new Map();
 
-// Store disassembly commands for reassembly
-let disassemblyCommands = [];
+// Get and store animation sequences
+const getStoredSequences = () => {
+    const sequences = sessionStorage.getItem('sequences');
+    return sequences ? JSON.parse(sequences) : [];
+};
+
+const addSequenceToStorage = (sequence) => {
+    const sequences = getStoredSequences();
+    sequences.push(sequence);
+    sessionStorage.setItem('sequences', JSON.stringify(sequences));
+};
+
+const getLatestSequence = () => {
+    const sequences = getStoredSequences();
+    return sequences.length > 0 ? sequences[sequences.length - 1] : [];
+};
 
 export async function animateModel(viewer, mode = 'disassembly') {
     try {
@@ -41,13 +55,14 @@ export async function animateModel(viewer, mode = 'disassembly') {
                 jointsAndConstraintsData,
                 mode
             );
-            // Store for reassembly
-            disassemblyCommands = [...commands];
+            // Store for current session
+            addSequenceToStorage(commands);
         } else {
-            // Use stored disassembly commands for reassembly
-            commands = disassemblyCommands.length > 0 
-                ? disassemblyCommands 
-                : await getGeminiAnimationCommands(
+            // Use latest disassembly commands for reassembly
+            commands = getLatestSequence();
+            if (commands.length === 0) {
+                // Fallback if no stored commands
+                commands = await getGeminiAnimationCommands(
                     viewer, 
                     sequence,
                     propertiesData,
@@ -55,6 +70,7 @@ export async function animateModel(viewer, mode = 'disassembly') {
                     jointsAndConstraintsData,
                     mode
                 );
+            }
         }
         
         // Execute animations
@@ -66,6 +82,9 @@ export async function animateModel(viewer, mode = 'disassembly') {
         return false;
     }
 }
+
+
+
 
 function getAssemblySequence(properties, hierarchy, jointsData, mode) {
     // Build assembly graph
