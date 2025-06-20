@@ -2,8 +2,10 @@
 
 .viewer-container {
     width:full;
-    height: 700px;
+    
+    height: 600px;
     background-color: #eee;
     display: block;
     position: relative;
+    margin-top: 100px;
 }
