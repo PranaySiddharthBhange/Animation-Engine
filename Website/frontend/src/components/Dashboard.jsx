@@ -4,22 +4,40 @@ import animateModel from '../utils/animateModel';
 
 const Dashboard = ({ viewer }) => {
     const [isAnimating, setIsAnimating] = useState(false);
-    const [currentMode, setCurrentMode] = useState('disassembly');
+    const [animationStatus, setAnimationStatus] = useState('idle'); // idle, disassembling, reassembling
 
-    const handleAnimate = async (mode) => {
+    const handleAnimate = async () => {
         if (isAnimating) return;
         
         setIsAnimating(true);
-        setCurrentMode(mode);
         
         if (viewer && viewer.model) {
-            const success = await animateModel(viewer, mode);
-            if (success) {
-                console.log(`${mode === 'disassembly' ? 'Disassembly' : 'Reassembly'} completed!`);
+            // First disassemble
+            setAnimationStatus('disassembling');
+            const disassemblySuccess = await animateModel(viewer, 'disassembly');
+            
+            if (disassemblySuccess) {
+                // Then reassemble
+                setAnimationStatus('reassembling');
+                const reassemblySuccess = await animateModel(viewer, 'assembly');
+                
+                if (reassemblySuccess) {
+                    console.log('Full animation sequence completed!');
+                }
             }
         }
         
         setIsAnimating(false);
+        setAnimationStatus('idle');
+    };
+
+    const getButtonText = () => {
+        if (isAnimating) {
+            if (animationStatus === 'disassembling') return 'Disassembling...';
+            if (animationStatus === 'reassembling') return 'Reassembling...';
+            return 'Animating...';
+        }
+        return 'Generate Animation';
     };
 
     return (
@@ -27,26 +45,14 @@ const Dashboard = ({ viewer }) => {
             <h2>Model Controls</h2>
             <div className="button-group">
                 <Button 
-                    title={isAnimating && currentMode === 'disassembly' ? "Animating..." : "Disassemble"} 
-                    action={() => handleAnimate('disassembly')}
+                    title={getButtonText()} 
+                    action={handleAnimate}
                     disabled={isAnimating}
                     style={{ 
                         padding: '10px 20px', 
-                        backgroundColor: isAnimating && currentMode === 'disassembly' ? '#2E7D32' : '#4CAF50', 
+                        backgroundColor: isAnimating ? '#2E7D32' : '#4CAF50', 
                         color: 'white',
                         zIndex: 1000 
-                    }}
-                />
-                <Button 
-                    title={isAnimating && currentMode === 'assembly' ? "Animating..." : "Reassemble"} 
-                    action={() => handleAnimate('assembly')}
-                    disabled={isAnimating}
-                    style={{ 
-                        padding: '10px 20px', 
-                        backgroundColor: isAnimating && currentMode === 'assembly' ? '#1565C0' : '#2196F3', 
-                        color: 'white',
-                        zIndex: 1000,
-                        marginTop: '10px'
                     }}
                 />
             </div>

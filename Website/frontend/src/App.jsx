@@ -13,26 +13,18 @@ const App = () => {
     }, []);
 
     return (
-        <div className="flex h-screen justify-around items-center bg-blue-300  border-2 border-red-500">
-           <div className=" w-1/3 bg-blue-500 flex items-center justify-center borde h-full">
+        <div className="flex h-screen justify-around items-center bg-blue-300 border-2 border-red-500">
+            <div className="w-1/3 bg-blue-500 flex items-center justify-center h-full">
                 <Dashboard viewer={viewer} />
             </div>
-            <div className='bg-red-500 w-full h-full flex  flex-col justify-between'>
-               <div className='bg-green-500 h-full flex flex-col'>
-                <div className='bg-yellow-500 h-1/4'>Viewer</div>
-                <div className='h-full'>
-                    <ModelViewer onViewerInitialized={handleViewerInitialized} />
+            <div className='bg-red-500 w-full h-full flex flex-col justify-between'>
+                <div className='bg-green-500 h-full flex flex-col'>
+                    <div className='bg-yellow-500 h-1/4'>Viewer</div>
+                    <div className='h-full'>
+                        <ModelViewer onViewerInitialized={handleViewerInitialized} />
+                    </div>
                 </div>
-               </div>
-               <div className='bg-yellow-500 h-1/4'>Buttons</div>
             </div>
-            {/* Left side: Model Viewer */}
-            {/* <div className="w-1/2 border border-green-500 bg-red-400">
-                <ModelViewer onViewerInitialized={handleViewerInitialized} />
-            </div> */}
-
-            {/* Right side: Dashboard */}
-           
         </div>
     );
 };

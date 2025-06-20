@@ -6,8 +6,16 @@ const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemi
 // Store initial fragment states
 const initialFragmentStates = new Map();
 
+// Store disassembly commands for reassembly
+let disassemblyCommands = [];
+
 export async function animateModel(viewer, mode = 'disassembly') {
     try {
+        // Only reset for disassembly
+        if (mode === 'disassembly') {
+            resetAllFragments(viewer);
+        }
+        
         // Load structured data from localStorage
         const data = JSON.parse(localStorage.getItem("data") || "{}");
         const propertiesData = data.properties;
@@ -22,15 +30,32 @@ export async function animateModel(viewer, mode = 'disassembly') {
             mode
         );
         
-        // Get animation commands using Gemini AI
-        const commands = await getGeminiAnimationCommands(
-            viewer, 
-            sequence,
-            propertiesData,
-            hierarchyData,
-            jointsAndConstraintsData,
-            mode
-        );
+        let commands;
+        if (mode === 'disassembly') {
+            // Get new disassembly commands
+            commands = await getGeminiAnimationCommands(
+                viewer, 
+                sequence,
+                propertiesData,
+                hierarchyData,
+                jointsAndConstraintsData,
+                mode
+            );
+            // Store for reassembly
+            disassemblyCommands = [...commands];
+        } else {
+            // Use stored disassembly commands for reassembly
+            commands = disassemblyCommands.length > 0 
+                ? disassemblyCommands 
+                : await getGeminiAnimationCommands(
+                    viewer, 
+                    sequence,
+                    propertiesData,
+                    hierarchyData,
+                    jointsAndConstraintsData,
+                    mode
+                );
+        }
         
         // Execute animations
         await executeAnimationQueue(viewer, commands, mode);
@@ -317,17 +342,39 @@ function resetAllFragments(viewer) {
 }
 
 async function executeAnimationQueue(viewer, commands, mode) {
-    // For reassembly, reverse the command sequence
+    // For reassembly, reverse and invert commands
     const executionCommands = mode === 'assembly' 
-        ? [...commands].reverse() 
+        ? [...commands].reverse().map(invertCommand) 
         : commands;
     
     for (const cmd of executionCommands) {
-        await executeSmoothAnimation(viewer, cmd, mode);
+        await executeSmoothAnimation(viewer, cmd);
     }
 }
 
-function executeSmoothAnimation(viewer, cmd, mode) {
+function invertCommand(cmd) {
+    const inverted = {...cmd};
+    
+    if (cmd.action === 'rotate') {
+        inverted.params = {...cmd.params};
+        inverted.params.angle = -cmd.params.angle;
+    } 
+    else if (cmd.action === 'translate') {
+        inverted.params = {
+            x: -(cmd.params.x || 0),
+            y: -(cmd.params.y || 0),
+            z: -(cmd.params.z || 0)
+        };
+    }
+    else if (cmd.action === 'scale') {
+        inverted.params = {...cmd.params};
+        inverted.params.factor = 1 / (cmd.params.factor || 1.5);
+    }
+    
+    return inverted;
+}
+
+function executeSmoothAnimation(viewer, cmd) {
     return new Promise(resolve => {
         const fragProxy = viewer.impl.getFragmentProxy(
             viewer.model, 
@@ -345,12 +392,6 @@ function executeSmoothAnimation(viewer, cmd, mode) {
         const currentScale = fragProxy.scale.clone();
         const currentQuaternion = fragProxy.quaternion.clone();
 
-        // Get initial state if available
-        const initialState = initialFragmentStates.get(parseInt(cmd.fragmentId));
-        const originalPosition = initialState?.position || new THREE.Vector3(0, 0, 0);
-        const originalScale = initialState?.scale || new THREE.Vector3(1, 1, 1);
-        const originalQuaternion = initialState?.quaternion || new THREE.Quaternion(0, 0, 0, 1);
-
         // Calculate target state
         let targetPosition, targetScale, targetQuaternion;
         const params = cmd.params || {};
@@ -364,47 +405,28 @@ function executeSmoothAnimation(viewer, cmd, mode) {
                 const angleRad = (params.angle || 45) * Math.PI / 180;
                 const rotationQuaternion = new THREE.Quaternion().setFromAxisAngle(axis, angleRad);
                 
-                if (mode === 'disassembly') {
-                    targetQuaternion = rotationQuaternion.multiply(currentQuaternion);
-                } else {
-                    // For reassembly, apply inverse rotation
-                    const inverseRotation = rotationQuaternion.invert();
-                    targetQuaternion = inverseRotation.multiply(currentQuaternion);
-                }
-                
-                targetPosition = mode === 'disassembly' ? 
-                    currentPosition.clone() : 
-                    originalPosition.clone();
+                targetQuaternion = rotationQuaternion.multiply(currentQuaternion);
+                targetPosition = currentPosition.clone();
                 targetScale = currentScale.clone();
                 break;
 
             case "scale":
                 const factor = params.factor || 1.5;
-                if (mode === 'disassembly') {
-                    targetScale = new THREE.Vector3(
-                        currentScale.x * factor,
-                        currentScale.y * factor,
-                        currentScale.z * factor
-                    );
-                } else {
-                    // For reassembly, revert to original scale
-                    targetScale = originalScale.clone();
-                }
+                targetScale = new THREE.Vector3(
+                    currentScale.x * factor,
+                    currentScale.y * factor,
+                    currentScale.z * factor
+                );
                 targetPosition = currentPosition.clone();
                 targetQuaternion = currentQuaternion.clone();
                 break;
 
             case "translate":
-                if (mode === 'disassembly') {
-                    targetPosition = new THREE.Vector3(
-                        currentPosition.x + (params.x || 0),
-                        currentPosition.y + (params.y || 0),
-                        currentPosition.z + (params.z || 0)
-                    );
-                } else {
-                    // For reassembly, move back to original position
-                    targetPosition = originalPosition.clone();
-                }
+                targetPosition = new THREE.Vector3(
+                    currentPosition.x + (params.x || 0),
+                    currentPosition.y + (params.y || 0),
+                    currentPosition.z + (params.z || 0)
+                );
                 targetScale = currentScale.clone();
                 targetQuaternion = currentQuaternion.clone();
                 break;
