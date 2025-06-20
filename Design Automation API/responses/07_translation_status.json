@@ -1,0 +1,78 @@
+{
+    "type": "manifest",
+    "hasThumbnail": "true",
+    "status": "success",
+    "progress": "complete",
+    "region": "US",
+    "urn": "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTIwXzIwMjUvQXNzZW1ibHkxLmlhbQ",
+    "version": "1.0",
+    "derivatives": [
+        {
+            "name": "Assembly1.iam",
+            "hasThumbnail": "true",
+            "status": "success",
+            "progress": "complete",
+            "outputType": "svf2",
+            "children": [
+                {
+                    "guid": "d2046f22-9c0f-4d9c-853b-abb4ef0c2395",
+                    "type": "geometry",
+                    "role": "3d",
+                    "name": "Scene",
+                    "status": "success",
+                    "progress": "complete",
+                    "hasThumbnail": "true",
+                    "children": [
+                        {
+                            "guid": "b04d6264-e50c-4f02-91b4-c22d71a6c532",
+                            "type": "resource",
+                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTIwXzIwMjUvQXNzZW1ibHkxLmlhbQ/output/1/Assembly1.svf.png01_thumb_400x400.png",
+                            "resolution": [
+                                400,
+                                400
+                            ],
+                            "mime": "image/png",
+                            "role": "thumbnail"
+                        },
+                        {
+                            "guid": "fca9c7c9-26de-4fb3-b924-00a1565913c8",
+                            "type": "resource",
+                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTIwXzIwMjUvQXNzZW1ibHkxLmlhbQ/output/1/Assembly1.svf.png01_thumb_200x200.png",
+                            "resolution": [
+                                200,
+                                200
+                            ],
+                            "mime": "image/png",
+                            "role": "thumbnail"
+                        },
+                        {
+                            "guid": "1f54a27c-c946-4503-b588-03f44b0a5f70",
+                            "type": "resource",
+                            "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTIwXzIwMjUvQXNzZW1ibHkxLmlhbQ/output/1/Assembly1.svf.png01_thumb_100x100.png",
+                            "resolution": [
+                                100,
+                                100
+                            ],
+                            "mime": "image/png",
+                            "role": "thumbnail"
+                        },
+                        {
+                            "role": "graphics",
+                            "mime": "application/autodesk-svf2",
+                            "guid": "1084ce6c-3f2a-4311-8762-c95a0a316935",
+                            "type": "resource"
+                        }
+                    ]
+                },
+                {
+                    "guid": "471860e4-562b-4811-a1e8-548150d043ef",
+                    "type": "resource",
+                    "urn": "urn:adsk.viewing:fs.file:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6anVuZTIwXzIwMjUvQXNzZW1ibHkxLmlhbQ/output/1/properties.db",
+                    "role": "Autodesk.CloudPlatform.PropertyDatabase",
+                    "mime": "application/autodesk-db",
+                    "status": "success"
+                }
+            ]
+        }
+    ]
+}
