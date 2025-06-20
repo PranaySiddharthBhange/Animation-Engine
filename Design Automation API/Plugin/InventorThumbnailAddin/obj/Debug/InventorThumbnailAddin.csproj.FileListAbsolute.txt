@@ -1,0 +1,33 @@
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.Inventor.addin
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.dll
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.pdb
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\bin\Debug\Autodesk.Forge.DesignAutomation.Inventor.Utils.dll
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\bin\Debug\Newtonsoft.Json.dll
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\bin\Debug\Newtonsoft.Json.xml
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.csproj.AssemblyReference.cache
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.csproj.CoreCompileInputs.cache
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\obj\Debug\Inventor.D87FD83F.Up2Date
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.dll
+C:\Users\omkar\OneDrive\Desktop\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.pdb
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.Inventor.addin
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.dll
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.pdb
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\bin\Debug\Autodesk.Forge.DesignAutomation.Inventor.Utils.dll
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.csproj.AssemblyReference.cache
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.csproj.CoreCompileInputs.cache
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\obj\Debug\Inventor.D87FD83F.Up2Date
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.dll
+C:\Users\Omkar Auti\Desktop\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.pdb
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.Inventor.addin
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.dll
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\bin\Debug\InventorThumbnailAddin.pdb
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\bin\Debug\Autodesk.Forge.DesignAutomation.Inventor.Utils.dll
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.csproj.AssemblyReference.cache
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.csproj.CoreCompileInputs.cache
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\obj\Debug\Inventor.D87FD83F.Up2Date
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.dll
+C:\Users\Omkar Auti\Desktop\Design Automation API\Plugin\InventorThumbnailAddin\obj\Debug\InventorThumbnailAddin.pdb

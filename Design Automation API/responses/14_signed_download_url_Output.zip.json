@@ -1,0 +1,10 @@
+{
+    "status": "complete",
+    "url": "https://s3.amazonaws.com/com.autodesk.oss-transient/0e/cc/a6/4f4ce9e880afe313343fc646acc5e47b51/june20_2025?response-content-disposition=attachment%3B%20filename%3D%22Output.zip%22&response-content-type=application%2Foctet-stream&X-Amz-Security-Token=IQoJb3JpZ2luX2VjENb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJGMEQCIB2sMMjwLk%2F5nkiETQ4lP03An6%2Bqm1sCtZQ6s7LPV3aPAiAKG%2F%2Bt3m4juyvwPGOmgJka2r0AFUTsM7b8W9i8I2HkyCrBAgi%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYwNDczMzAwOTQwMyIMaPsHA8Lesxl4ujfeKpUCN8%2F4DAjv36HOw7gBssdyH9yLP1RfktSGj1FaUwCBzjLZ%2B9uZzgHMv38ngdBR9o9zabeLENn1JZApGroSZ0%2F7cU0GjoumAjNeiWk%2FgQ%2FQ9%2Fx3O900UFE%2F44j00EytydvNL8oTNUZ3obu3wBXcjzeU9PmZjwBeYP1lF9cdMzdoYqI289DwH4Oj6cIz5SWHTDIjsxKIlLTfUGkbusu4hI1EzUtsXt9FOtTdxQm9ifLulQXymsckWzxsp9F%2F6ZDCt9YIl21VwOMnOTJSN2dVDw120VlJQIQa2eXy7dScAIkB4aSE7U4BSeqLUPwkiqVQqQNcBD%2BTQ7POU2JF1e4kFwnZdBOhs5mI0%2BtMPcUNCGrbst4Y3%2FWZOTD20tXCBjqeAfQOB3A%2B%2F8I6DiXdtakaWl3Y11WUj5i%2BMMc26MD%2BvUz9BByZlTVuw9rtGXxvljSdpleoLY156a6n5gWkDlXedTCCtME5wHXLyf%2B7UpmkixyGRbJGjw0EPB0KPIkhqnxR%2BFTjWkRnjpOG%2BUCjdLHYHF8lineQeij%2F287%2BYt83tQllsZNJdP0r%2Bq8UL64C3s33uloTwsB8oUqJzR1UBh61&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250620T140349Z&X-Amz-SignedHeaders=host&X-Amz-Credential=ASIAYZTHFNX55MQYDAX5%2F20250620%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Expires=119&X-Amz-Signature=6afc501b3626a4022ab9c485da60416022b47d9ee5bc8e464f013d0c025d6dbf",
+    "params": {
+        "content-type": "application/octet-stream",
+        "content-disposition": "attachment; filename=\"Output.zip\""
+    },
+    "size": 1147,
+    "sha1": "0ecca64f4ce9e880afe313343fc646acc5e47b51"
+}
