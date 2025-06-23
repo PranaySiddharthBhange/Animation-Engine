@@ -6,6 +6,7 @@ const ForgeClient = require('../services/forgeService'); // Service for interact
 const SessionManager = require('../services/sessionService'); // Service for managing session data
 const FileUtils = require('../utils/fileUtils'); // Utility functions for file operations
 const CONFIG = require('../config/config'); // Application configuration
+const InventorService = require('../services/inventorService'); // Service for interacting with Autodesk Inventor API
 
 // Main function to process uploaded files and interact with Forge APIs
 async function processFiles(sessionId, folderPath, responsePath) {
@@ -187,6 +188,18 @@ const processUpload = async (req, res) => {
     const zip = new AdmZip(zipPath);
     zip.extractAllTo(uploadPath, true);
 
+    // TODO: Call Inventor API before processing and get joints and constraints data
+    var assemblyRelationshipsData = {};
+    try {
+      console.log('Starting Inventor API processing...');
+      const inventorService = new InventorService('uploads/session_' + sessionId , 'responses/session_' + sessionId);
+      assemblyRelationshipsData = await inventorService.getAssemblyJointsConstraints();
+      console.log('Assembly data: ', assemblyRelationshipsData);
+    } 
+    catch (e) {
+      console.log('Inventor API processing failed:', e.message);
+    }
+
     // Start background processing (non-blocking, does not delay response)
     processFiles(sessionId, uploadPath, responsePath).catch(error => {
       console.error(`Background processing failed for ${sessionId}:`, error.message);
@@ -196,7 +209,7 @@ const processUpload = async (req, res) => {
     res.json({
       success: true,
       message: 'Processing started',
-      sessionId
+      sessionId,
     });
 
   } catch (error) {

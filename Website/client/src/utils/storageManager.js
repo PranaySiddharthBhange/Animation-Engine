@@ -1,4 +1,5 @@
-const API_BASE_URL = 'https://animation-server.onrender.com';
+
+const API_BASE_URL = import.meta.env.API_BASE_URL || 'http://localhost:3000';
 const STORAGE_KEY = 'Storage';
 const TOKEN_REFRESH_INTERVAL = 50*  60 * 1000; 
 const SESSION_EXPIRATION = 23 * 60 * 60 * 1000; 
@@ -10,7 +11,9 @@ const storageManager = {
   },
   
   set: (data) => {
+    const currentData = storageManager.get() || {};
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      ...currentData,
       ...data,
       timestamp: Date.now()
     }));

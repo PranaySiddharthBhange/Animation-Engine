@@ -1,4 +1,5 @@
 const SessionManager = require('../services/sessionService');
+const FileUtils = require('../utils/fileUtils');
 
 /**
  * Controller function to handle GET requests for session status.
@@ -31,12 +32,39 @@ const getStatus = async (req, res) => {
       });
     }
 
+    const sessionResult = session.result || {};
+
+    let objectHierarchy = null;
+    let properties = null;
+    let jointsConstraints = null;
+    if(session.status === 'completed') {
+      // create path of three files
+      const objectHierarchyPath = `responses/session_${sessionId}/09_object_hierarchy.json`;
+      const propertiesPath = `responses/session_${sessionId}/10_properties_all_objects.json`;
+      const jointsConstraintsPath = `responses/session_${sessionId}/joints_constraints.json`;
+
+      // Read those files and add to result
+      objectHierarchy = await FileUtils.readJsonFile(objectHierarchyPath);
+      properties = await FileUtils.readJsonFile(propertiesPath);
+      jointsConstraints = await FileUtils.readJsonFile(jointsConstraintsPath);
+    }
+
     // Respond with session status and relevant details
     res.json({
-      status: session.status,         // Current status of the session (e.g., 'processing', 'completed')
+      status: session.status || 'Almost done',         // Current status of the session (e.g., 'processing', 'completed')
       message: session.message,       // Optional message about the session
       progress: session.progress || 0, // Progress value (default to 0 if not set)
-      result: session.result,         // Result data if available
+
+      sessionId: sessionId,          // Unique identifier for the session
+      bucketKey: sessionResult.bucketKey, // Bucket key for the oss buckets
+      accessToken: sessionResult.accessToken, // Access token if available
+      encodedUrn: sessionResult.encodedUrn, // Encoded URN if available
+
+      objectHierarchy: objectHierarchy, // Object hierarchy data if available
+      properties: properties,         // Properties data if available
+      jointsConstraints: jointsConstraints, // Joints and constraints data if available
+      dissemblySequence: [], // Disassembly sequence if available
+
       error: session.error,           // Any error information if present
       createdAt: session.createdAt,   // Timestamp when session was created
       updatedAt: session.updatedAt    // Timestamp when session was last updated

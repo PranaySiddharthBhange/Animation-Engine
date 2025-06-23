@@ -11,5 +11,20 @@
     "path": "^0.12.7",
     "uuid": "^11.1.0",
     "winston": "^3.17.0"
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }

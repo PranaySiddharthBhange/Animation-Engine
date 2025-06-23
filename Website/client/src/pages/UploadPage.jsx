@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE_URL } from "../utils/storageManager";
+import { API_BASE_URL, storageManager } from "../utils/storageManager";
 import { FileArchive, Upload, AlertCircle } from "lucide-react";
 import { useAppContext } from "../context/AppContext";
 
@@ -49,6 +49,7 @@ const UploadPage = () => {
       }
 
       const { sessionId } = await response.json();
+      
       handleProcessingStart(sessionId);
     } catch (err) {
       setError(err.message || 'Upload failed. Please try again.');
