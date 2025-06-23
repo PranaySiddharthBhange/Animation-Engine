@@ -7,7 +7,7 @@ import networkx as nx
 
 CLIENT_ID = "Kx5ZBaHiGk9aWpiSYTNKLWpuIJehrigAOV6sSng7D60kXGAq"
 CLIENT_SECRET = "r1AqeIwZQlj9Adnac88IbML01OGt9DHAKum741XBRFXMwbXuWzsf5aGVorDagXJq"
-BUCKET_KEY = "13june_2025"
+BUCKET_KEY = "16june_2025_1"
 POLICY_KEY = "transient"
 FOLDER_PATH = "upload"
 RESPONSES_FOLDER = "responses"
@@ -203,7 +203,7 @@ def check_translation_status(access_token, encoded_urn):
             print("❌ Translation failed or timed out.")
             break
         else:
-            time.sleep(30)
+            time.sleep(10)
 
 def retrieve_list_of_viewable_files(access_token, encoded_urn):
     url = f"https://developer.api.autodesk.com/modelderivative/v2/designdata/{encoded_urn}/metadata"
@@ -383,8 +383,9 @@ def save_graph_to_json(graph, output_file):
     """
     Saves the graph to JSON using node-link format with explicit 'edges' key.
     """
-    graph_data = nx.readwrite.json_graph.node_link_data(graph, edges='edges')
+    # Ensure output file is in responses folder
     output_path = os.path.join(RESPONSES_FOLDER, output_file)
+    graph_data = nx.readwrite.json_graph.node_link_data(graph, edges='edges')
     with open(output_path, 'w') as f:
         json.dump(graph_data, f, indent=2)
 
@@ -393,8 +394,11 @@ def load_graph_from_json(file_path):
     Loads the assembly graph from JSON.
     """
     try:
-        full_path = os.path.join(RESPONSES_FOLDER, file_path)
-        with open(full_path, 'r') as f:
+        # Check if file is already in responses folder path, otherwise add it
+        if not file_path.startswith(RESPONSES_FOLDER):
+            file_path = os.path.join(RESPONSES_FOLDER, file_path)
+        
+        with open(file_path, 'r') as f:
             data = json.load(f)
         G = nx.DiGraph()
         
@@ -459,12 +463,15 @@ def reverse_disassembly(disassembly_steps):
         assembly_sequence.append(step["removed_part"])
     return assembly_sequence
 
-def save_to_json(data, file_name, key_name):
+def save_to_json(data, file_path, key_name):
     """
     Saves the data to JSON in the responses folder.
     """
     try:
-        file_path = os.path.join(RESPONSES_FOLDER, file_name)
+        # Ensure file is saved in responses folder
+        if not file_path.startswith(RESPONSES_FOLDER):
+            file_path = os.path.join(RESPONSES_FOLDER, file_path)
+        
         with open(file_path, 'w') as f:
             json.dump({key_name: data}, f, indent=2)
         print(f"✅ Saved '{key_name}' to '{file_path}'.")
@@ -482,8 +489,8 @@ def generate_assembly_graph():
     # File paths
     properties_file = os.path.join(RESPONSES_FOLDER, '10_properties_all_objects.json')
     hierarchy_file = os.path.join(RESPONSES_FOLDER, '09_object_hierarchy.json')
-    joints_file = 'output_3.json'  # Assuming this exists in the root directory
-    output_file = '11_assembly_graph_demo.json'
+    joints_file = os.path.join(RESPONSES_FOLDER, 'output_3.json')  # Changed to look in responses folder
+    output_file = 'assembly_graph_demo_new.json'  # Will be saved in responses folder
 
     # Load JSON files
     properties_data = load_json(properties_file)
@@ -516,7 +523,7 @@ def generate_assembly_graph():
 
         # Save graph to JSON
         save_graph_to_json(assembly_graph, output_file)
-        print(f"✅ Assembly graph saved to responses/{output_file}")
+        print(f"✅ Assembly graph saved to {os.path.join(RESPONSES_FOLDER, output_file)}")
         return True
     else:
         print("⚠️ No assembly graph generated - insufficient data")
@@ -530,7 +537,7 @@ def run_assembly_pipeline():
     print("🏗️ STARTING ASSEMBLY PIPELINE PLANNING")
     print("="*50)
     
-    input_file = '12_assembly_graph_demo.json'
+    input_file = 'assembly_graph_demo_new.json'  # Will be loaded from responses folder
 
     # Load the assembly graph
     graph = load_graph_from_json(input_file)
@@ -553,7 +560,7 @@ def run_assembly_pipeline():
         return False
 
     # Save disassembly steps
-    save_to_json(disassembly_steps, '13_disassembly_sequence.json', key_name='disassembly_steps')
+    save_to_json(disassembly_steps, 'disassembly_sequence_new.json', key_name='disassembly_steps')
 
     # Generate assembly sequence
     assembly_sequence = reverse_disassembly(disassembly_steps)
@@ -562,7 +569,7 @@ def run_assembly_pipeline():
         print(f"  Step {idx}: Install '{part}'")
 
     # Save assembly sequence
-    save_to_json(assembly_sequence, '14_assembly_sequence.json', key_name='assembly_sequence')
+    save_to_json(assembly_sequence, 'assembly_sequence.json', key_name='assembly_sequence')
     
     print("✅ Assembly pipeline planning completed successfully!")
     return True

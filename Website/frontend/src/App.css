@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+.viewer-container {
+    width:full;
+    
+    height: 600px;
+    background-color: #eee;
+    display: block;
+    position: relative;
+    margin-top: 100px;
+}

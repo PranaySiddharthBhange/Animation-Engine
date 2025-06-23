@@ -1,0 +1,116 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorThumbnailAddin\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1835876B-20F9-4AE6-9E4F-C81B85203B6C}|InventorThumbnailAddin.csproj|C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorThumbnailAddin\\automation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1835876B-20F9-4AE6-9E4F-C81B85203B6C}|InventorThumbnailAddin.csproj|solutionrelative:automation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1835876B-20F9-4AE6-9E4F-C81B85203B6C}|InventorThumbnailAddin.csproj|c:\\users\\omkar auti\\desktop\\design automation api\\plugin\\inventorthumbnailaddin\\standardaddinserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1835876B-20F9-4AE6-9E4F-C81B85203B6C}|InventorThumbnailAddin.csproj|solutionrelative:standardaddinserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6EEB29D1-A97B-4E85-B351-1690E647F42D}|..\\InventorAddinTest\\InventorAddinTest.csproj|c:\\users\\omkar auti\\desktop\\design automation api\\plugin\\inventoraddintest\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 247,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StandardAddInServer.cs",
+              "DocumentMoniker": "C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorThumbnailAddin\\StandardAddInServer.cs",
+              "RelativeDocumentMoniker": "StandardAddInServer.cs",
+              "ToolTip": "C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorThumbnailAddin\\StandardAddInServer.cs",
+              "RelativeToolTip": "StandardAddInServer.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAcwCkAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T13:01:19.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Automation.cs",
+              "DocumentMoniker": "C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorThumbnailAddin\\Automation.cs",
+              "RelativeDocumentMoniker": "Automation.cs",
+              "ToolTip": "C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorThumbnailAddin\\Automation.cs",
+              "RelativeToolTip": "Automation.cs",
+              "ViewState": "AgIAALYAAAAAAAAAAAAIwPMAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T08:59:18.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Program.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\InventorAddinTest\\Program.cs",
+              "ToolTip": "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Program.cs",
+              "RelativeToolTip": "..\\..\\..\\InventorAddinTest\\Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAcwCUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-17T04:56:03.048Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 328,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 138,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorAddinTest\\Program.cs",
+              "RelativeDocumentMoniker": "..\\InventorAddinTest\\Program.cs",
+              "ToolTip": "C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorAddinTest\\Program.cs",
+              "RelativeToolTip": "..\\InventorAddinTest\\Program.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAkwBQAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-20T13:38:57.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
