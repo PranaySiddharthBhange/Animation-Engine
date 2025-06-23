@@ -192,8 +192,8 @@ const processUpload = async (req, res) => {
     var assemblyRelationshipsData = {};
     try {
       console.log('Starting Inventor API processing...');
-      const inventorService = new InventorService('uploads/session_' + sessionId , 'outputs');
-      assemblyRelationshipsData = await inventorService.getAssemblyRelationshipsData();
+      const inventorService = new InventorService('uploads/session_' + sessionId , 'responses/session_' + sessionId);
+      assemblyRelationshipsData = await inventorService.getAssemblyJointsConstraints();
       console.log('Assembly data: ', assemblyRelationshipsData);
     } 
     catch (e) {
@@ -210,8 +210,6 @@ const processUpload = async (req, res) => {
       success: true,
       message: 'Processing started',
       sessionId,
-      assemblyRelationshipsData,
-      // TODO: send joints and constraints data from Inventor API
     });
 
   } catch (error) {

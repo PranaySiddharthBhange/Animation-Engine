@@ -11,7 +11,9 @@ const storageManager = {
   },
   
   set: (data) => {
+    const currentData = storageManager.get() || {};
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      ...currentData,
       ...data,
       timestamp: Date.now()
     }));

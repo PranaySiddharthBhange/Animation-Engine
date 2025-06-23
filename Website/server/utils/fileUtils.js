@@ -108,6 +108,17 @@ class FileUtils {
       console.error(`Cleanup failed for ${filePath}:`, error.message);
     }
   }
+
+  static async readJsonFile(filePath) {
+    try {
+      // Read the file and parse it as JSON
+      const data = await fs.readFile(filePath, 'utf-8');
+      return JSON.parse(data);  
+    } 
+    catch(e) {
+      return { error: `Failed to read or parse JSON file at ${filePath}: ${e.message}` };
+    }
+  }
 }
 
 module.exports = FileUtils;

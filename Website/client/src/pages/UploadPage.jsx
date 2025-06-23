@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_BASE_URL } from "../utils/storageManager";
+import { API_BASE_URL, storageManager } from "../utils/storageManager";
 import { FileArchive, Upload, AlertCircle } from "lucide-react";
 import { useAppContext } from "../context/AppContext";
 
@@ -48,8 +48,7 @@ const UploadPage = () => {
         throw new Error(errorData.error || 'Upload failed');
       }
 
-      const { sessionId, assemblyRelationshipsData } = await response.json();
-      console.log(assemblyRelationshipsData);
+      const { sessionId } = await response.json();
       
       handleProcessingStart(sessionId);
     } catch (err) {

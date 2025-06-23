@@ -54,9 +54,9 @@ class InventorService {
      * Finds the assembly file, runs the exporter, and returns the relationships data.
      * @returns {Promise<Object>} - Parsed relationships data from output JSON
      */
-    async getAssemblyRelationshipsData() {
+    async getAssemblyJointsConstraints() {
         const assemblyPath = await this.findAssemblyFile();
-        const outputJsonPath = path.join(this.outputFolder, 'assembly_relationships.json');
+        const outputJsonPath = path.join(this.outputFolder, 'joints_constraints.json');
         // Run the exporter and wait for it to finish
         await InventorService.runExporter(assemblyPath, outputJsonPath);
         // Read and parse the output JSON file

@@ -19,22 +19,28 @@ const ProcessingPage = ({ sessionId }) => {
         if (!response.ok) throw new Error('Status check failed');
 
         const data = await response.json();
+        console.log('Status data: ', data);
         if (!isMounted) return;
 
         setMessage(data.message);
         setProgress(data.progress || 0);
 
         if (data.status === 'completed') {
+          console.log(data);
+
           clearInterval(intervalId);
           storageManager.set({
             sessionId,
             status: 'completed',
-            accessToken: data.result.accessToken,
-            encodedUrn: data.result.encodedUrn
+            accessToken: data.accessToken,
+            encodedUrn: data.encodedUrn,
+            jointsConstraints: data.jointsConstraints, 
+            objectHierarchy: data.objectHierarchy,
+            properties: data.properties,
           });
           handleProcessingComplete({
-            accessToken: data.result.accessToken,
-            encodedUrn: data.result.encodedUrn
+            accessToken: data.accessToken,
+            encodedUrn: data.encodedUrn
           });
         } else if (data.status === 'error') {
           clearInterval(intervalId);
