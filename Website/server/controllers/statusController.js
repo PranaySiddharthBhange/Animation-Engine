@@ -1,5 +1,6 @@
 const SessionManager = require('../services/sessionService');
 const FileUtils = require('../utils/fileUtils');
+const DesignAutomationService = require('../services/designAutomationService');
 
 /**
  * Controller function to handle GET requests for session status.
