@@ -102,6 +102,9 @@ async function processFiles(sessionId, folderPath, responsePath) {
 
     await forgeClient.getProperties(accessToken, encodedUrn, guidViewable, responsePath);
 
+    // TODO: Get joints & constraints from design automation service here
+    
+
     // Mark session as completed and store key results
     await SessionManager.updateSession(sessionId, {
       status: 'completed',
@@ -189,16 +192,16 @@ const processUpload = async (req, res) => {
     zip.extractAllTo(uploadPath, true);
 
     // TODO: Call Inventor API before processing and get joints and constraints data
-    var assemblyRelationshipsData = {};
-    try {
-      console.log('Starting Inventor API processing...');
-      const inventorService = new InventorService('uploads/session_' + sessionId , 'responses/session_' + sessionId);
-      assemblyRelationshipsData = await inventorService.getAssemblyJointsConstraints();
-      console.log('Assembly data: ', assemblyRelationshipsData);
-    } 
-    catch (e) {
-      console.log('Inventor API processing failed:', e.message);
-    }
+    // var assemblyRelationshipsData = {};
+    // try {
+    //   console.log('Starting Inventor API processing...');
+    //   const inventorService = new InventorService('uploads/session_' + sessionId , 'responses/session_' + sessionId);
+    //   assemblyRelationshipsData = await inventorService.getAssemblyJointsConstraints();
+    //   console.log('Assembly data: ', assemblyRelationshipsData);
+    // } 
+    // catch (e) {
+    //   console.log('Inventor API processing failed:', e.message);
+    // }
 
     // Start background processing (non-blocking, does not delay response)
     processFiles(sessionId, uploadPath, responsePath).catch(error => {
