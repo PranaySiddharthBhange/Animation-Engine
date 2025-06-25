@@ -270,6 +270,9 @@ def create_or_update_activity(token):
     }
 
     r = requests.post("https://developer.api.autodesk.com/da/us-east/v3/activities", headers=headers, json=data)
+    
+    print("Activity creation response:", r.status_code, r.text)
+
     if r.status_code == 409:
         print("ℹ️ Activity exists. Creating new version...")
         return create_activity_version(token)

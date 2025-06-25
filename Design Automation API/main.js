@@ -26,15 +26,16 @@ const RESPONSES_FOLDER = "responses";  // Folder to store API responses
 const FOLDER_PATH = "upload";  // Folder containing input files
 
 // Forge API credentials
-const CLIENT_ID = "kARf5BOK9ACxCqGUpWqM18p2OnlzxyGlgCm9AIrLOY1WXrvI";
-const CLIENT_SECRET = "CGG9rHGA27ckzmxPAKDUYbv0c8hFU4igSpSU0at4tEc69J1oXpDXHcC5OGRSwXCG";
+const CLIENT_ID = "VfDBDogsyVTG2DPdUva3g50EpxFr9YEjXHe0ZKidt1IzXKut";
+const CLIENT_SECRET = "k7c3ljTVOyPXkjAroZ6Yu5yKMd4T6xV5oPCmsZr1AC9AEI01GYH6Q6yliWwNy8fP";
 
-// Dynamic bucket name with timestamp
-const BUCKET_KEY = `bucket_${new Date().toISOString().replace(/[-:.]/g, "").slice(0, 14)}`;
+// Dynamic bucket name with uuid
+// const BUCKET_KEY = `bucket_${uuidv4().replace(/-/g, '')}`;
+const BUCKET_KEY = "joints_constraints_bucket";  // OSS bucket name
 const POLICY_KEY = "transient";  // Bucket retention policy
 
 // Design Automation identifiers
-const NICKNAME = "daa";  // Developer nickname
+const NICKNAME = "assembly_animation";  // Developer nickname
 const APPBUNDLE_ID = "joints_constraints_appbundle";  // AppBundle ID
 const ACTIVITY_ID = "joints_constraints_activity";  // Activity ID
 const ACTIVITY_ALIAS = "my_current_version";  // Activity version alias
@@ -319,7 +320,7 @@ async function createOrUpdateActivity(token) {
     const commandLine = "$(engine.path)\\InventorCoreConsole.exe /al \"$(appbundles[joints_constraints_appbundle].path)\"";
 
     const data = {
-        "id": ACTIVITY_ID,
+        "id": `${ACTIVITY_ID}`,
         "commandLine": commandLine,
         "parameters": {
             "inputZip": {
@@ -347,6 +348,9 @@ async function createOrUpdateActivity(token) {
             { headers }
         );
 
+        console.log("Activity Response: ", response);
+        saveResponseToFile("11_create_activity", response.data);
+
         if (response.status === 200) {
             console.log("✅ Activity created.");
             const version = response.data.version || 1;
@@ -372,6 +376,7 @@ async function createActivityVersion(token) {
     };
 
     const data = {
+        
         "commandLine": "$(engine.path)\\InventorCoreConsole.exe /al \"$(appbundles[joints_constraints_appbundle].path)\"",
         "parameters": {
             "inputZip": {
@@ -437,6 +442,7 @@ async function createActivityAlias(token, version) {
             const updateUrl = `${url}/${ACTIVITY_ALIAS}`;
             try {
                 const updateResponse = await axios.patch(updateUrl, { "version": version }, { headers });
+                
                 if (updateResponse.status === 200) {
                     console.log(`🔁 Activity alias updated to version ${version}`);
                     return true;
@@ -585,6 +591,8 @@ async function submitWorkItemWithZips(accessToken, inputKey, resultKey) {
             { headers }
         );
 
+        console.log("Response:: ", response);
+
         if (response.status === 200) {
             const workItemId = response.data.id;
             console.log(`✅ Workitem submitted! ID: ${workItemId}`);
@@ -596,6 +604,7 @@ async function submitWorkItemWithZips(accessToken, inputKey, resultKey) {
             return null;
         }
     } catch (error) {
+        console.log("❌ Error submitting workitem:");
         console.log("❌ Failed to submit workitem:", error.response?.data || error.message);
         await saveResponseToFile("12_submit_workitem_error", error.response?.data || {});
         return null;
@@ -708,7 +717,8 @@ async function main() {
     if (bucketName) {
         console.log(`✅ Bucket created: ${bucketName}`);
     } else {
-        console.log("❌ ERROR: Bucket creation failed. Continuing with existing bucket if possible.");
+        console.log("❌ ERROR: Bucket creation failed.");
+        throw new Error("❌ ERROR: Bucket creation failed.");
     }
 
     // 3. AppBundle Setup
@@ -746,6 +756,7 @@ async function main() {
 
     // 6. Submit and monitor workitem
     console.log("\n🚀 STEP 6: SUBMITTING WORKITEM...");
+    try{
     const workItemId = await submitWorkItemWithZips(token, inputKey, resultKey);
     
     if (workItemId) {
@@ -774,6 +785,10 @@ async function main() {
         }
     } else {
         console.log("❌ ERROR: Workitem submission failed. Exiting workflow.");
+    }
+} catch (error) {
+        console.error("❌ ERROR during workitem processing:", error.message);
+        console.log("Workflow terminated due to an error.");
     }
 }
 
