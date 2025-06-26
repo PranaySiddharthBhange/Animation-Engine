@@ -35,8 +35,9 @@ const BUCKET_KEY = "joints_constraints_bucket";  // OSS bucket name
 const POLICY_KEY = "transient";  // Bucket retention policy
 
 // Design Automation identifiers
-const NICKNAME = "assembly_animation";  // Developer nickname
+// const NICKNAME = "assembly_animation";  // Developer nickname
 const APPBUNDLE_ID = "joints_constraints_appbundle";  // AppBundle ID
+
 const ACTIVITY_ID = "joints_constraints_activity";  // Activity ID
 const ACTIVITY_ALIAS = "my_current_version";  // Activity version alias
 
@@ -337,7 +338,7 @@ async function createOrUpdateActivity(token) {
             }
         },
         "engine": ENGINE,
-        "appbundles": [`${NICKNAME}.${APPBUNDLE_ID}+my_working_version`],
+        "appbundles": [`${CLIENT_ID}.${APPBUNDLE_ID}+my_working_version`],
         "description": "Extracts joints and constraints from Inventor models"
     };
 
@@ -376,7 +377,6 @@ async function createActivityVersion(token) {
     };
 
     const data = {
-        
         "commandLine": "$(engine.path)\\InventorCoreConsole.exe /al \"$(appbundles[joints_constraints_appbundle].path)\"",
         "parameters": {
             "inputZip": {
@@ -393,7 +393,7 @@ async function createActivityVersion(token) {
             }
         },
         "engine": ENGINE,
-        "appbundles": [`${NICKNAME}.${APPBUNDLE_ID}+my_working_version`],
+        "appbundles": [`${CLIENT_ID}.${APPBUNDLE_ID}+my_working_version`],
         "description": "Updated version of activity"
     };
 
@@ -401,7 +401,7 @@ async function createActivityVersion(token) {
         const response = await axios.post(
             `https://developer.api.autodesk.com/da/us-east/v3/activities/${ACTIVITY_ID}/versions`,
             data,
-            { headers }
+            {headers} 
         );
 
         if (response.status === 200) {
@@ -563,7 +563,7 @@ async function submitWorkItemWithZips(accessToken, inputKey, resultKey) {
     };
 
     const payload = {
-        "activityId": `${NICKNAME}.${ACTIVITY_ID}+${ACTIVITY_ALIAS}`,
+        "activityId": `${CLIENT_ID}.${ACTIVITY_ID}+${ACTIVITY_ALIAS}`,
         "arguments": {
             "inputZip": {
                 "url": `urn:adsk.objects:os.object:${BUCKET_KEY}/${inputKey}`,
@@ -591,8 +591,6 @@ async function submitWorkItemWithZips(accessToken, inputKey, resultKey) {
             { headers }
         );
 
-        console.log("Response:: ", response);
-
         if (response.status === 200) {
             const workItemId = response.data.id;
             console.log(`✅ Workitem submitted! ID: ${workItemId}`);
@@ -604,7 +602,6 @@ async function submitWorkItemWithZips(accessToken, inputKey, resultKey) {
             return null;
         }
     } catch (error) {
-        console.log("❌ Error submitting workitem:");
         console.log("❌ Failed to submit workitem:", error.response?.data || error.message);
         await saveResponseToFile("12_submit_workitem_error", error.response?.data || {});
         return null;
@@ -758,6 +755,7 @@ async function main() {
     console.log("\n🚀 STEP 6: SUBMITTING WORKITEM...");
     try{
     const workItemId = await submitWorkItemWithZips(token, inputKey, resultKey);
+
     
     if (workItemId) {
         console.log(`ℹ️ Workitem ID: ${workItemId}`);

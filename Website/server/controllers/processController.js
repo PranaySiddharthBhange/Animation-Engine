@@ -6,7 +6,8 @@ const ForgeClient = require('../services/forgeService'); // Service for interact
 const SessionManager = require('../services/sessionService'); // Service for managing session data
 const FileUtils = require('../utils/fileUtils'); // Utility functions for file operations
 const CONFIG = require('../config/config'); // Application configuration
-const InventorService = require('../services/inventorService'); // Service for interacting with Autodesk Inventor API
+// const InventorService = require('../services/inventorService'); // Service for interacting with Autodesk Inventor API
+const DesignAutomationService = require('../services/designAutomationService'); // Service for interacting with Autodesk Design Automation API
 
 // Main function to process uploaded files and interact with Forge APIs
 async function processFiles(sessionId, folderPath, responsePath) {
@@ -97,13 +98,19 @@ async function processFiles(sessionId, folderPath, responsePath) {
     // Step 10: Retrieve all properties for all objects in the model
     await SessionManager.updateSession(sessionId, {
       message: 'Retrieving properties',
-      progress: 95
+      progress: 90
     });
 
     await forgeClient.getProperties(accessToken, encodedUrn, guidViewable, responsePath);
 
     // TODO: Get joints & constraints from design automation service here
-    
+    await SessionManager.updateSession(sessionId, {
+      message: 'Retrieving joints and constraints',
+      progress: 95
+    });
+
+    const daaService = new DesignAutomationService(accessToken, bucketKey, responsePath);
+    await daaService.extractJointsAndConstraints(assemblyFile, folderPath);
 
     // Mark session as completed and store key results
     await SessionManager.updateSession(sessionId, {
