@@ -1,89 +1,44 @@
 {
-  "DisplayName": "Assembly1.iam",
-  "FullFileName": "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Sandbox\\upload\\Assembly1.iam",
-  "DocumentType": "kAssemblyDocumentObject",
-  "ReferencedDocuments": [
-    "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Sandbox\\upload\\Socket_1.ipt",
-    "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Sandbox\\upload\\Lever_1.ipt",
-    "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Sandbox\\upload\\Connector_1.ipt",
-    "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Sandbox\\upload\\Ball_1.ipt",
-    "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Sandbox\\upload\\Base_1.ipt",
-    "C:\\Users\\Omkar Auti\\Desktop\\InventorAddinTest\\Sandbox\\upload\\FixturePlate.ipt",
-  ],
+  "FullFileName": "C:\\Users\\Omkar Auti\\Desktop\\Design Automation API\\Plugin\\InventorAddinTest\\Sandbox\\upload\\Assembly1.iam",
   "Components": [
     {
       "Name": "FixturePlate:1",
       "Type": "kPartDocumentObject",
-      "BoundingBox": {
-        "MinPoint": { "X": -2.54, "Y": -6.35, "Z": -0.508 },
-        "MaxPoint": { "X": 2.54, "Y": 6.35, "Z": 0.9525 },
-        "SizeX": 5.08,
-        "SizeY": 12.7,
-        "SizeZ": 1.4605
-      }
+      "DisplayName": "Miscellaneous"
     },
     {
       "Name": "Base_1:1",
       "Type": "kPartDocumentObject",
-      "BoundingBox": {
-        "MinPoint": { "X": -2.3876, "Y": -5.0768, "Z": -2.22044604925031E-16 },
-        "MaxPoint": { "X": 2.3876, "Y": 4.0552866610865, "Z": 3.3401 },
-        "SizeX": 4.7752,
-        "SizeY": 9.13208666108651,
-        "SizeZ": 3.3401
-      }
+      "DisplayName": "Wall Paint: Glossy"
     },
     {
       "Name": "Ball_1:1",
       "Type": "kPartDocumentObject",
-      "BoundingBox": {
-        "MinPoint": { "X": -0.599440000000026, "Y": -9.32259183875352, "Z": 1.86435999999994 },
-        "MaxPoint": { "X": 0.599440000000035, "Y": -0.8110518387535, "Z": 3.06324000000003 },
-        "SizeX": 1.19888000000006,
-        "SizeY": 8.51154000000002,
-        "SizeZ": 1.19888000000009
-      }
+      "DisplayName": "Metal"
     },
     {
       "Name": "Connector_1:1",
       "Type": "kPartDocumentObject",
-      "BoundingBox": {
-        "MinPoint": { "X": -1.21347533013606, "Y": -1.94289491491259, "Z": 1.8145569237002 },
-        "MaxPoint": { "X": 1.15888466986411, "Y": 2.47621273201142, "Z": 3.69814690343061 },
-        "SizeX": 2.37236000000017,
-        "SizeY": 4.41910764692401,
-        "SizeZ": 1.88358997973041
-      }
+      "DisplayName": "Miscellaneous"
     },
     {
       "Name": "Lever_1:1",
       "Type": "kPartDocumentObject",
-      "BoundingBox": {
-        "MinPoint": { "X": -0.75467533252037, "Y": -4.32452122888467, "Z": 1.63976320910448 },
-        "MaxPoint": { "X": 0.700084667479633, "Y": 6.0504339957018, "Z": 10.8439221361956 },
-        "SizeX": 1.45476,
-        "SizeY": 10.3749552245865,
-        "SizeZ": 9.20415892709109
-      }
+      "DisplayName": "Default"
     },
     {
       "Name": "Socket_1:1",
       "Type": "kPartDocumentObject",
-      "BoundingBox": {
-        "MinPoint": { "X": -2.14153838225191, "Y": -10.0881999136788, "Z": 1.66065904192136 },
-        "MaxPoint": { "X": 2.14153838225191, "Y": -8.32073496575209, "Z": 3.27438707670532 },
-        "SizeX": 4.28307676450382,
-        "SizeY": 1.76746494792671,
-        "SizeZ": 1.61372803478396
-      }
-    },
+      "DisplayName": "Metal"
+    }
   ],
   "Constraints": [
     {
       "Name": "Mate:1",
       "Type": "kMateConstraintObject",
-      "Suppressed": false
-    },
+      "EntityOne": "Lever_1:1",
+      "EntityTwo": "Base_1:1"
+    }
   ],
   "Joints": [
     {
@@ -115,6 +70,6 @@
       "Type": "kAssemblyJointObject",
       "OccurrenceOne": "Socket_1:1",
       "OccurrenceTwo": "Ball_1:1"
-    },
+    }
   ]
 }

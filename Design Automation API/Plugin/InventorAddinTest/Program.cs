@@ -1,5 +1,4 @@
 ﻿
-
 // Program.cs
 
 using System;
@@ -14,12 +13,12 @@ namespace InventorAddinTest
         {
             try
             {
+                
+                Console.WriteLine("Starting Inventor...");
                 InventorServer inventorApp = (InventorServer)Activator.CreateInstance(Type.GetTypeFromProgID("Inventor.Application"));
-                var automation = new Automation(inventorApp);
-
 
                 Console.WriteLine("Creating automation instance...");
-
+                var automation = new Automation(inventorApp);
 
                 Console.WriteLine("Running test...");
                 automation.helloWorld();

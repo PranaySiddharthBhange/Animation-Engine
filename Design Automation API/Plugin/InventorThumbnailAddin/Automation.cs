@@ -60,31 +60,16 @@ namespace InventorThumbnailAddin
             }
         }
 
+
         private string GenerateJson(AssemblyDocument assyDoc)
         {
             var sb = new StringBuilder();
             sb.AppendLine("{");
 
             // Basic properties
-            sb.AppendLine($"  \"DisplayName\": \"{EscapeJsonString(assyDoc.DisplayName)}\",");
-            sb.AppendLine($"  \"FullFileName\": \"{EscapeJsonString(assyDoc.FullFileName)}\",");
-            sb.AppendLine($"  \"DocumentType\": \"{assyDoc.DocumentType}\",");
 
-            // Referenced Documents
-            sb.AppendLine("  \"ReferencedDocuments\": [");
-            try
-            {
-                var refDocs = assyDoc.ReferencedDocuments.Cast<Document>().ToList();
-                for (int i = 0; i < refDocs.Count; i++)
-                {
-                    sb.AppendLine($"    \"{EscapeJsonString(refDocs[i].FullFileName)}\"{(i < refDocs.Count - 1 ? "," : "")}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[WARN] ReferencedDocs error: {ex.Message}");
-            }
-            sb.AppendLine("  ],");
+            sb.AppendLine($"  \"FullFileName\": \"{EscapeJsonString(assyDoc.FullFileName)}\",");
+
 
             // Components
             sb.AppendLine("  \"Components\": [");
@@ -94,37 +79,14 @@ namespace InventorThumbnailAddin
                 for (int i = 0; i < occurrences.Count; i++)
                 {
                     var occ = occurrences[i];
-                    Box box = null;
-                    try
-                    {
-                        box = occ.RangeBox;
-                        Point min = box.MinPoint;
-                        Point max = box.MaxPoint;
 
-                        double sizeX = max.X - min.X;
-                        double sizeY = max.Y - min.Y;
-                        double sizeZ = max.Z - min.Z;
+                    sb.AppendLine("    {");
+                    sb.AppendLine($"      \"Name\": \"{EscapeJsonString(occ.Name)}\",");
+                    sb.AppendLine($"      \"Type\": \"{EscapeJsonString(occ.DefinitionDocumentType.ToString())}\",");
+                    sb.AppendLine($"      \"DisplayName\": \"{EscapeJsonString(occ.Appearance.CategoryName)}\"");
 
-                        sb.AppendLine("    {");
-                        sb.AppendLine($"      \"Name\": \"{EscapeJsonString(occ.Name)}\",");
-                        sb.AppendLine($"      \"Type\": \"{EscapeJsonString(occ.DefinitionDocumentType.ToString())}\",");
-                        sb.AppendLine("      \"BoundingBox\": {");
-                        sb.AppendLine($"        \"MinPoint\": {{ \"X\": {min.X}, \"Y\": {min.Y}, \"Z\": {min.Z} }},");
-                        sb.AppendLine($"        \"MaxPoint\": {{ \"X\": {max.X}, \"Y\": {max.Y}, \"Z\": {max.Z} }},");
-                        sb.AppendLine($"        \"SizeX\": {sizeX},");
-                        sb.AppendLine($"        \"SizeY\": {sizeY},");
-                        sb.AppendLine($"        \"SizeZ\": {sizeZ}");
-                        sb.AppendLine("      }");
-                        sb.AppendLine(i < occurrences.Count - 1 ? "    }," : "    }");
-                    }
-                    catch (Exception ex)
-                    {
-                        sb.AppendLine($"    {{ \"Error\": \"{EscapeJsonString(ex.Message)}\" }}{(i < occurrences.Count - 1 ? "," : "")}");
-                    }
-                    finally
-                    {
-                        if (box != null) Marshal.ReleaseComObject(box);
-                    }
+                    sb.AppendLine(i < occurrences.Count - 1 ? "    }," : "    }");
+
                 }
             }
             catch (Exception ex)
@@ -132,6 +94,8 @@ namespace InventorThumbnailAddin
                 sb.AppendLine($"    {{ \"Error\": \"{EscapeJsonString(ex.Message)}\" }}");
             }
             sb.AppendLine("  ],");
+
+
 
             // Constraints
             sb.AppendLine("  \"Constraints\": [");
@@ -141,10 +105,12 @@ namespace InventorThumbnailAddin
                 for (int i = 0; i < constraints.Count; i++)
                 {
                     var constraint = constraints[i];
+
                     sb.AppendLine("    {");
                     sb.AppendLine($"      \"Name\": \"{EscapeJsonString(constraint.Name)}\",");
                     sb.AppendLine($"      \"Type\": \"{EscapeJsonString(constraint.Type.ToString())}\",");
-                    sb.AppendLine($"      \"Suppressed\": {constraint.Suppressed.ToString().ToLower()}");
+                    sb.AppendLine($"      \"EntityOne\": \"{EscapeJsonString(constraint.OccurrenceOne.Name)}\",");
+                    sb.AppendLine($"      \"EntityTwo\": \"{EscapeJsonString(constraint.OccurrenceTwo.Name)}\"");
                     sb.AppendLine(i < constraints.Count - 1 ? "    }," : "    }");
                 }
             }
@@ -153,6 +119,7 @@ namespace InventorThumbnailAddin
                 Console.WriteLine($"[WARN] Constraints error: {ex.Message}");
             }
             sb.AppendLine("  ],");
+
 
             // Joints
             sb.AppendLine("  \"Joints\": [");

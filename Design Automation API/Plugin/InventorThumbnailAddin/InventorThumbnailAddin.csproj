@@ -56,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automation.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="StandardAddInServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleAutomation.cs" />
